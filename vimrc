@@ -3,7 +3,11 @@ if &shell =~# 'fish$'
   set shell=sh
 endif
 
-" ignore temp files 
+
+set textwidth=80
+set colorcolumn=+1
+
+" ignore temp files
 set wildignore+=*/tmp/*,*.so,*.swp
 
 " set encoding to utf-8
@@ -99,8 +103,15 @@ nnoremap <leader>z :ZoomWin<cr>
 nnoremap <leader>uc :w<CR>:call clearmatches()<CR>:let cmd = system('unused -v true ' . expand('%'))<CR>:exec cmd<CR>
 nmap ld :m +1<CR>
 nmap lu :m -2<CR>
+
 " Use the_silver_searcher instead of ack
-let g:ackprg = 'ag --nogroup --nocolor --column'
+if executable('ag')
+   let g:ackprg = 'ag --vimgrep --smart-case --nocolor --nogroup --column'
+   cnoreabbrev ag Ack
+   cnoreabbrev aG Ack
+   cnoreabbrev Ag Ack
+   cnoreabbrev AG Ack
+endif
 
 " Vunlde plugins
 set nocompatible              " be iMproved, required
@@ -110,41 +121,46 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-Plugin 'alfredodeza/pytest.vi'
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'vim-scripts/indentpython.vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'elzr/vim-json'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'kien/ctrlp.vim'
-Plugin 'rking/ag.vim'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'ZoomWin'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'chriskempson/base16-vim'
-Plugin 'Quramy/tsuquyomi'
-Plugin 'nathanielc/vim-tickscript'
-Plugin 'fatih/vim-go'
-Plugin 'mhinz/vim-startify'
-Plugin 'editorconfig/editorconfig-vim'
-Plugin 'cespare/vim-toml'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'shougo/vimshell.vim'
-Plugin 'shougo/vimproc.vim'
-Plugin 'ekalinin/dockerfile.vim'
-Plugin 'hail2u/vim-css3-syntax'
-Plugin 'othree/html5.vim'
-Plugin 'sheerun/vim-polyglot'
-Plugin 'joshdick/onedark.vim'
-Plugin 'junegunn/goyo.vim'
-Plugin 'nvie/vim-flake8'
-Plugin 'jmcantrell/vim-virtualenv'
+
+Bundle 'alfredodeza/pytest.vim'
+Bundle 'tomtom/tcomment_vim'
+Bundle 'ervandew/supertab'
+Bundle 'tmhedberg/matchit'
+Bundle 'sickill/vim-pasta'
+Bundle 'VundleVim/Vundle.vim'
+Bundle 'vim-scripts/indentpython.vim'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'bronson/vim-trailing-whitespace'
+Bundle 'jiangmiao/auto-pairs'
+Bundle 'elzr/vim-json'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-surround'
+Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/syntastic'
+Bundle 'kien/ctrlp.vim'
+Bundle 'mileszs/ack.vim'
+Bundle 'flazz/vim-colorschemes'
+Bundle 'ZoomWin'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'chriskempson/base16-vim'
+Bundle 'Quramy/tsuquyomi'
+Bundle 'nathanielc/vim-tickscript'
+Bundle 'fatih/vim-go'
+Bundle 'mhinz/vim-startify'
+Bundle 'editorconfig/editorconfig-vim'
+Bundle 'cespare/vim-toml'
+Bundle 'vim-airline/vim-airline'
+Bundle 'vim-airline/vim-airline-themes'
+Bundle 'shougo/vimshell.vim'
+Bundle 'shougo/vimproc.vim'
+Bundle 'ekalinin/dockerfile.vim'
+Bundle 'hail2u/vim-css3-syntax'
+Bundle 'othree/html5.vim'
+Bundle 'sheerun/vim-polyglot'
+Bundle 'joshdick/onedark.vim'
+Bundle 'junegunn/goyo.vim'
+Bundle 'nvie/vim-flake8'
+Bundle 'jmcantrell/vim-virtualenv'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -186,4 +202,5 @@ set laststatus=2
 let python_highlight_all=1
 set wildignore+=*.pyc
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
-"
+let g:syntastic_python_checkers=['python', 'pep8', 'flake8', 'pyflakes']
+
