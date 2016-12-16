@@ -95,6 +95,8 @@ nnoremap <leader>nt :NERDTreeToggle<cr>
 " make sure files run in the right directory
 nnoremap <c-p> :execute ':Files '.expand("%:p:h")<cr>
 
+" map goto definition for you complete me
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " ctrlsf bindings
 nnoremap <c-t> :CtrlSF<Space>
 nnoremap <leader>ct :CtrlSFToggle<cr>
@@ -186,14 +188,11 @@ let g:rehash256 = 1
 let g:onedark_termcolors=256
 
 set background=dark
-
 colorscheme onedark
-set guifont=Fira\ Code:h15
 
 " YouCompleteMe configs
 let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_python_binary_path='python'
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " vim-go configs
 let g:neomake_go_enabled_makers = ['golint', 'govet', 'errcheck']
