@@ -128,3 +128,7 @@ fortune | cowsay -f $(ls /usr/share/cowsay/cows | shuf -n 1)
 
 # added by travis gem
 [ -f /home/odedlaz/.travis/travis.sh ] && source /home/odedlaz/.travis/travis.sh
+
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
