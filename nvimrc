@@ -1,11 +1,66 @@
+ "Plug Plugins
+call plug#begin('~/.vim/plugged')
+Plug 'alfredodeza/pytest.vim'
+Plug 'tComment'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'luochen1990/rainbow'
+Plug 'gcmt/wildfire.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'osyo-manga/vim-over'
+Plug 'ervandew/supertab'
+Plug 'matchit.zip'
+Plug 'sickill/vim-pasta'
+Plug 'vim-scripts/indentpython.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-commentary'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'jiangmiao/auto-pairs'
+Plug 'elzr/vim-json'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'easymotion/vim-easymotion'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'scrooloose/nerdtree'
+Plug 'neomake/neomake'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'dyng/ctrlsf.vim'
+Plug 'flazz/vim-colorschemes'
+Plug 'ZoomWin'
+Plug 'Valloric/YouCompleteMe'
+Plug 'chriskempson/base16-vim'
+Plug 'Quramy/tsuquyomi'
+Plug 'nathanielc/vim-tickscript'
+Plug 'fatih/vim-go'
+Plug 'mhinz/vim-startify'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'cespare/vim-toml'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'shougo/vimshell.vim'
+Plug 'shougo/vimproc.vim' ,{'do':'make'}
+Plug 'ekalinin/dockerfile.vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'joshdick/onedark.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'nvie/vim-flake8'
+Plug 'jmcantrell/vim-virtualenv'
+" maybe I'll move from YCM to deoplete one day
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'zchee/deoplete-jedi'
+call plug#end()
 
-set incsearch
+syntax on
+filetype plugin indent on
 
-"mappings
+if &compatible
+  set nocompatible
+endif
 
 " remap leader
 let mapleader = ","
-
 
 " easy motion bindings
 map  / <Plug>(easymotion-sn)
@@ -29,7 +84,6 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-
 " quick edit for vimrc file
 nnoremap <leader>ev :vsplit ~/.vimrc<cr>
 nnoremap <leader>sv :source ~/.vimrc<cr>
@@ -50,9 +104,6 @@ nnoremap <leader>z :ZoomWin<cr>
 nmap ld :m +1<CR>
 nmap lu :m -2<CR>
 
-" ag-vim shortcut
-map <Leader>f gagiw
-
 " add column indicator
 set textwidth=80
 set colorcolumn=+1
@@ -68,7 +119,10 @@ set undofile
 set undodir=~/.vim/undo
 set noswapfile
 
+" highlight text
+set incsearch
 
+"mappings
 " centralize backups, swapfiles and undo history
 set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
@@ -108,11 +162,6 @@ set guioptions=-m
 set smartindent
 set smarttab
 
-" Enable syntax
-syntax on
-filetype plugin indent on
-filetype on
-filetype plugin on
 
 " make splits open below and right
 set splitbelow
@@ -124,79 +173,14 @@ set nocompatible
 " No more mistaking :)
 command! W w
 
-
-" Plug plugins
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
-
-call plug#begin('~/.vim/plugged')
-Plug 'alfredodeza/pytest.vim'
-Plug 'tComment'
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-Plug 'luochen1990/rainbow'
-Plug 'gcmt/wildfire.vim'
-Plug 'airblade/vim-gitgutter'
-Plug 'osyo-manga/vim-over'
-Plug 'ervandew/supertab'
-Plug 'matchit.zip'
-Plug 'sickill/vim-pasta'
-Plug 'VundleVim/Vundle.vim'
-Plug 'vim-scripts/indentpython.vim'
-Plug 'pythoncomplete'
-Plug 'scrooloose/nerdcommenter'
-Plug 'tpope/vim-commentary'
-Plug 'bronson/vim-trailing-whitespace'
-Plug 'jiangmiao/auto-pairs'
-Plug 'elzr/vim-json'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'easymotion/vim-easymotion'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/syntastic'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'dyng/ctrlsf.vim'
-Plug 'flazz/vim-colorschemes'
-Plug 'ZoomWin'
-Plug 'Valloric/YouCompleteMe'
-Plug 'chriskempson/base16-vim'
-Plug 'Quramy/tsuquyomi'
-Plug 'nathanielc/vim-tickscript'
-Plug 'fatih/vim-go'
-Plug 'mhinz/vim-startify'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'cespare/vim-toml'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'shougo/vimshell.vim'
-Plug 'shougo/vimproc.vim' ,{'do':'make'}
-Plug 'ekalinin/dockerfile.vim'
-Plug 'sheerun/vim-polyglot'
-Plug 'joshdick/onedark.vim'
-Plug 'junegunn/goyo.vim'
-Plug 'nvie/vim-flake8'
-Plug 'jmcantrell/vim-virtualenv'
-call plug#end()
-filetype plugin indent on
-
-
 " Colors and fonts
 set t_Co=256
 let g:rehash256 = 1
 let g:onedark_termcolors=256
 
-
 set background=dark
 
 colorscheme onedark
-if has("macligatures")
-  set macligatures
-endif
 set guifont=Fira\ Code:h15
 
 " YouCompleteMe configs
@@ -205,9 +189,8 @@ let g:ycm_python_binary_path='python'
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " vim-go configs
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:neomake_go_enabled_makers = ['golint', 'govet', 'errcheck']
 let g:go_fmt_command = "goimports"
-
 
 "fzf configurations
 let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
@@ -224,10 +207,12 @@ set laststatus=2
 let python_highlight_all=1
 set wildignore+=*.pyc
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
-let g:syntastic_python_checkers=['python', 'pep8', 'flake8', 'pyflakes']
+let g:neomake_python_enabled_makers = ['python', 'pep8', 'flake8', 'pyflakes']
+autocmd BufWritePost *.py call Flake8()
 
 "easy motion configs
-
-
 let g:EasyMotion_smartcase = 1
 
+" Use deoplete.
+" maybe I'll use replace with YCM at one point
+" let g:deoplete#enable_at_startup = 1

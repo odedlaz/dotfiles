@@ -3,6 +3,8 @@ SCRIPTS_DIR="$HOME/Scripts"
 # remove ag alias for silver searcher
 unalias ag &> /dev/null
 
+alias vi="nvim"
+alias vim="nvim"
 alias atom="echo use vim instead\!"
 alias atom\!="/usr/bin/atom"
 alias wget="axel -a -n 5"
