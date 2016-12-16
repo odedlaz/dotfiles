@@ -1,9 +1,59 @@
-" Fix the shell, if we are using fish
-if &shell =~# 'fish$'
-  set shell=sh
-endif
+
+set incsearch
+
+"mappings
+
+" remap leader
+let mapleader = ","
 
 
+" easy motion bindings
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
+
+" This selects the next closest text object, and previous one.
+map <SPACE> <Plug>(wildfire-fuel)
+vmap <C-SPACE> <Plug>(wildfire-water)
+
+" resize splits
+nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
+
+" move between splits
+
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+
+" quick edit for vimrc file
+nnoremap <leader>ev :vsplit ~/.vimrc<cr>
+nnoremap <leader>sv :source ~/.vimrc<cr>
+
+"toggle nerd view
+nnoremap <leader>nt :NERDTreeToggle<cr>
+
+" make sure files run in the right directory
+nnoremap <c-p> :execute ':Files '.expand("%:p:h")<cr>
+
+" ctrlsf bindings
+nnoremap <c-t> :CtrlSF<Space>
+nnoremap <leader>ct :CtrlSFToggle<cr>
+
+nnoremap <leader>z :ZoomWin<cr>
+
+" move line up or down
+nmap ld :m +1<CR>
+nmap lu :m -2<CR>
+
+" ag-vim shortcut
+map <Leader>f gagiw
+
+" add column indicator
 set textwidth=80
 set colorcolumn=+1
 
@@ -19,18 +69,7 @@ set undodir=~/.vim/undo
 set noswapfile
 
 
-" better split view
-
-" move below
-nnoremap <C-J> <C-W><C-J>
-" move above
-nnoremap <C-K> <C-W><C-K>
-" move right
-nnoremap <C-L> <C-W><C-L>
-" move left
-nnoremap <C-H> <C-W><C-H>
-"
-" Centralize backups, swapfiles and undo history
+" centralize backups, swapfiles and undo history
 set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
 if exists("&undodir")
@@ -65,24 +104,19 @@ set shiftwidth=3
 " hide the menu bar
 set guioptions=-m
 
-" Make it smart
+" Make tabs smart
 set smartindent
 set smarttab
-"set smartcaseset autoindent
 
 " Enable syntax
 syntax on
 filetype plugin indent on
 filetype on
 filetype plugin on
-" Causes split to make it below
+
+" make splits open below and right
 set splitbelow
-
-" Causes vsplit to split to the right
 set splitright
-
-nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
-nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 
 " These lines setup the environment to show graphics and colors correctly.
 set nocompatible
@@ -91,78 +125,64 @@ set nocompatible
 command! W w
 
 
-" Leaders!
-let mapleader = ","
-
-" quick edit for vimrc file
-nnoremap <leader>ev :vsplit ~/.vimrc<cr>
-nnoremap <leader>sv :source ~/.vimrc<cr>
-nnoremap <leader>nt :NERDTreeToggle<cr>
-nnoremap <leader>rt :!cd app/ && grunt test<cr>
-nnoremap <leader>z :ZoomWin<cr>
-nnoremap <leader>uc :w<CR>:call clearmatches()<CR>:let cmd = system('unused -v true ' . expand('%'))<CR>:exec cmd<CR>
-nmap ld :m +1<CR>
-nmap lu :m -2<CR>
-
-" Use the_silver_searcher instead of ack
-if executable('ag')
-   let g:ackprg = 'ag --vimgrep --smart-case --nocolor --nogroup --column'
-   cnoreabbrev ag Ack
-   cnoreabbrev aG Ack
-   cnoreabbrev Ag Ack
-   cnoreabbrev AG Ack
-endif
-
-" Vunlde plugins
+" Plug plugins
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
 
-
-Bundle 'alfredodeza/pytest.vim'
-Bundle 'tomtom/tcomment_vim'
-Bundle 'ervandew/supertab'
-Bundle 'tmhedberg/matchit'
-Bundle 'sickill/vim-pasta'
-Bundle 'VundleVim/Vundle.vim'
-Bundle 'vim-scripts/indentpython.vim'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'bronson/vim-trailing-whitespace'
-Bundle 'jiangmiao/auto-pairs'
-Bundle 'elzr/vim-json'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-surround'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
-Bundle 'kien/ctrlp.vim'
-Bundle 'mileszs/ack.vim'
-Bundle 'flazz/vim-colorschemes'
-Bundle 'ZoomWin'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'chriskempson/base16-vim'
-Bundle 'Quramy/tsuquyomi'
-Bundle 'nathanielc/vim-tickscript'
-Bundle 'fatih/vim-go'
-Bundle 'mhinz/vim-startify'
-Bundle 'editorconfig/editorconfig-vim'
-Bundle 'cespare/vim-toml'
-Bundle 'vim-airline/vim-airline'
-Bundle 'vim-airline/vim-airline-themes'
-Bundle 'shougo/vimshell.vim'
-Bundle 'shougo/vimproc.vim'
-Bundle 'ekalinin/dockerfile.vim'
-Bundle 'hail2u/vim-css3-syntax'
-Bundle 'othree/html5.vim'
-Bundle 'sheerun/vim-polyglot'
-Bundle 'joshdick/onedark.vim'
-Bundle 'junegunn/goyo.vim'
-Bundle 'nvie/vim-flake8'
-Bundle 'jmcantrell/vim-virtualenv'
-call vundle#end()            " required
-filetype plugin indent on    " required
+call plug#begin('~/.vim/plugged')
+Plug 'alfredodeza/pytest.vim'
+Plug 'tComment'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'luochen1990/rainbow'
+Plug 'gcmt/wildfire.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'osyo-manga/vim-over'
+Plug 'ervandew/supertab'
+Plug 'matchit.zip'
+Plug 'sickill/vim-pasta'
+Plug 'VundleVim/Vundle.vim'
+Plug 'vim-scripts/indentpython.vim'
+Plug 'pythoncomplete'
+Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-commentary'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'jiangmiao/auto-pairs'
+Plug 'elzr/vim-json'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'easymotion/vim-easymotion'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'dyng/ctrlsf.vim'
+Plug 'flazz/vim-colorschemes'
+Plug 'ZoomWin'
+Plug 'Valloric/YouCompleteMe'
+Plug 'chriskempson/base16-vim'
+Plug 'Quramy/tsuquyomi'
+Plug 'nathanielc/vim-tickscript'
+Plug 'fatih/vim-go'
+Plug 'mhinz/vim-startify'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'cespare/vim-toml'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'shougo/vimshell.vim'
+Plug 'shougo/vimproc.vim' ,{'do':'make'}
+Plug 'ekalinin/dockerfile.vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'joshdick/onedark.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'nvie/vim-flake8'
+Plug 'jmcantrell/vim-virtualenv'
+call plug#end()
+filetype plugin indent on
 
 
 " Colors and fonts
@@ -180,27 +200,34 @@ endif
 set guifont=Fira\ Code:h15
 
 " YouCompleteMe configs
-
 let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_python_binary_path='python'
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " vim-go configs
 let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:go_fmt_command = "goimports"
 
-" Ignore node_modules and git from Ctrl+P
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
+"fzf configurations
+let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
 
-" Airline config
+" markdown config
+let g:vim_markdown_folding_disabled=1
+
+" airline config
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 set laststatus=2
 
 " python specific configurations
-
 let python_highlight_all=1
 set wildignore+=*.pyc
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 let g:syntastic_python_checkers=['python', 'pep8', 'flake8', 'pyflakes']
+
+"easy motion configs
+
+
+let g:EasyMotion_smartcase = 1
 
