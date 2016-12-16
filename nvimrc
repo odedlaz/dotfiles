@@ -47,6 +47,7 @@ Plug 'joshdick/onedark.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'nvie/vim-flake8'
 Plug 'jmcantrell/vim-virtualenv'
+Plug 'janko-m/vim-test'
 " maybe I'll move from YCM to deoplete one day
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'zchee/deoplete-jedi'
@@ -98,6 +99,12 @@ nnoremap <c-p> :execute ':Files '.expand("%:p:h")<cr>
 nnoremap <c-t> :CtrlSF<Space>
 nnoremap <leader>ct :CtrlSFToggle<cr>
 
+"test suite mappings
+nmap <silent> <leader>tf :TestFile<CR>
+nmap <silent> <leader>ts :TestSuite<CR>
+nmap <silent> <leader>tl :TestLast<CR>
+nmap <silent> <leader>tn :TestNearest<CR>
+nmap <silent> <leader>tv :TestVisit<CR>
 nnoremap <leader>z :ZoomWin<cr>
 
 " move line up or down
@@ -167,8 +174,8 @@ set smarttab
 set splitbelow
 set splitright
 
-" These lines setup the environment to show graphics and colors correctly.
-set nocompatible
+" run neomake on every file save
+autocmd! BufWritePost * Neomake
 
 " No more mistaking :)
 command! W w
@@ -207,9 +214,7 @@ set laststatus=2
 let python_highlight_all=1
 set wildignore+=*.pyc
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
-let g:neomake_python_enabled_makers = ['python', 'pep8', 'flake8', 'pyflakes']
-autocmd BufWritePost *.py call Flake8()
-
+let g:neomake_python_enabled_makers = ['python', 'pyflakes', 'pep8', 'flake8']
 "easy motion configs
 let g:EasyMotion_smartcase = 1
 
