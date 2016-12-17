@@ -44,6 +44,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'nvie/vim-flake8'
 Plug 'jmcantrell/vim-virtualenv'
 Plug 'janko-m/vim-test'
+Plug 'dbakker/vim-projectroot'
 " maybe I'll move from YCM to deoplete one day
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'zchee/deoplete-jedi'
@@ -99,7 +100,7 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 
 
 " make sure files run in the right directory
-nnoremap <c-p> :execute ':Files '.expand("%:p:h")<cr>
+nnoremap <c-p> :execute ':Files ' projectroot#guess()<cr>
 
 " map goto definition for you complete me
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
