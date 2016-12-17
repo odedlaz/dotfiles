@@ -227,3 +227,11 @@ let g:EasyMotion_smartcase = 1
 " maybe I'll use replace with YCM at one point
 " let g:deoplete#enable_at_startup = 1
 
+" Make sure Vim returns to the same line when you reopen a file.
+augroup line_return
+    au!
+    au BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \     execute 'normal! g`"zvzz' |
+        \ endif
+augroup END
