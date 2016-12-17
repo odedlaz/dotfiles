@@ -1,6 +1,7 @@
  "Plug Plugins
 call plug#begin('~/.vim/plugged')
 Plug 'alfredodeza/pytest.vim'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'tComment'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
