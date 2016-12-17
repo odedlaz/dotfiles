@@ -64,6 +64,16 @@ endif
 " remap leader
 let mapleader = ","
 
+" remap split navigation
+
+let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> <S-Up> :TmuxNavigateUp<cr>
+nnoremap <silent> <S-Down> :TmuxNavigateDown<cr>
+nnoremap <silent> <S-Left> :TmuxNavigateLeft<cr>
+nnoremap <silent> <S-Right> :TmuxNavigateRight<cr>
+nnoremap <silent> <c-\> :TmuxNavigatePrevious<cr>
+
 " easy motion bindings
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
@@ -79,12 +89,6 @@ vmap <C-SPACE> <Plug>(wildfire-water)
 nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 
-" move between splits
-
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
 
 " quick edit for vimrc file
 nnoremap <leader>ev :vsplit ~/.vimrc<cr>
@@ -221,3 +225,4 @@ let g:EasyMotion_smartcase = 1
 " Use deoplete.
 " maybe I'll use replace with YCM at one point
 " let g:deoplete#enable_at_startup = 1
+

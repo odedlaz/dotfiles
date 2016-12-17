@@ -48,17 +48,19 @@ bind-key -n S-F4 display-panes \; select-pane -t :.+
 # See: https://github.com/christoomey/vim-tmux-navigator
 is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
     | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
-bind-key -n C-k if-shell "$is_vim" "send-keys C-k"  "display-panes; select-pane -U"
-bind-key -n C-j if-shell "$is_vim" "send-keys C-j"  "display-panes; select-pane -D"
-bind-key -n C-h if-shell "$is_vim" "send-keys C-h"  "display-panes; select-pane -L"
-bind-key -n C-l if-shell "$is_vim" "send-keys C-l"  "display-panes; select-pane -R"
+bind-key -n S-Up if-shell "$is_vim" "send-keys S-Up"  "display-panes; select-pane -U"
+bind-key -n S-Down if-shell "$is_vim" "send-keys S-Down"  "display-panes; select-pane -D"
+bind-key -n S-Left if-shell "$is_vim" "send-keys S-Left"  "display-panes; select-pane -L"
+bind-key -n S-Right if-shell "$is_vim" "send-keys S-Right"  "display-panes; select-pane -R"
 bind-key -n C-\ if-shell "$is_vim" "send-keys C-\\" "display-panes; select-pane -l"
 
-
+# original byobu bindnigs:
+#
 # bind-key -n S-Up display-panes \; select-pane -U
 # bind-key -n S-Down display-panes \; select-pane -D
 # bind-key -n S-Left display-panes \; select-pane -L
 # bind-key -n S-Right display-panes \; select-pane -R
+
 bind-key -n C-F3 display-panes \; swap-pane -s :. -t :.- \; select-pane -t :.-
 bind-key -n C-F4 display-panes \; swap-pane -s :. -t :.+ \; select-pane -t :.+
 bind-key -n C-S-F3 swap-window -t :-1
