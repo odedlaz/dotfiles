@@ -97,6 +97,12 @@ nnoremap <leader>sv :source ~/.vimrc<cr>
 "toggle nerd view
 nnoremap <leader>nt :NERDTreeToggle<cr>
 
+" opens nerdtree automatically when a directory is opened using vim
+" thanks to nerdtree faq
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+
+
 " make sure files run in the right directory
 nnoremap <c-p> :execute ':Files '.expand("%:p:h")<cr>
 
