@@ -71,6 +71,7 @@ Plug 'jmcantrell/vim-virtualenv'
 
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+Plug 'junegunn/gv.vim'
 
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
@@ -207,3 +208,5 @@ augroup END
 " maybe I'll use replace with YCM at one point
 " let g:deoplete#enable_at_startup = 1
 
+silent! set winheight=30
+silent! set winminheight=5
