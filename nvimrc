@@ -1,4 +1,7 @@
-" run this on top to make sure it loads the settings first
+"""""""""""""""""""
+"""odedlaz vimrc"""
+"""""""""""""""""""
+
 runtime! plugin/sensible.vim
 set encoding=utf-8
 set shell=/usr/bin/zsh
@@ -6,6 +9,12 @@ set shell=/usr/bin/zsh
 if &compatible
   set nocompatible
 endif
+
+let mapleader = ","
+
+"""""""""""""
+"""plugins"""
+"""""""""""""
 
 call plug#begin('~/.vim/plugged')
 
@@ -30,14 +39,14 @@ map  N <Plug>(easymotion-prev)
 
 Plug 'scrooloose/nerdtree'
 nnoremap <leader>nt :NERDTreeToggle<cr>
-" opens nerdtree automatically when a directory is opened using vim
+"opens nerdtree automatically when a directory is opened using vim
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-" make sure files run in the right directory
+"make sure files run in the right directory
 nnoremap <c-p> :execute ':Files ' projectroot#guess()<cr>
 let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
 
@@ -86,6 +95,9 @@ Plug 'junegunn/limelight.vim'
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 
+Plug 'flazz/vim-colorschemes'
+Plug 'joshdick/onedark.vim'
+
 Plug 'tComment'
 Plug 'tpope/vim-sensible'
 Plug 'godlygeek/tabular'
@@ -102,90 +114,103 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'flazz/vim-colorschemes'
 Plug 'chriskempson/base16-vim'
 Plug 'mhinz/vim-startify'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'shougo/vimshell.vim'
 Plug 'shougo/vimproc.vim' ,{'do':'make'}
 Plug 'sheerun/vim-polyglot'
-Plug 'joshdick/onedark.vim'
 Plug 'dbakker/vim-projectroot'
-" maybe I'll move from YCM to deoplete one day
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'zchee/deoplete-jedi'
+"maybe I'll move from YCM to deoplete one day
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'zchee/deoplete-jedi'
 call plug#end()
+
+"""""""""""""""
+"""functions"""
+"""""""""""""""
+
+function! CreateDirectory (base, ...)
+   for dir in a:000
+      silent! execute '!mkdir ' a:base . '/' . dir . ' > /dev/null 2>&1'
+   endfor
+endfunction
+
+"""""""""""""""""""
+"""anything else"""
+"""""""""""""""""""
 
 silent! set winheight=30
 silent! set winminheight=5
 
-" add column indicator
+"add column indicator
 set textwidth=80
 set colorcolumn=+1
 
-let mapleader = ","
-
-" quick edit for vimrc file
+"quick edit for vimrc file
 nnoremap <leader>ev :vsplit ~/.vimrc<cr>
 nnoremap <leader>sv :source ~/.vimrc<cr>
 
-" move line up or down
+"move line up or down
 nmap ld :m +1<CR>
 nmap lu :m -2<CR>
 
-" ignore all kinds of files
+"ignore all kinds of files
 set wildignore+=*/tmp/*,*.so,*.swp,*.pyc
 
-" maintain undo history between sessions
+
+"create all needed directories
+call CreateDirectory('~/.vim', 'undo', 'backups', 'swaps')
+
+"maintain undo history between sessions
 set undofile
 set undodir=~/.vim/undo
 set noswapfile
 
-" centralize backups, swapfiles and undo history
+"centralize backups, swapfiles and undo history
 set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
 if exists("&undodir")
    set undodir=~/.vim/undo
 endif
 
-" Don’t create backups when editing files in certain directories
+"Don’t create backups when editing files in certain directories
 set backupskip=/tmp/*,/private/tmp/*
 
-" Highlight current line
+"Highlight current line
 set cursorline
 
-" Set the term title
+"Set the term title
 set title
 set titlestring=%F
 
-" Show line number and position
+"Show line number and position
 set number
 
-" Show matching braces, etc.
+"Show matching braces, etc.
 set showmatch
 
-" Default to soft tab
+"Default to soft tab
 set expandtab
 set smartindent
 
-" Default to 3 spaces per tab
+"Default to 3 spaces per tab
 set tabstop=3
 set softtabstop=3
 set shiftwidth=3
 
-" make splits open below and right
+"make splits open below and right
 set splitbelow
 set splitright
 
-" Colors and fonts
+
 set t_Co=256
 let g:rehash256 = 1
-let g:onedark_termcolors=256
-
 set background=dark
+let g:onedark_termcolors=256
 colorscheme onedark
 
-" Make sure Vim returns to the same line when you reopen a file.
+"Make sure Vim returns to the same line when you reopen a file.
 augroup line_return
     au!
     au BufReadPost *
@@ -194,6 +219,6 @@ augroup line_return
         \ endif
 augroup END
 
-" Use deoplete.
-" maybe I'll use replace with YCM at one point
-" let g:deoplete#enable_at_startup = 1
+"Use deoplete.
+"maybe I'll use replace with YCM at one point
+"let g:deoplete#enable_at_startup = 1
