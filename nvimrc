@@ -38,11 +38,20 @@ map  n <Plug>(easymotion-next)
 map  N <Plug>(easymotion-prev)
 
 Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'octref/RootIgnore'
 nnoremap <leader>nt :NERDTreeToggle<cr>
 "opens nerdtree automatically when a directory is opened using vim
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+"disable the builtin, bloated netrw plugin. We don’t need two filebrowsers.
+let loaded_netrwPlugin=1
+"let NERDTree respect the vim wildignore setting
+"Rootignore converts .gitignore into wildignore
+"thus making NERDTree respect gitignore!
+let NERDTreeRespectWildIgnore=1
+"close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
