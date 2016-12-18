@@ -1,3 +1,12 @@
+" run this on top to make sure it loads the settings first
+runtime! plugin/sensible.vim
+set encoding=utf-8
+set shell=/usr/bin/zsh
+
+if &compatible
+  set nocompatible
+endif
+
 call plug#begin('~/.vim/plugged')
 
 Plug 'christoomey/vim-tmux-navigator'
@@ -63,7 +72,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
-set laststatus=2
 
 Plug 'vim-scripts/indentpython.vim'
 Plug 'nvie/vim-flake8'
@@ -79,6 +87,7 @@ autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 
 Plug 'tComment'
+Plug 'tpope/vim-sensible'
 Plug 'godlygeek/tabular'
 Plug 'osyo-manga/vim-over'
 Plug 'ervandew/supertab'
@@ -107,14 +116,13 @@ Plug 'dbakker/vim-projectroot'
 " Plug 'zchee/deoplete-jedi'
 call plug#end()
 
-syntax on
-filetype plugin indent on
+silent! set winheight=30
+silent! set winminheight=5
 
-if &compatible
-  set nocompatible
-endif
+" add column indicator
+set textwidth=80
+set colorcolumn=+1
 
-" remap leader
 let mapleader = ","
 
 " quick edit for vimrc file
@@ -125,30 +133,19 @@ nnoremap <leader>sv :source ~/.vimrc<cr>
 nmap ld :m +1<CR>
 nmap lu :m -2<CR>
 
-" add column indicator
-set textwidth=80
-set colorcolumn=+1
-
 " ignore all kinds of files
 set wildignore+=*/tmp/*,*.so,*.swp,*.pyc
-
-" set encoding to utf-8
-set encoding=utf-8
 
 " maintain undo history between sessions
 set undofile
 set undodir=~/.vim/undo
 set noswapfile
 
-" highlight text
-set incsearch
-
-"mappings
 " centralize backups, swapfiles and undo history
 set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
 if exists("&undodir")
-	set undodir=~/.vim/undo
+   set undodir=~/.vim/undo
 endif
 
 " Don’t create backups when editing files in certain directories
@@ -163,25 +160,18 @@ set titlestring=%F
 
 " Show line number and position
 set number
-set ruler
 
 " Show matching braces, etc.
 set showmatch
 
 " Default to soft tab
 set expandtab
+set smartindent
 
 " Default to 3 spaces per tab
 set tabstop=3
 set softtabstop=3
 set shiftwidth=3
-
-" hide the menu bar
-set guioptions=-m
-
-" Make tabs smart
-set smartindent
-set smarttab
 
 " make splits open below and right
 set splitbelow
@@ -207,6 +197,3 @@ augroup END
 " Use deoplete.
 " maybe I'll use replace with YCM at one point
 " let g:deoplete#enable_at_startup = 1
-
-silent! set winheight=30
-silent! set winminheight=5
