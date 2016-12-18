@@ -72,30 +72,34 @@ Plug 'jmcantrell/vim-virtualenv'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
 Plug 'tComment'
 Plug 'godlygeek/tabular'
-Plug 'luochen1990/rainbow'
 Plug 'osyo-manga/vim-over'
 Plug 'ervandew/supertab'
 Plug 'matchit.zip'
 Plug 'sickill/vim-pasta'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-repeat'
 Plug 'bronson/vim-trailing-whitespace'
+Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'flazz/vim-colorschemes'
 Plug 'chriskempson/base16-vim'
-Plug 'Quramy/tsuquyomi'
 Plug 'mhinz/vim-startify'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'shougo/vimshell.vim'
 Plug 'shougo/vimproc.vim' ,{'do':'make'}
 Plug 'sheerun/vim-polyglot'
 Plug 'joshdick/onedark.vim'
-Plug 'junegunn/goyo.vim'
 Plug 'dbakker/vim-projectroot'
 " maybe I'll move from YCM to deoplete one day
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -111,10 +115,6 @@ endif
 
 " remap leader
 let mapleader = ","
-
-" resize splits
-nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
-nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 
 " quick edit for vimrc file
 nnoremap <leader>ev :vsplit ~/.vimrc<cr>
