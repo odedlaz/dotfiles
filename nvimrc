@@ -54,8 +54,8 @@ Plug 'dyng/ctrlsf.vim'
 nnoremap <c-t> :CtrlSF<Space>
 nnoremap <leader>ct :CtrlSFToggle<cr>
 
-Plug 'ZoomWin'
-nnoremap <leader>z :ZoomWin<cr>
+Plug 'troydm/zoomwintab.vim'
+nnoremap <leader>z :ZoomWinTabToggle<cr>
 
 Plug 'janko-m/vim-test'
 nmap <silent> <leader>tf :TestFile<CR>
