@@ -1,4 +1,4 @@
-SCRIPTS_DIR="$HOME/Scripts"
+SCRIPTS_DIR="$HOME/Dev/scripts"
 
 # remove ag alias for silver searcher
 unalias ag &> /dev/null
