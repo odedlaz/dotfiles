@@ -13,7 +13,6 @@ alias pc="python3 ${SCRIPTS_DIR}/passgen.py"
 alias fuck='sudo $(fc -ln -1)'
 alias pbcopy='xclip -selection c'
 alias pbpaste='xclip -selection clipboard -o'
-alias less='most'
 alias apt='sudo /usr/bin/apt -o Acquire::ForceIPv4=true'
 alias pingg="ping google.com"
 alias unpair="sudo bash ${SCRIPTS_DIR}/unpair.sh"

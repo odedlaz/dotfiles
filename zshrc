@@ -126,13 +126,28 @@ source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
 chruby ruby-2.3
 
-# this should be at the bottom after all initialization has been done!
+# less syntax highlighting
 
-fortune | cowsay -f $(ls /usr/share/cowsay/cows | shuf -n 1)
+export PAGER="less"
+export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
+export LESS=' -R '
+
+# less colors for Man Pages
+export LESS_TERMCAP_mb=$'\e[01;31m'       # begin blinking
+export LESS_TERMCAP_md=$'\e[01;38;5;74m'  # begin bold
+export LESS_TERMCAP_me=$'\e[0m'           # end mode
+export LESS_TERMCAP_se=$'\e[0m'           # end standout-mode
+export LESS_TERMCAP_so=$'\e[38;5;246m'    # begin standout-mode - info box
+export LESS_TERMCAP_ue=$'\e[0m'           # end underline
+export LESS_TERMCAP_us=$'\e[04;38;5;146m' # begin underline
 
 # added by travis gem
 [ -f /home/odedlaz/.travis/travis.sh ] && source /home/odedlaz/.travis/travis.sh
 
-
-
+# added by fzf
+#
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# this should be at the bottom after all initialization has been done!
+
+fortune | cowsay -f $(ls /usr/share/cowsay/cows | shuf -n 1)
