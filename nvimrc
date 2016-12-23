@@ -141,6 +141,10 @@ call plug#end()
 """""""""""""""
 """functions"""
 """""""""""""""
+" Source the vimrc file after saving it
+if has("autocmd")
+  autocmd bufwritepost .vimrc source $MYVIMRC
+endif
 
 function! CreateDirectory (base, ...)
    for dir in a:000
@@ -163,6 +167,11 @@ nnoremap <C-Up> :wincmd +<cr>
 nnoremap <C-Down> :wincmd -<cr>
 nnoremap <C-Left> :wincmd <<cr>
 nnoremap <C-Right> :wincmd ><cr>
+"nagivate between tabs
+nnoremap th  :tabfirst<CR>
+nnoremap tj  :tabnext<CR>
+nnoremap tk  :tabprev<CR>
+nnoremap tl  :tablast<CR>
 
 silent! set winheight=30
 silent! set winminheight=5
@@ -172,8 +181,7 @@ set textwidth=80
 set colorcolumn=+1
 
 "quick edit for vimrc file
-nnoremap <leader>ev :vsplit ~/.vimrc<cr>
-nnoremap <leader>sv :source ~/.vimrc<cr>
+nnoremap <leader>ev :tabedit $MYVIMRC<cr>
 
 "move line up or down
 nmap ld :m +1<CR>
