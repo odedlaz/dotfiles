@@ -54,6 +54,11 @@ bind-key -n S-Left if-shell "$is_vim" "send-keys S-Left"  "display-panes; select
 bind-key -n S-Right if-shell "$is_vim" "send-keys S-Right"  "display-panes; select-pane -R"
 bind-key -n C-\ if-shell "$is_vim" "send-keys C-\\" "display-panes; select-pane -l"
 
+bind-key -n C-Up if-shell "$is_vim" "send-keys C-Up"
+bind-key -n C-Down if-shell "$is_vim" "send-keys C-Down"
+bind-key -n C-Left if-shell "$is_vim" "send-keys C-Left"
+bind-key -n C-Right if-shell "$is_vim" "send-keys C-Right"
+
 # original byobu bindnigs:
 #
 # bind-key -n S-Up display-panes \; select-pane -U

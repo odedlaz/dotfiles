@@ -26,6 +26,8 @@ nnoremap <silent> <S-Left> :TmuxNavigateLeft<cr>
 nnoremap <silent> <S-Right> :TmuxNavigateRight<cr>
 nnoremap <silent> <c-\> :TmuxNavigatePrevious<cr>
 
+
+
 Plug 'gcmt/wildfire.vim'
 map <SPACE> <Plug>(wildfire-fuel)
 vmap <C-SPACE> <Plug>(wildfire-water)
@@ -130,6 +132,7 @@ Plug 'shougo/vimshell.vim'
 Plug 'shougo/vimproc.vim' ,{'do':'make'}
 Plug 'sheerun/vim-polyglot'
 Plug 'dbakker/vim-projectroot'
+Plug 'tinykeymap'
 "maybe I'll move from YCM to deoplete one day
 "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'zchee/deoplete-jedi'
@@ -148,6 +151,18 @@ endfunction
 """""""""""""""""""
 """anything else"""
 """""""""""""""""""
+
+
+"movement mappings
+noremap  <Up> <Nop>
+noremap  <Down> <Nop>
+noremap  <Left> <Nop>
+noremap  <Right> <Nop>
+
+nnoremap <C-Up> :wincmd +<cr>
+nnoremap <C-Down> :wincmd -<cr>
+nnoremap <C-Left> :wincmd <<cr>
+nnoremap <C-Right> :wincmd ><cr>
 
 silent! set winheight=30
 silent! set winminheight=5
