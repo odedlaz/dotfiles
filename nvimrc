@@ -10,7 +10,7 @@ if &compatible
   set nocompatible
 endif
 
-let mapleader = ","
+let mapleader = "\\"
 
 """""""""""""
 """plugins"""
