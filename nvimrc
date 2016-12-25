@@ -156,6 +156,8 @@ endfunction
 """anything else"""
 """""""""""""""""""
 
+"live subsitution
+set inccommand=split
 
 "movement mappings
 noremap  <Up> <Nop>
