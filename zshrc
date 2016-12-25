@@ -148,6 +148,8 @@ export LESS_TERMCAP_us=$'\e[04;38;5;146m' # begin underline
 #
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# remap caps lock to ESC 
+setxkbmap -option caps:escape
 # this should be at the bottom after all initialization has been done!
 
 fortune | cowsay -f $(ls /usr/share/cowsay/cows | shuf -n 1)
