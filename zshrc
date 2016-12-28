@@ -141,14 +141,17 @@ export LESS_TERMCAP_so=$'\E[37;44m'       # begin standout-mode - info box
 export LESS_TERMCAP_ue=$'\e[0m'           # end underline
 export LESS_TERMCAP_us=$'\e[04;38;5;146m' # begin underline
 
+# export the right terminal
+export TERM=xterm-256color
+[ -n "$TMUX" ] && export TERM=screen-256color
+
 # added by travis gem
 [ -f /home/odedlaz/.travis/travis.sh ] && source /home/odedlaz/.travis/travis.sh
 
 # added by fzf
-#
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# remap caps lock to ESC 
+# remap caps lock to ESC
 setxkbmap -option caps:escape
 # this should be at the bottom after all initialization has been done!
 
