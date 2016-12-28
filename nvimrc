@@ -7,7 +7,7 @@ set encoding=utf-8
 set shell=/usr/bin/zsh
 
 if &compatible
-  set nocompatible
+   set nocompatible
 endif
 
 let mapleader = "\\"
@@ -78,7 +78,8 @@ nmap <silent> <leader>tv :TestVisit<CR>
 Plug 'neomake/neomake'
 autocmd! BufWritePost * Neomake
 let g:neomake_go_enabled_makers = ['golint', 'govet', 'errcheck']
-let g:neomake_python_enabled_makers = ['python', 'pyflakes', 'pep8', 'flake8']
+let g:neomake_python_enabled_makers = ['flake8']
+let g:neomake_open_list = 2
 
 Plug 'fatih/vim-go'
 let g:go_fmt_command = "goimports"
@@ -93,7 +94,9 @@ Plug 'vim-airline/vim-airline-themes'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
-Plug 'vim-scripts/indentpython.vim'
+Plug 'Chiel92/vim-autoformat'
+au BufWrite * :Autoformat
+
 Plug 'nvie/vim-flake8'
 Plug 'jmcantrell/vim-virtualenv'
 
@@ -142,9 +145,8 @@ call plug#end()
 """functions"""
 """""""""""""""
 " Source the vimrc file after saving it
-if has("autocmd")
-  autocmd bufwritepost .vimrc source $MYVIMRC
-endif
+autocmd bufwritepost init.vim source $MYVIMRC
+autocmd bufwritepost .vimrc source $MYVIMRC
 
 function! CreateDirectory (base, ...)
    for dir in a:000
@@ -160,10 +162,10 @@ endfunction
 set inccommand=split
 
 "movement mappings
-noremap  <Up> <Nop>
-noremap  <Down> <Nop>
-noremap  <Left> <Nop>
-noremap  <Right> <Nop>
+noremap  <Up> :echo 'use k!'<cr>
+noremap  <Down> :echo 'use j!'<cr>
+noremap  <Left> :echo 'use h!'<cr>
+noremap  <Right> :echo 'use k!'<cr>
 
 nnoremap <C-Up> :wincmd +<cr>
 nnoremap <C-Down> :wincmd -<cr>
@@ -246,11 +248,11 @@ colorscheme onedark
 
 "Make sure Vim returns to the same line when you reopen a file.
 augroup line_return
-    au!
-    au BufReadPost *
-        \ if line("'\"") > 0 && line("'\"") <= line("$") |
-        \     execute 'normal! g`"zvzz' |
-        \ endif
+   au!
+   au BufReadPost *
+            \ if line("'\"") > 0 && line("'\"") <= line("$") |
+            \     execute 'normal! g`"zvzz' |
+            \ endif
 augroup END
 
 "Use deoplete.
