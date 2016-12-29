@@ -2,7 +2,6 @@
 """odedlaz vimrc"""
 """""""""""""""""""
 
-runtime! plugin/sensible.vim
 set encoding=utf-8
 set shell=/usr/bin/zsh
 
@@ -112,7 +111,6 @@ Plug 'flazz/vim-colorschemes'
 Plug 'joshdick/onedark.vim'
 
 Plug 'tComment'
-Plug 'tpope/vim-sensible'
 Plug 'godlygeek/tabular'
 Plug 'osyo-manga/vim-over'
 Plug 'ervandew/supertab'
@@ -130,6 +128,9 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'chriskempson/base16-vim'
 Plug 'mhinz/vim-startify'
 Plug 'editorconfig/editorconfig-vim'
+" root ignore has to be loaded after editor-config
+" else, there are wildignore issues
+" Plug 'octref/RootIgnore'
 Plug 'shougo/vimshell.vim'
 Plug 'shougo/vimproc.vim' ,{'do':'make'}
 Plug 'sheerun/vim-polyglot'
@@ -138,7 +139,6 @@ Plug 'tinykeymap'
 "maybe I'll move from YCM to deoplete one day
 "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'zchee/deoplete-jedi'
-" Plug 'octref/RootIgnore'
 call plug#end()
 
 """""""""""""""
