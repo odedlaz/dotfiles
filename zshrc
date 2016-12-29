@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-  export ZSH=$HOME/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # VI Mode
 bindkey -v
@@ -112,8 +112,8 @@ source ~/.funcrc
 # ssh-agent
 
 if ! ps -ef | grep "[s]sh-agent -s" &> /dev/null; then
-  eval "$(ssh-agent -s)" &> /dev/null
-  ssh-add ~/.ssh/github_rsa &> /dev/null
+   eval "$(ssh-agent -s)" &> /dev/null
+   ssh-add ~/.ssh/github_rsa &> /dev/null
 fi
 
 # python virtualenv
@@ -154,5 +154,8 @@ export TERM=xterm-256color
 # remap caps lock to ESC
 setxkbmap -option caps:escape
 # this should be at the bottom after all initialization has been done!
+
+# add direnv hook
+eval "$(direnv hook zsh)"
 
 fortune | cowsay -f $(ls /usr/share/cowsay/cows | shuf -n 1)
