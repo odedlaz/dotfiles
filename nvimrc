@@ -41,7 +41,6 @@ map  N <Plug>(easymotion-prev)
 
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'octref/RootIgnore'
 nnoremap <leader>nt :NERDTreeToggle<cr>
 "opens nerdtree automatically when a directory is opened using vim
 autocmd StdinReadPre * let s:std_in=1
@@ -79,7 +78,7 @@ Plug 'neomake/neomake'
 autocmd! BufWritePost * Neomake
 let g:neomake_go_enabled_makers = ['golint', 'govet', 'errcheck']
 let g:neomake_python_enabled_makers = ['flake8']
-let g:neomake_open_list = 2
+let g:neomake_open_list = 2 "don't move the cursor when this opens
 
 Plug 'fatih/vim-go'
 let g:go_fmt_command = "goimports"
@@ -139,6 +138,7 @@ Plug 'tinykeymap'
 "maybe I'll move from YCM to deoplete one day
 "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'zchee/deoplete-jedi'
+" Plug 'octref/RootIgnore'
 call plug#end()
 
 """""""""""""""
@@ -190,10 +190,6 @@ nnoremap <leader>ev :tabedit $MYVIMRC<cr>
 "move line up or down
 nmap ld :m +1<CR>
 nmap lu :m -2<CR>
-
-"ignore all kinds of files
-set wildignore+=*/tmp/*,*.so,*.swp,*.pyc
-
 
 "create all needed directories
 call CreateDirectory('~/.vim', 'undo', 'backups', 'swaps')
