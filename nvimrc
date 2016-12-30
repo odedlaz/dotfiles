@@ -95,6 +95,9 @@ let g:airline#extensions#tabline#enabled = 1
 Plug 'Chiel92/vim-autoformat'
 au BufWrite * :Autoformat
 
+Plug 'luochen1990/rainbow'
+let g:rainbow_active = 1
+
 Plug 'nvie/vim-flake8'
 Plug 'jmcantrell/vim-virtualenv'
 
@@ -120,7 +123,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'bronson/vim-trailing-whitespace'
-Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'terryma/vim-multiple-cursors'
