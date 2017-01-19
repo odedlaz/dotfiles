@@ -172,10 +172,12 @@ nnoremap <C-Down> :wincmd -<cr>
 nnoremap <C-Left> :wincmd <<cr>
 nnoremap <C-Right> :wincmd ><cr>
 "nagivate between tabs
-nnoremap th  :tabfirst<CR>
 nnoremap tj  :tabnext<CR>
 nnoremap tk  :tabprev<CR>
-nnoremap tl  :tablast<CR>
+
+nnoremap bj  :bnext<CR>
+nnoremap bk  :bprev<CR>
+nnoremap bls  :ls<CR>
 
 silent! set winheight=30
 silent! set winminheight=5
