@@ -238,12 +238,6 @@ set splitbelow
 set splitright
 
 
-set t_Co=256
-let g:rehash256 = 1
-set background=dark
-let g:onedark_termcolors=256
-colorscheme onedark
-
 "Make sure Vim returns to the same line when you reopen a file.
 augroup line_return
    au!
@@ -252,6 +246,22 @@ augroup line_return
             \     execute 'normal! g`"zvzz' |
             \ endif
 augroup END
+
+
+" the following are configurations for onedark theme
+if (has("nvim"))
+   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+
+if (has("termguicolors"))
+   set termguicolors
+endif
+
+set t_Co=256
+let g:rehash256 = 1
+let g:onedark_termcolors=256
+set background=dark
+colorscheme onedark
 
 "Use deoplete.
 "maybe I'll use replace with YCM at one point

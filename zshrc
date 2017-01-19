@@ -143,7 +143,6 @@ export LESS_TERMCAP_us=$'\e[04;38;5;146m' # begin underline
 
 # export the right terminal
 export TERM=xterm-256color
-[ -n "$TMUX" ] && export TERM=screen-256color
 
 # added by travis gem
 [ -f /home/odedlaz/.travis/travis.sh ] && source /home/odedlaz/.travis/travis.sh
