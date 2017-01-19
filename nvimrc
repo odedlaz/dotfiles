@@ -25,8 +25,6 @@ nnoremap <silent> <S-Left> :TmuxNavigateLeft<cr>
 nnoremap <silent> <S-Right> :TmuxNavigateRight<cr>
 nnoremap <silent> <c-\> :TmuxNavigatePrevious<cr>
 
-
-
 Plug 'gcmt/wildfire.vim'
 map <SPACE> <Plug>(wildfire-fuel)
 vmap <C-SPACE> <Plug>(wildfire-water)
@@ -237,7 +235,6 @@ set shiftwidth=3
 set splitbelow
 set splitright
 
-
 "Make sure Vim returns to the same line when you reopen a file.
 augroup line_return
    au!
@@ -246,7 +243,6 @@ augroup line_return
             \     execute 'normal! g`"zvzz' |
             \ endif
 augroup END
-
 
 " the following are configurations for onedark theme
 if (has("nvim"))
@@ -260,6 +256,7 @@ endif
 set t_Co=256
 let g:rehash256 = 1
 let g:onedark_termcolors=256
+let g:airline_theme='onedark'
 set background=dark
 colorscheme onedark
 
