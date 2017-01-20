@@ -1,4 +1,4 @@
-if-shell "test -f ~/.tmux/tmux-status.conf" "source ~/.tmux/tmux-status.conf"
+if-shell "test -f ~/.tmux/themes/onedark.tmux" "source ~/.tmux/themes/onedark.tmux"
 
 set-window-option -g pane-base-index 1
 set -sg escape-time 0
