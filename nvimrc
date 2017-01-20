@@ -87,8 +87,11 @@ let g:ycm_python_binary_path='python'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'joshdick/onedark.vim'
+" Plug 'edkolev/tmuxline.vim'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tmuxline#enabled = 1
 
 Plug 'Chiel92/vim-autoformat'
 au BufWrite * :Autoformat
@@ -108,9 +111,8 @@ Plug 'junegunn/limelight.vim'
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 
-Plug 'flazz/vim-colorschemes'
-Plug 'joshdick/onedark.vim'
 
+Plug 'flazz/vim-colorschemes'
 Plug 'tComment'
 Plug 'godlygeek/tabular'
 Plug 'osyo-manga/vim-over'
@@ -157,15 +159,12 @@ endfunction
 """""""""""""""""""
 """anything else"""
 """""""""""""""""""
+"navigation mappings
 
-"live subsitution
-set inccommand=split
-
-"movement mappings
 noremap  <Up> :echo 'use k!'<cr>
 noremap  <Down> :echo 'use j!'<cr>
 noremap  <Left> :echo 'use h!'<cr>
-noremap  <Right> :echo 'use k!'<cr>
+noremap  <Right> :echo 'use l!'<cr>
 
 nnoremap <C-Up> :wincmd +<cr>
 nnoremap <C-Down> :wincmd -<cr>
@@ -219,7 +218,14 @@ set title
 set titlestring=%F
 
 "Show line number and position
-set number
+set relativenumber
+
+" Change numbering in insert mode
+autocmd InsertEnter * :set number
+autocmd InsertLeave * :set relativenumber
+
+"live subsitution
+set inccommand=split
 
 "Show matching braces, etc.
 set showmatch
