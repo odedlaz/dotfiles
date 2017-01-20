@@ -185,6 +185,12 @@ silent! set winminheight=5
 set textwidth=80
 set colorcolumn=+1
 
+" do not automatically wrap on load
+set nowrap
+
+" do not automatically wrap text when typing
+set formatoptions-=t
+
 "quick edit for vimrc file
 nnoremap <leader>ev :tabedit $MYVIMRC<cr>
 
