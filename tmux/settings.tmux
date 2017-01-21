@@ -3,16 +3,16 @@ if-shell "test -f ~/.tmux/themes/onedark.tmux" "source ~/.tmux/themes/onedark.tm
 set-window-option -g pane-base-index 1
 set -sg escape-time 0
 
-set -g prefix ^A
-set -g prefix2 ^A
-bind a send-prefix
+set-option -g prefix C-f
 
 set-window-option -g xterm-keys on
 
 set-option -g history-limit 10000
 set-option -g display-panes-time 150
 set-option -g clock-mode-style 24
+
 set-option -g mode-keys vi
+set -g @shell_mode 'vi'
 
 set-window-option -g automatic-rename on
 set-window-option -g aggressive-resize on
