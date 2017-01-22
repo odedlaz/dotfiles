@@ -18,14 +18,18 @@ bind-key -n C-F8 command-prompt -p "(rename-session) " "rename-session '%%'"
 
 is_vim="ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
 
-bind-key -n C-J if-shell "$is_vim" "send-keys C-J"  "display-panes; select-pane -U"
-bind-key -n C-K if-shell "$is_vim" "send-keys C-K"  "display-panes; select-pane -D"
-bind-key -n C-H if-shell "$is_vim" "send-keys C-H"  "display-panes; select-pane -L"
-bind-key -n C-L if-shell "$is_vim" "send-keys C-L"  "display-panes; select-pane -R"
-bind-key -n C-\ if-shell "$is_vim" "send-keys C-\\" "display-panes; select-pane -l"
+bind-key -n S-Up if-shell "$is_vim" "send-keys S-Up"  "display-panes; select-pane -U"
+bind-key -n S-Down if-shell "$is_vim" "send-keys S-Down"  "display-panes; select-pane -D"
+bind-key -n S-Left if-shell "$is_vim" "send-keys S-Left"  "display-panes; select-pane -L"
+bind-key -n S-Right if-shell "$is_vim" "send-keys S-Right"  "display-panes; select-pane -R"
 
 bind-key -n M-Left previous-window
 bind-key -n M-Right next-window
+
+bind-key -n M-S-Up resize-pane -U
+bind-key -n M-S-Down resize-pane -D
+bind-key -n M-S-Left resize-pane -L
+bind-key -n M-S-Right resize-pane -R
 
 bind -n WheelUpPane if "[[ #{pane_current_command} =~ vim ]]" "select-pane -t = ; send-keys -M" "select-pane -t = ; send-keys Up"
 bind -n WheelDownPane if "[[ #{pane_current_command} =~ vim ]]" "select-pane -t = ; send-keys -M" "select-pane -t = ; send-keys Down"
