@@ -172,13 +172,10 @@ nnoremap <C-Up> :wincmd +<cr>
 nnoremap <C-Down> :wincmd -<cr>
 nnoremap <C-Left> :wincmd <<cr>
 nnoremap <C-Right> :wincmd ><cr>
-"nagivate between tabs
-nnoremap tj  :tabnext<CR>
-nnoremap tk  :tabprev<CR>
 
-nnoremap bj  :bnext<CR>
-nnoremap bk  :bprev<CR>
-nnoremap bls  :ls<CR>
+"quickfix widnow for fast tab and buffer switching
+:nnoremap <F5> :tabs<CR>:tabn<Space>
+:nnoremap <F6> :buffers<CR>:buffer<Space>
 
 silent! set winheight=30
 silent! set winminheight=5
@@ -231,6 +228,9 @@ set relativenumber
 " Change numbering in insert mode
 autocmd InsertEnter * :set number
 autocmd InsertLeave * :set relativenumber
+
+"lower tiemout
+set timeoutlen=1000 ttimeoutlen=0
 
 "live subsitution
 set inccommand=split
