@@ -2,7 +2,6 @@ if-shell "test -f ~/.tmux/themes/onedark.tmux" "source ~/.tmux/themes/onedark.tm
 
 set-window-option -g pane-base-index 1
 set -sg escape-time 0
-
 set-option -g prefix C-f
 
 set-window-option -g xterm-keys on

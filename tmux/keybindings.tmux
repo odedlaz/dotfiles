@@ -31,5 +31,7 @@ bind-key -n M-S-Down resize-pane -D
 bind-key -n M-S-Left resize-pane -L
 bind-key -n M-S-Right resize-pane -R
 
+bind-key "_" split-window -v -c "#{pane_current_path}"
+
 bind -n WheelUpPane if "[[ #{pane_current_command} =~ vim ]]" "select-pane -t = ; send-keys -M" "select-pane -t = ; send-keys Up"
 bind -n WheelDownPane if "[[ #{pane_current_command} =~ vim ]]" "select-pane -t = ; send-keys -M" "select-pane -t = ; send-keys Down"
