@@ -27,7 +27,7 @@ set-option -ga terminal-overrides ",$TERM:Tc"
 # BUG: Should *not* hardcode /bin/bash here
 set -g default-command $SHELL
 
-set -g status-interval 1
+set -g status-interval 20
 set -g message-fg white
 set -g mouse on
 

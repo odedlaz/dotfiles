@@ -42,7 +42,7 @@ set -g @prefix_highlight_copy_mode_attr 'fg=#282c34,bg=#98c379'
 set -g @prefix_highlight_output_prefix '  '
 
 set -g status-left "#[fg=#3e4452,bg=#98c379,bold] #S #{prefix_highlight}#[fg=#98c379,bg=#3e4452,nobold,nounderscore,noitalics]"
-set -g status-right "#[fg=#aab2bf,bg=#282c34,nounderscore,noitalics]%H:%M:%S  %d/%m/%y #[fg=#3e4452,bg=#282c34]#[fg=#3e4452,bg=#3e4452]#[fg=#aab2bf, bg=#3e4452]#{package_updates} #{free_mem} #[fg=#98c379,bg=#3e4452,nobold,nounderscore,noitalics]#[fg=#282c34,bg=#98c379,bold] #h #[fg=#e5c07b, bg=#98c379]#[fg=#e06c75,bg=#e5c07b]"
+set -g status-right "#[fg=#aab2bf,bg=#282c34,nounderscore,noitalics]%H:%M  %d/%m/%y #[fg=#3e4452,bg=#282c34]#[fg=#3e4452,bg=#3e4452]#[fg=#aab2bf, bg=#3e4452]#{external_ip} #{package_updates} #{free_mem} #[fg=#98c379,bg=#3e4452,nobold,nounderscore,noitalics]#[fg=#282c34,bg=#98c379,bold] #h #[fg=#e5c07b, bg=#98c379]#[fg=#e06c75,bg=#e5c07b]"
 
 
 setw -g window-status-format "#[fg=#282c34,bg=#282c34,nobold,nounderscore,noitalics]#[fg=#abb2bf,bg=#282c34] #I  #W #[fg=#282c34,bg=#282c34,nobold,nounderscore,noitalics]"
