@@ -1,5 +1,3 @@
-if-shell "test -f ~/.tmux/themes/onedark.tmux" "source ~/.tmux/themes/onedark.tmux"
-
 set-window-option -g pane-base-index 1
 set -sg escape-time 0
 set-option -g prefix C-f
