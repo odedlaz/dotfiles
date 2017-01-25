@@ -90,10 +90,8 @@ let g:ycm_python_binary_path='python'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'joshdick/onedark.vim'
-" Plug 'edkolev/tmuxline.vim'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
-" let g:airline#extensions#tmuxline#enabled = 1
 
 Plug 'Chiel92/vim-autoformat'
 au BufWrite * :Autoformat
@@ -124,7 +122,11 @@ Plug 'sickill/vim-pasta'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
-Plug 'bronson/vim-trailing-whitespace'
+
+Plug 'ntpeters/vim-better-whitespace'
+let g:better_whitespace_filetypes_blacklist=['markdown', 'md', 'diff', 'gitcommit', 'unite', 'qf', 'help']
+autocmd BufEnter * EnableStripWhitespaceOnSave
+
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'terryma/vim-multiple-cursors'
@@ -132,22 +134,17 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'chriskempson/base16-vim'
 Plug 'mhinz/vim-startify'
 Plug 'editorconfig/editorconfig-vim'
-" root ignore has to be loaded after editor-config
-" else, there are wildignore issues
-" Plug 'octref/RootIgnore'
 Plug 'shougo/vimshell.vim'
 Plug 'shougo/vimproc.vim' ,{'do':'make'}
 Plug 'sheerun/vim-polyglot'
 Plug 'dbakker/vim-projectroot'
 Plug 'tinykeymap'
-"maybe I'll move from YCM to deoplete one day
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"Plug 'zchee/deoplete-jedi'
 call plug#end()
 
 """""""""""""""
 """functions"""
 """""""""""""""
+
 " Source the vimrc file after saving it
 autocmd bufwritepost init.vim source $MYVIMRC
 autocmd bufwritepost .vimrc source $MYVIMRC
@@ -275,7 +272,3 @@ let g:onedark_termcolors=256
 let g:airline_theme='onedark'
 set background=dark
 colorscheme onedark
-
-"Use deoplete.
-"maybe I'll use replace with YCM at one point
-"let g:deoplete#enable_at_startup = 1
