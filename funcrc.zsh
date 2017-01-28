@@ -26,7 +26,7 @@ function update_python_packages {
    pip install -U --upgrade pip &> /dev/null
 
    packages_to_install=$(pip list --outdated --format=legacy)
-   if [ -z $packages_to_install ]; then
+   if [ -z "$packages_to_install" ]; then
       return 0
    fi
 
