@@ -17,6 +17,13 @@ let mapleader = "\\"
 
 call plug#begin('~/.vim/plugged')
 
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+let g:deoplete#enable_at_startup = 1
+Plug 'zchee/deoplete-jedi'
+let g:python_host_prog = $HOME."/.virtualenvs/neovim2/bin/python"
+let g:python3_host_prog = $HOME."/.virtualenvs/neovim3/bin/python"
+
+Plug 'tmux-plugins/vim-tmux'
 Plug 'christoomey/vim-tmux-navigator'
 let g:tmux_navigator_no_mappings = 1
 nnoremap <silent> <S-Up> :TmuxNavigateUp<cr>
@@ -25,7 +32,6 @@ nnoremap <silent> <S-Left> :TmuxNavigateLeft<cr>
 nnoremap <silent> <S-Right> :TmuxNavigateRight<cr>
 nnoremap <silent> <c-\> :TmuxNavigatePrevious<cr>
 
-Plug 'tmux-plugins/vim-tmux'
 
 Plug 'gcmt/wildfire.vim'
 map <SPACE> <Plug>(wildfire-fuel)
@@ -82,10 +88,10 @@ let g:neomake_open_list = 2 "don't move the cursor when this opens
 Plug 'fatih/vim-go'
 let g:go_fmt_command = "goimports"
 
-Plug 'Valloric/YouCompleteMe'
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-let g:ycm_autoclose_preview_window_after_completion=1
-let g:ycm_python_binary_path='python'
+" Plug 'Valloric/YouCompleteMe'
+" map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" let g:ycm_autoclose_preview_window_after_completion=1
+" let g:ycm_python_binary_path='python'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
