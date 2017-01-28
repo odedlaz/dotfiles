@@ -16,7 +16,6 @@ alias pbpaste='xclip -selection clipboard -o'
 alias readme='pandoc README.md | lynx -stdin'
 alias gpom='git push origin master'
 alias gpom\!='git push -f origin master'
-alias apt='sudo /usr/bin/apt -o Acquire::ForceIPv4=true'
 alias pingg="ping google.com"
 alias unpair="sudo bash ${SCRIPTS_DIR}/unpair.sh"
 alias pair="sudo bash ${SCRIPTS_DIR}/pair.sh"
