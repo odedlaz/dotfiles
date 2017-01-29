@@ -20,8 +20,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 let g:deoplete#enable_at_startup = 1
 Plug 'zchee/deoplete-jedi'
-let g:python_host_prog = $HOME."/.virtualenvs/neovim2/bin/python"
-let g:python3_host_prog = $HOME."/.virtualenvs/neovim3/bin/python"
+let g:python_host_prog = $WORKON_HOME."/neovim2/bin/python"
+let g:python3_host_prog = $WORKON_HOME."/neovim3/bin/python"
 
 Plug 'tmux-plugins/vim-tmux'
 Plug 'christoomey/vim-tmux-navigator'
