@@ -1,5 +1,16 @@
 #!/usr/bin/zsh
 
+function update_python_packages {
+   workon "$1"
+   pip install -U --upgrade pip &> /dev/null
+   packages_to_install=$(pip list --outdated --format=legacy)
+   if [ ! -z "$packages_to_install" ]; then
+      echo $packages_to_install | awk '{print $1}' | \
+         xargs -n1 pip install -U
+   fi
+   deactivate
+}
+
 while IFS= read -r line; do
    # check if neovim is being installed
    # if so, update the client libraries!
@@ -16,8 +27,6 @@ while IFS= read -r line; do
    export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
    source /usr/local/bin/virtualenvwrapper.sh
 
-   # get the 'update_python_packages' function
-   source "$HOME/.funcrc"
    update_python_packages "neovim2"
    update_python_packages "neovim3"
 done
