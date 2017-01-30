@@ -1,8 +1,12 @@
 #!/usr/bin/zsh
 
 function update_python_packages {
-   workon "$1"
-   pip install -U --upgrade pip &> /dev/null
+   USERNAME=$(logname)
+   # run command as the user who logged in. see: https://goo.gl/akX2eo
+   echo "Updating neovim python$1 libraries ..."
+
+   source /opt/nvim/python$1/bin/activate
+   pip install -u --upgrade pip &> /dev/null
    packages_to_install=$(pip list --outdated --format=legacy)
    if [ ! -z "$packages_to_install" ]; then
       echo $packages_to_install | awk '{print $1}' | \
@@ -18,15 +22,6 @@ while IFS= read -r line; do
       continue
    fi
 
-   # run command as the user who logged in. see: https://goo.gl/akX2eo
-   USERNAME=$(logname)
-   echo "Updating neovim python libraries ..."
-
-   # setup virtualenv
-   export WORKON_HOME="$HOME/.virtualenvs"
-   export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-   source /usr/local/bin/virtualenvwrapper.sh
-
-   update_python_packages "neovim2"
-   update_python_packages "neovim3"
+   update_python_packages "2"
+   update_python_packages "3"
 done
