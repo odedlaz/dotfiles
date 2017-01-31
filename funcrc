@@ -1,3 +1,47 @@
+#!/usr/bin/zsh
+
+function venvon {
+   venv="$1"
+   if [ -z "$venv" ]; then
+      if [ -d "$(pwd)/.venv" ]; then
+         venv=".venv"
+      else
+         venv=$(basename $(pwd))
+      fi
+   fi
+
+   if ! source "$(pwd)/$venv/bin/activate" &> /dev/null; then
+      echo "./$venv dir is missing"
+      return 1
+   fi
+}
+
+function __mkvenv {
+   version="$1"
+   venvtype="$2"
+   venv="$3"
+
+   if [ -z "$venv" ]; then
+      venv=".venv"
+   fi
+
+   if [ -d "$(pwd)/$venv" ]; then
+      echo "venv already exist"
+      return 1
+   fi
+
+   python$version -m $venvtype $venv
+   venvon $venv
+}
+
+function mkvenv2 {
+   __mkvenv "2" "virtualenv" "$1"
+}
+
+function mkvenv3 {
+   __mkvenv "3" "venv" "$1"
+}
+
 function jkill {
    jobs -l | cut -d' ' -f 4 | xargs kill -9
 }
