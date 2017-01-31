@@ -1,26 +1,26 @@
 """""""""""""""""""
 """odedlaz vimrc"""
 """""""""""""""""""
+setglobal encoding=utf-8
+setglobal fileencoding=utf-8
+scriptencoding utf-8
 
-set encoding=utf-8
 set shell=/usr/bin/zsh
 
-if &compatible
-   set nocompatible
-endif
-
-let mapleader = "\\"
+let g:mapleader = "\\"
 
 """""""""""""
 """plugins"""
 """""""""""""
 
 call plug#begin('~/.vim/plugged')
+
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 let g:deoplete#enable_at_startup = 1
+
 Plug 'zchee/deoplete-jedi'
-let g:python_host_prog = "/opt/nvim/python2/bin/python"
-let g:python3_host_prog = "/opt/nvim/python3/bin/python"
+let g:python_host_prog = '/opt/nvim/python2/bin/python'
+let g:python3_host_prog = '/opt/nvim/python3/bin/python'
 
 Plug 'tmux-plugins/vim-tmux'
 Plug 'christoomey/vim-tmux-navigator'
@@ -30,7 +30,6 @@ nnoremap <silent> <S-Down> :TmuxNavigateDown<cr>
 nnoremap <silent> <S-Left> :TmuxNavigateLeft<cr>
 nnoremap <silent> <S-Right> :TmuxNavigateRight<cr>
 nnoremap <silent> <c-\> :TmuxNavigatePrevious<cr>
-
 
 Plug 'gcmt/wildfire.vim'
 map <SPACE> <Plug>(wildfire-fuel)
@@ -46,20 +45,27 @@ map  N <Plug>(easymotion-prev)
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 nnoremap <leader>nt :NERDTreeToggle<cr>
-"opens nerdtree automatically when a directory is opened using vim
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+
+augroup nerdtree
+   au!
+   " open nerdtree when editing a directory
+   autocmd StdinReadPre * let s:std_in=1
+   autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+
+   "close vim if the only window left open is a NERDTree
+   autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup END
+
 "disable the builtin, bloated netrw plugin. We don’t need two filebrowsers.
-let loaded_netrwPlugin=1
+let g:loaded_netrwPlugin=1
 "let NERDTree respect the vim wildignore setting
 "Rootignore converts .gitignore into wildignore
 "thus making NERDTree respect gitignore!
-let NERDTreeRespectWildIgnore=1
-"close vim if the only window left open is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+let g:NERDTreeRespectWildIgnore=1
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+
 "make sure files run in the right directory
 nnoremap <c-p> :execute ':Files ' projectroot#guess()<cr>
 let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
@@ -78,19 +84,20 @@ nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tn :TestNearest<CR>
 nmap <silent> <leader>tv :TestVisit<CR>
 
+
 Plug 'neomake/neomake'
-autocmd! BufWritePost * Neomake
-let g:neomake_go_enabled_makers = ['golint', 'govet', 'errcheck']
+augroup neomake_hooks
+   au!
+   autocmd BufWritePost * update | Neomake
+augroup END
+
 let g:neomake_python_enabled_makers = ['flake8']
-let g:neomake_open_list = 2 "don't move the cursor when this opens
+let g:neomake_open_list = 2  " don't move the cursor when this opens
+let g:neomake_logfile = '/var/log/neovim/neomake'
+let g:neomake_go_enabled_makers = ['golint', 'govet', 'errcheck']
 
 Plug 'fatih/vim-go'
 let g:go_fmt_command = "goimports"
-
-" Plug 'Valloric/YouCompleteMe'
-" map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-" let g:ycm_autoclose_preview_window_after_completion=1
-" let g:ycm_python_binary_path='python'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -99,24 +106,30 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
 Plug 'Chiel92/vim-autoformat'
-au BufWrite * :Autoformat
+augroup autoformat
+   au!
+   au BufWrite * :Autoformat
+augroup END
 
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1
 
-Plug 'nvie/vim-flake8'
-Plug 'jmcantrell/vim-virtualenv'
+Plug 'ntpeters/vim-better-whitespace'
+augroup better_whitespace
+   let g:better_whitespace_filetypes_blacklist=['markdown',
+            \'md',
+            \'diff',
+            \'gitcommit',
+            \'unite',
+            \'qf',
+            \'help']
+   autocmd BufEnter * EnableStripWhitespaceOnSave
+augroup END
 
+Plug 'jmcantrell/vim-virtualenv'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
-
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
-
-
 Plug 'flazz/vim-colorschemes'
 Plug 'tComment'
 Plug 'godlygeek/tabular'
@@ -127,11 +140,6 @@ Plug 'sickill/vim-pasta'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
-
-Plug 'ntpeters/vim-better-whitespace'
-let g:better_whitespace_filetypes_blacklist=['markdown', 'md', 'diff', 'gitcommit', 'unite', 'qf', 'help']
-autocmd BufEnter * EnableStripWhitespaceOnSave
-
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'terryma/vim-multiple-cursors'
@@ -151,12 +159,16 @@ call plug#end()
 """""""""""""""
 
 " Source the vimrc file after saving it
-autocmd bufwritepost init.vim source $MYVIMRC
-autocmd bufwritepost .vimrc source $MYVIMRC
+
+augroup reload_vimrc
+   au!
+   autocmd BufWritePost init.vim source $MYVIMRC
+   autocmd BufWritePost .vimrc source $MYVIMRC
+augroup END
 
 function! CreateDirectory (base, ...)
-   for dir in a:000
-      silent! execute '!mkdir ' a:base . '/' . dir . ' > /dev/null 2>&1'
+   for l:dir in a:000
+      silent! execute '!mkdir ' a:base . '/' . l:dir . ' > /dev/null 2>&1'
    endfor
 endfunction
 
@@ -175,14 +187,19 @@ nnoremap <C-Down> :wincmd -<cr>
 nnoremap <C-Left> :wincmd <<cr>
 nnoremap <C-Right> :wincmd ><cr>
 
-"quickfix widnow for fast tab and buffer switching
+" quickfix widnow for fast tab and buffer switching
 :nnoremap <F5> :tabs<CR>:tabn<Space>
 :nnoremap <F6> :buffers<CR>:buffer<Space>
 
+" add min/max window bounds
 silent! set winheight=30
 silent! set winminheight=5
 
-"add column indicator
+" reload buffer it was edited outside of vim
+set autoread
+au CursorHold * checktime
+
+" add column indicator
 set textwidth=80
 set colorcolumn=+1
 
@@ -210,7 +227,7 @@ set noswapfile
 "centralize backups, swapfiles and undo history
 set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
-if exists("&undodir")
+if exists('&undodir')
    set undodir=~/.vim/undo
 endif
 
@@ -228,8 +245,11 @@ set titlestring=%F
 set relativenumber
 
 " Change numbering in insert mode
-autocmd InsertEnter * :set number
-autocmd InsertLeave * :set relativenumber
+augroup set_linenumbers_on_enter_and_leave
+   au!
+   autocmd InsertEnter * :set number
+   autocmd InsertLeave * :set relativenumber
+augroup END
 
 "lower tiemout
 set timeoutlen=1000 ttimeoutlen=0
@@ -253,8 +273,7 @@ set shiftwidth=3
 set splitbelow
 set splitright
 
-"Make sure Vim returns to the same line when you reopen a file.
-augroup line_return
+augroup return_to_last_line_when_reopen_file
    au!
    au BufReadPost *
             \ if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -263,11 +282,11 @@ augroup line_return
 augroup END
 
 " the following are configurations for onedark theme
-if (has("nvim"))
+if (has('nvim'))
    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 
-if (has("termguicolors"))
+if (has('termguicolors'))
    set termguicolors
 endif
 
