@@ -15,6 +15,10 @@ let g:mapleader = "\\"
 
 call plug#begin('~/.vim/plugged')
 
+Plug 'chrisbra/Colorizer'
+let g:colorizer_auto_filetype='css,less,html'
+let g:colorizer_skip_comments = 1
+
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 let g:deoplete#enable_at_startup = 1
 
@@ -84,16 +88,15 @@ nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>tn :TestNearest<CR>
 nmap <silent> <leader>tv :TestVisit<CR>
 
-
 Plug 'neomake/neomake'
 augroup neomake_hooks
    au!
    autocmd BufWritePost * update | Neomake
 augroup END
 
-let g:neomake_python_enabled_makers = ['flake8']
 let g:neomake_open_list = 2  " don't move the cursor when this opens
-let g:neomake_logfile = '/var/log/neovim/neomake'
+let g:neomake_logfile = '/var/log/neovim/neomake.log'
+let g:neomake_python_enabled_makers = ['flake8']
 let g:neomake_go_enabled_makers = ['golint', 'govet', 'errcheck']
 
 Plug 'fatih/vim-go'
@@ -101,9 +104,11 @@ let g:go_fmt_command = "goimports"
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'joshdick/onedark.vim'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+
+Plug 'joshdick/onedark.vim'
+let g:airline_theme='onedark'
 
 Plug 'Chiel92/vim-autoformat'
 augroup autoformat
@@ -116,6 +121,7 @@ let g:rainbow_active = 1
 
 Plug 'ntpeters/vim-better-whitespace'
 augroup better_whitespace
+   au!
    let g:better_whitespace_filetypes_blacklist=['markdown',
             \'md',
             \'diff',
@@ -281,7 +287,7 @@ augroup return_to_last_line_when_reopen_file
             \ endif
 augroup END
 
-" the following are configurations for onedark theme
+" ensure vim works in truecolor mode
 if (has('nvim'))
    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
@@ -290,9 +296,4 @@ if (has('termguicolors'))
    set termguicolors
 endif
 
-set t_Co=256
-let g:rehash256 = 1
-let g:onedark_termcolors=256
-let g:airline_theme='onedark'
-set background=dark
 colorscheme onedark
