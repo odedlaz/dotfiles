@@ -81,3 +81,16 @@ function update_python_packages {
       deactivate
    fi
 }
+
+function _git_branch {
+   git symbolic-ref HEAD | sed 's!refs\/heads\/!!'
+}
+
+function gpom {
+   git push origin $(_git_branch)
+}
+
+function gpom\! {
+   git push -f origin $(_git_branch)
+}
+

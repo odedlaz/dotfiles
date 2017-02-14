@@ -18,8 +18,7 @@ alias fuckhome='sudo -H $(fc -ln -1)'
 alias pbcopy='xclip -selection c'
 alias pbpaste='xclip -selection clipboard -o'
 alias readme='pandoc README.md | lynx -stdin'
-alias gpom='git push origin master'
-alias gpom\!='git push -f origin master'
+
 alias pingg="ping google.com"
 alias unpair="sudo bash ${SCRIPTS_DIR}/unpair.sh"
 alias pair="sudo bash ${SCRIPTS_DIR}/pair.sh"
