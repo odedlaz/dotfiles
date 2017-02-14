@@ -20,11 +20,24 @@ let g:colorizer_auto_filetype='css,less,html'
 let g:colorizer_skip_comments = 1
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+set completeopt+=noselect
 let g:deoplete#enable_at_startup = 1
+
+Plug 'zchee/deoplete-go', { 'do': 'make'}
+let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+let g:deoplete#sources#go#use_cache = 1
+let g:deoplete#sources#go#json_directory = '~/.cache/deoplete/go/$GOOS_$GOARCH'
+let g:deoplete#sources#go#auto_goos = 1
+augroup golang
+   au!
+   au FileType go map <leader>g :!go run %<CR>
+augroup END
 
 Plug 'zchee/deoplete-jedi'
 let g:python_host_prog = '/opt/nvim/python2/bin/python'
 let g:python3_host_prog = '/opt/nvim/python3/bin/python'
+
 
 Plug 'tmux-plugins/vim-tmux'
 Plug 'christoomey/vim-tmux-navigator'
@@ -94,7 +107,7 @@ augroup neomake_hooks
    autocmd BufWritePost * update | Neomake
 augroup END
 
-let g:neomake_open_list = 2  " don't move the cursor when this opens
+let g:neomake_open_list = 1
 let g:neomake_logfile = '/var/log/neovim/neomake.log'
 let g:neomake_python_enabled_makers = ['flake8']
 let g:neomake_go_enabled_makers = ['golint', 'govet', 'errcheck']
@@ -204,6 +217,9 @@ silent! set winminheight=5
 " reload buffer it was edited outside of vim
 set autoread
 au CursorHold * checktime
+
+" make buffer modifiable
+set modifiable
 
 " add column indicator
 set textwidth=80
