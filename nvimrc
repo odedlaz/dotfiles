@@ -110,6 +110,19 @@ augroup END
 let g:neomake_open_list = 1
 let g:neomake_logfile = '/var/log/neovim/neomake.log'
 let g:neomake_python_enabled_makers = ['flake8']
+
+" taken from github.com/neomake/neomake/autoload/neomake/makers/ft/python.vim
+" needed to change the arguemnts of flake8
+let g:neomake_python_flake8_maker = {
+         \ 'args': ['--format=default', '--ignore=E501'],
+         \ 'errorformat':
+         \ '%E%f:%l: could not compile,%-Z%p^,' .
+         \ '%A%f:%l:%c: %t%n %m,' .
+         \ '%A%f:%l: %t%n %m,' .
+         \ '%-G%.%#',
+         \ 'postprocess': function('neomake#makers#ft#python#Flake8EntryProcess')
+         \ }
+
 let g:neomake_go_enabled_makers = ['golint', 'govet', 'errcheck']
 
 Plug 'fatih/vim-go'
@@ -124,6 +137,8 @@ Plug 'joshdick/onedark.vim'
 let g:airline_theme='onedark'
 
 Plug 'Chiel92/vim-autoformat'
+let g:formatters_python = ['autopep8', 'yapf']
+let g:formatter_yapf_style = 'google'
 augroup autoformat
    au!
    au BufWrite * :Autoformat
