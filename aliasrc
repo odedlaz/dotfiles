@@ -1,4 +1,4 @@
-#!/usr/bin/zsh
+#!/usr/bin/env zsh
 
 SCRIPTS_DIR="$HOME/Dev/scripts"
 
