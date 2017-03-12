@@ -14,6 +14,8 @@ let g:mapleader = "\\"
 """""""""""""
 
 call plug#begin('~/.vim/plugged')
+Plug 'farmergreg/vim-lastplace'
+let g:lastplace_ignore_buftype = "quickfix"
 
 Plug 'chrisbra/Colorizer'
 let g:colorizer_auto_filetype='css,less,html'
@@ -108,6 +110,7 @@ augroup neomake_hooks
 augroup END
 
 let g:neomake_open_list = 1
+" let g:neomake_verbose = 3
 let g:neomake_logfile = '/var/log/neovim/neomake.log'
 let g:neomake_python_enabled_makers = ['flake8']
 
@@ -126,7 +129,7 @@ let g:neomake_python_flake8_maker = {
 let g:neomake_go_enabled_makers = ['golint', 'govet', 'errcheck']
 
 Plug 'fatih/vim-go'
-let g:go_fmt_command = "goimports"
+let g:go_fmt_command = 'goimports'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -138,7 +141,7 @@ let g:airline_theme='onedark'
 
 Plug 'Chiel92/vim-autoformat'
 let g:formatters_python = ['autopep8', 'yapf']
-let g:formatter_yapf_style = 'google'
+let g:formatter_yapf_style = 'pep8'
 augroup autoformat
    au!
    au BufWrite * :Autoformat
@@ -200,6 +203,20 @@ augroup reload_vimrc
    autocmd BufWritePost .vimrc source $MYVIMRC
 augroup END
 
+augroup close_vim_if_only_quickfix
+   au!
+   au BufEnter * call MyLastWindow()
+   function! MyLastWindow()
+      " if the window is quickfix go on
+      if &buftype=="quickfix"
+         " if this window is last on screen quit without warning
+         if winbufnr(2) == -1
+            quit!
+         endif
+      endif
+   endfunction
+augroup END
+
 function! CreateDirectory (base, ...)
    for l:dir in a:000
       silent! execute '!mkdir ' a:base . '/' . l:dir . ' > /dev/null 2>&1'
@@ -230,11 +247,12 @@ silent! set winheight=30
 silent! set winminheight=5
 
 " reload buffer it was edited outside of vim
-set autoread
-au CursorHold * checktime
-
-" make buffer modifiable
-set modifiable
+" Change numbering in insert mode
+augroup set_update
+   au!
+   set autoread
+   au CursorHold * checktime
+augroup END
 
 " add column indicator
 set textwidth=80
@@ -247,7 +265,7 @@ set nowrap
 set formatoptions-=t
 
 "quick edit for vimrc file
-nnoremap <leader>ev :tabedit $MYVIMRC<cr>
+nnoremap <leader>ev :sv $MYVIMRC<cr>
 
 "move line up or down
 nmap ld :m +1<CR>
@@ -310,14 +328,6 @@ set shiftwidth=3
 set splitbelow
 set splitright
 
-augroup return_to_last_line_when_reopen_file
-   au!
-   au BufReadPost *
-            \ if line("'\"") > 0 && line("'\"") <= line("$") |
-            \     execute 'normal! g`"zvzz' |
-            \ endif
-augroup END
-
 " ensure vim works in truecolor mode
 if (has('nvim'))
    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -328,3 +338,4 @@ if (has('termguicolors'))
 endif
 
 colorscheme onedark
+
