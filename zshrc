@@ -13,66 +13,58 @@ export TERM="xterm-256color"
 # force key timeout to 1 second
 export KEYTIMEOUT=1
 
-# python virtualenv
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-export WORKON_HOME=~/.virtualenvs
-export PROJECT_HOME=~/Dev
-
 # golang
-export GOROOT=/usr/local/go
 export GOPATH=$HOME/Dev/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 # less syntax highlighting
 export PAGER="less"
-export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
-export LESS=' -R '
 
-# less colors for Man Pages
-export LESS_TERMCAP_mb=$'\e[01;31m'       # begin blinking
-export LESS_TERMCAP_md=$'\e[01;38;5;74m'  # begin bold
-export LESS_TERMCAP_me=$'\e[0m'           # end mode
-export LESS_TERMCAP_se=$'\e[0m'           # end standout-mode
-export LESS_TERMCAP_so=$'\E[37;44m'       # begin standout-mode - info box
-export LESS_TERMCAP_ue=$'\e[0m'           # end underline
-export LESS_TERMCAP_us=$'\e[04;38;5;146m' # begin underline
+# gpg-agent
+export GPG_TTY=$(tty)
 
 # sourcing oh my zsh and plugins after all exports have been made
-plugins=(virtualenvwrapper aws docker chucknorris command-not-found wifi debian wd jsontools urltools sudo)
+plugins=(docker chucknorris command-not-found wifi wd jsontools urltools)
 source $ZSH/oh-my-zsh.sh
 
 # VI Mode
 bindkey -v
+
+# Allow all local users to display applications on the desktop.
+xhost +local: 1> /dev/null
 
 # Path to your oh-my-zsh installation.
 # import all aliases and funcs
 source ~/.aliasrc
 source ~/.funcrc
 
-# remap caps lock to ESC
-setxkbmap -option caps:escape
-
 # ssh-agent
 if ! ps -ef | grep "[s]sh-agent -s" &> /dev/null; then
    eval "$(ssh-agent -s)" &> /dev/null
    ssh-add ~/.ssh/github_rsa &> /dev/null
+   ssh-add ~/.ssh/digitalocean_rsa &> /dev/null
 fi
 
 # add direnv hook
 eval "$(direnv hook zsh)"
 
-# python virtualenv
-source /usr/local/bin/virtualenvwrapper.sh
-
-# chruby
-source /usr/local/share/chruby/chruby.sh
-source /usr/local/share/chruby/auto.sh
-chruby ruby-2.3
-
-# added by fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# added by travis gem
-[ -f /home/odedlaz/.travis/travis.sh ] && source /home/odedlaz/.travis/travis.sh
+# zkbd key bindings
+autoload zkbd
+[[ ! -f ${ZDOTDIR:-$HOME}/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE} ]] && zkbd
+source ${ZDOTDIR:-$HOME}/.zkbd/$TERM-${${DISPLAY:t}:-$VENDOR-$OSTYPE}
 
-fortune | cowsay -f $(ls /usr/share/cowsay/cows | shuf -n 1)
+[[ -n ${key[Backspace]} ]] && bindkey "${key[Backspace]}" backward-delete-char
+[[ -n ${key[Insert]} ]] && bindkey "${key[Insert]}" overwrite-mode
+[[ -n ${key[Home]} ]] && bindkey "${key[Home]}" beginning-of-line
+[[ -n ${key[PageUp]} ]] && bindkey "${key[PageUp]}" up-line-or-history
+[[ -n ${key[Delete]} ]] && bindkey "${key[Delete]}" delete-char
+[[ -n ${key[End]} ]] && bindkey "${key[End]}" end-of-line
+[[ -n ${key[PageDown]} ]] && bindkey "${key[PageDown]}" down-line-or-history
+[[ -n ${key[Up]} ]] && bindkey "${key[Up]}" up-line-or-search
+[[ -n ${key[Left]} ]] && bindkey "${key[Left]}" backward-char
+[[ -n ${key[Down]} ]] && bindkey "${key[Down]}" down-line-or-search
+[[ -n ${key[Right]} ]] && bindkey "${key[Right]}" forward-char
+
+fortune | ponysay
