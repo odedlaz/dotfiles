@@ -140,10 +140,11 @@ Plug 'joshdick/onedark.vim'
 let g:airline_theme='onedark'
 
 Plug 'Chiel92/vim-autoformat'
-let g:formatters_python = ['autopep8', 'yapf']
-let g:formatter_yapf_style = 'pep8'
-augroup autoformat
+let g:formatters_python = ['autopep8']
+autocmd FileType markdown let b:autoformat_remove_trailing_spaces=0
+augroup format
    au!
+   au BufWrite *.py :Isort
    au BufWrite * :Autoformat
 augroup END
 
@@ -153,9 +154,7 @@ let g:rainbow_active = 1
 Plug 'ntpeters/vim-better-whitespace'
 augroup better_whitespace
    au!
-   let g:better_whitespace_filetypes_blacklist=['markdown',
-            \'md',
-            \'diff',
+   let g:better_whitespace_filetypes_blacklist=['diff',
             \'gitcommit',
             \'unite',
             \'qf',
@@ -163,12 +162,13 @@ augroup better_whitespace
    autocmd BufEnter * EnableStripWhitespaceOnSave
 augroup END
 
+Plug 'tComment'
+Plug 'fisadev/vim-isort'
 Plug 'jmcantrell/vim-virtualenv'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 Plug 'flazz/vim-colorschemes'
-Plug 'tComment'
 Plug 'godlygeek/tabular'
 Plug 'osyo-manga/vim-over'
 Plug 'ervandew/supertab'
