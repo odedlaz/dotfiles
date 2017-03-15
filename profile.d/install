@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root"
+   exit 1
+fi
+
+for path in $(dirname $(readlink -f $0))/*.sh; do
+   if [ "$(readlink -f $path)" == "$(readlink -f $0)" ]; then
+      continue
+   fi
+   filename=$(basename $path)
+   echo -en "\033[33m"
+   rm -v -f /etc/profile.d/$filename
+   echo -en "\033[39m"
+   ln -v -s $path /etc/profile.d/$filename
+done
