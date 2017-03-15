@@ -14,7 +14,11 @@ function hook() {
 }
 
 hook "$DOTFILES/home/zshrc" "$HOME/.zshrc"
+hook "$DOTFILES/zshrc.d" "$HOME/.zshrc.d"
+
 hook "$DOTFILES/home/nvimrc" "$HOME/.vimrc" "$HOME/.config/nvim/init.vim"
+
 hook "$DOTFILES/tmux" "$HOME/.tmux"
 hook "$DOTFILES/tmux/tmux.conf" "$HOME/.tmux.conf"
+
 hook "$DOTFILES/home/redshift.conf" "$HOME/.config/redshift.conf"
