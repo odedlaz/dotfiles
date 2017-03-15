@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DOTFILES=$(dirname $(readlink -f $0))
+
+function hook() {
+   from=$1
+   for to in "${@:2}"; do
+      echo -en "\033[33m"
+      rm -v -f $to
+      echo -en "\033[39m"
+      ln -v -s $from $to
+   done
+}
+
+hook "$DOTFILES/home/zshrc" "$HOME/.zshrc"
+hook "$DOTFILES/home/nvimrc" "$HOME/.vimrc" "$HOME/.config/nvim/init.vim"
+hook "$DOTFILES/tmux" "$HOME/.tmux"
+hook "$DOTFILES/tmux/tmux.conf" "$HOME/.tmux.conf"
+hook "$DOTFILES/home/redshift.conf" "$HOME/.config/redshift.conf"
