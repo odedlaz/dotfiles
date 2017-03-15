@@ -1,2 +1,2 @@
 #!/bin/sh
-[ -f /home/odedlaz/.travis/travis.sh ] && source /home/odedlaz/.travis/travis.sh
+[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
