@@ -1,24 +1,34 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env fish
+set DIR (dirname (readlink -f (status -f)))
 
-DOTFILES=$(dirname $(readlink -f $0))
 
-function hook() {
-   from=$1
-   for to in "${@:2}"; do
-      echo -en "\033[33m"
-      rm -v -f $to
-      echo -en "\033[39m"
-      ln -v -s $from $to
-   done
-}
+function link
+	set from $argv[1]
+	set to $argv[2]
 
-hook "$DOTFILES/home/zshrc" "$HOME/.zshrc"
-hook "$DOTFILES/zshrc.d" "$HOME/.zshrc.d"
+	# if $from is a file -> link it
+	# if $from is a dir, and $to doesn't exist -> link it
+	# otherwise, walk $from
+	if test -f $from; or test -d $from;and not test -d $to
+		set_color 'yellow'
+		rm -v -f $to
+		set_color 'normal'
+		echo -en "\033[39m"
+		ln -v -s $from $to
+		return $status
+	end
 
-hook "$DOTFILES/home/nvimrc" "$HOME/.vimrc" "$HOME/.config/nvim/init.vim"
+	for path in $from/*
+		link $path $to/(basename $path)
+	end
+end
 
-hook "$DOTFILES/tmux" "$HOME/.tmux"
-hook "$DOTFILES/tmux/tmux.conf" "$HOME/.tmux.conf"
+link "$DIR/fish" "$HOME/.config/fish"
 
-hook "$DOTFILES/home/redshift.conf" "$HOME/.config/redshift.conf"
+link "$DIR/nvimrc" "$HOME/.vimrc"
+link "$DIR/nvimrc" "$HOME/.config/nvim/init.vim"
+
+link "$DIR/tmux" "$HOME/.tmux"
+link "$DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
+
+link "$DIR/redshift.conf" "$HOME/.config/redshift.conf"

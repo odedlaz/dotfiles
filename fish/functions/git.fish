@@ -1,0 +1,13 @@
+#!/usr/bin/env fish
+
+function _git_branch --description 'get current git branch'
+   git symbolic-ref HEAD | sed 's!refs\/heads\/!!'
+end
+
+function gpo --description 'git push CURRENT-BRANCH'
+   git push $argv origin (_git_branch)
+end
+
+function gpo\! --description "git push -f CURRENT-BRANCH"
+   gpo -f $argv
+end
