@@ -1,11 +1,14 @@
 """""""""""""""""""
 """odedlaz vimrc"""
 """""""""""""""""""
+set shell=$SHELL
+
 setglobal encoding=utf-8
 setglobal fileencoding=utf-8
 scriptencoding utf-8
 
-set shell=/usr/bin/zsh
+syntax enable
+filetype plugin indent on
 
 let g:mapleader = "\\"
 
@@ -142,11 +145,7 @@ let g:airline_theme='onedark'
 Plug 'Chiel92/vim-autoformat'
 let g:formatters_python = ['autopep8']
 autocmd FileType markdown let b:autoformat_remove_trailing_spaces=0
-augroup format
-   au!
-   au BufWrite *.py :Isort
-   au BufWrite * :Autoformat
-augroup END
+autocmd FileType fish compiler fish
 
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1
@@ -162,6 +161,7 @@ augroup better_whitespace
    autocmd BufEnter * EnableStripWhitespaceOnSave
 augroup END
 
+Plug 'dag/vim-fish'
 Plug 'tComment'
 Plug 'fisadev/vim-isort'
 Plug 'jmcantrell/vim-virtualenv'
