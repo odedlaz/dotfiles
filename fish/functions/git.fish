@@ -9,5 +9,5 @@ function gpob --description 'git push CURRENT-BRANCH'
 end
 
 function gpob\! --description "git push -f CURRENT-BRANCH"
-   gpo -f $argv
+   gpob -f $argv
 end
