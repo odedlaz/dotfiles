@@ -24,6 +24,7 @@ set-option -ga terminal-overrides ",$TERM:Tc"
 # Must set default-command to $SHELL, in order to not source ~/.profile
 # BUG: Should *not* hardcode /bin/bash here
 set -g default-command $SHELL
+set -g default-shell /usr/bin/bash
 
 set -g status-interval 60
 set -g message-fg white
