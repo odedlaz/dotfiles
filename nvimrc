@@ -1,7 +1,11 @@
 """""""""""""""""""
 """odedlaz vimrc"""
 """""""""""""""""""
-set shell=$SHELL
+
+" fish is not posix, and breaks many plugins
+if &shell =~# '/usr/bin/fish$'
+    set shell=/usr/bin/bash
+endif
 
 setglobal encoding=utf-8
 setglobal fileencoding=utf-8
