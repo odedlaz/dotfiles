@@ -9,6 +9,21 @@ function link
 	# if $from is a file -> link it
 	# if $from is a dir, and $to doesn't exist -> link it
 	# otherwise, walk $from
+
+   if test -d $from
+      if test -e $to; and not test -d $to
+         set_color 'red'
+         echo "'$from' is a directory, '$to' is not: "(file $to)
+         set_color 'normal'
+         return 1
+      end
+
+      if not test -d $to
+         mkdir -p $to
+      end
+
+   end
+
 	if test -f $from; or test -d $from;and not test -d $to
 		set_color 'yellow'
 		rm -v -f $to
