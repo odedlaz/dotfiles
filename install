@@ -32,7 +32,6 @@ function link
       if not test -d $to
          mkdir -p $to
       end
-
    end
 
 	if test -f $from; or test -d $from;and not test -d $to
@@ -61,12 +60,12 @@ end
 
 
 link "$DIR/fish" "$HOME/.config/fish"
-# link "$DIR/oh-my-fish" "$HOME/.config/omf"
-#
-# link "$DIR/nvim/init.vim" "$HOME/.vimrc"
-# link "$DIR/nvim" "$HOME/.config/nvim"
-#
-# link "$DIR/tmux" "$HOME/.tmux"
-# link "$DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
-#
-# link "$DIR/redshift.conf" "$HOME/.config/redshift.conf"
+link "$DIR/oh-my-fish" "$HOME/.config/omf"
+
+link "$DIR/neovim/init.vim" "$HOME/.vimrc"
+link "$DIR/neovim" "$HOME/.config/nvim"
+
+link "$DIR/tmux" "$HOME/.tmux"
+link "$DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
+
+link "$DIR/redshift.conf" "$HOME/.config/redshift.conf"
