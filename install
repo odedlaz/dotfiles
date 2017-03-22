@@ -1,6 +1,17 @@
 #!/usr/bin/env fish
+
 set DIR (dirname (readlink -f (status -f)))
 
+# poor mans optarg :)
+set rm_flags
+for item in $argv
+    switch "$item"
+        case -f --force
+           set rm_flags $rm_flags "-f"
+         case -i --interactive
+            set rm_flags $rm_flags "-i"
+    end
+end
 
 function link
 	set from $argv[1]
@@ -25,12 +36,22 @@ function link
    end
 
 	if test -f $from; or test -d $from;and not test -d $to
-		set_color 'yellow'
-		rm -v -f $to
-		set_color 'normal'
-		echo -en "\033[39m"
-		ln -v -s $from $to
-		return $status
+      if test (count $rm_flags) -gt 0
+         set_color 'yellow'
+         rm -v $rm_flags $to
+         set_color 'normal'
+      end
+
+      if test -e $to
+         set_color 'red'
+         echo "can't link '$from' -> '$to': destination already exists"
+         set_color 'normal'
+         return 1
+      end
+
+      ln -v -s $from $to
+      return $status
+
 	end
 
 	for path in $from/*
@@ -38,13 +59,14 @@ function link
 	end
 end
 
+
 link "$DIR/fish" "$HOME/.config/fish"
-link "$DIR/oh-my-fish" "$HOME/.config/omf"
-
-link "$DIR/nvim/init.vim" "$HOME/.vimrc"
-link "$DIR/nvim" "$HOME/.config/nvim"
-
-link "$DIR/tmux" "$HOME/.tmux"
-link "$DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
-
-link "$DIR/redshift.conf" "$HOME/.config/redshift.conf"
+# link "$DIR/oh-my-fish" "$HOME/.config/omf"
+#
+# link "$DIR/nvim/init.vim" "$HOME/.vimrc"
+# link "$DIR/nvim" "$HOME/.config/nvim"
+#
+# link "$DIR/tmux" "$HOME/.tmux"
+# link "$DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
+#
+# link "$DIR/redshift.conf" "$HOME/.config/redshift.conf"
