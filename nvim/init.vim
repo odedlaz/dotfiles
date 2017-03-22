@@ -11,9 +11,6 @@ setglobal encoding=utf-8
 setglobal fileencoding=utf-8
 scriptencoding utf-8
 
-syntax enable
-filetype plugin indent on
-
 let g:mapleader = "\\"
 
 """""""""""""
@@ -31,6 +28,8 @@ let g:colorizer_skip_comments = 1
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 set completeopt+=noselect
 let g:deoplete#enable_at_startup = 1
+
+Plug 'zchee/deoplete-clang'
 
 Plug 'zchee/deoplete-go', { 'do': 'make'}
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
@@ -243,8 +242,8 @@ nnoremap <C-Left> :wincmd <<cr>
 nnoremap <C-Right> :wincmd ><cr>
 
 " quickfix widnow for fast tab and buffer switching
-:nnoremap <F5> :tabs<CR>:tabn<Space>
-:nnoremap <F6> :buffers<CR>:buffer<Space>
+:nnoremap <F5> :Windows<CR>
+:nnoremap <F6> :Buffers<CR>
 
 " add min/max window bounds
 silent! set winheight=30
