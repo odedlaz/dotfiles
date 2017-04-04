@@ -4,7 +4,7 @@
 
 " fish is not posix, and breaks many plugins
 if &shell =~# '/usr/bin/fish$'
-    set shell=/usr/bin/bash
+   set shell=/usr/bin/bash
 endif
 
 setglobal encoding=utf-8
@@ -18,6 +18,22 @@ let g:mapleader = "\\"
 """""""""""""
 
 call plug#begin('~/.vim/plugged')
+
+Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/incsearch-fuzzy.vim'
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
+" Unset "last search pattern" register on <CR>
+
+" Clear highlighting on escape in normal mode
+nnoremap <esc> :noh<return><esc>
+nnoremap <esc>^[ <esc>^[
+
+"live subsitution
+set inccommand=split
+
 Plug 'farmergreg/vim-lastplace'
 let g:lastplace_ignore_buftype = "quickfix"
 
@@ -28,8 +44,6 @@ let g:colorizer_skip_comments = 1
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 set completeopt+=noselect
 let g:deoplete#enable_at_startup = 1
-
-Plug 'zchee/deoplete-clang'
 
 Plug 'zchee/deoplete-go', { 'do': 'make'}
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
@@ -46,7 +60,6 @@ Plug 'zchee/deoplete-jedi'
 let g:python_host_prog = '/opt/nvim/python2/bin/python'
 let g:python3_host_prog = '/opt/nvim/python3/bin/python'
 
-
 Plug 'tmux-plugins/vim-tmux'
 Plug 'christoomey/vim-tmux-navigator'
 let g:tmux_navigator_no_mappings = 1
@@ -59,13 +72,6 @@ nnoremap <silent> <c-\> :TmuxNavigatePrevious<cr>
 Plug 'gcmt/wildfire.vim'
 map <SPACE> <Plug>(wildfire-fuel)
 vmap <C-SPACE> <Plug>(wildfire-water)
-
-Plug 'easymotion/vim-easymotion'
-let g:EasyMotion_smartcase = 1
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-map  n <Plug>(easymotion-next)
-map  N <Plug>(easymotion-prev)
 
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -120,6 +126,15 @@ let g:neomake_open_list = 1
 let g:neomake_logfile = '/var/log/neovim/neomake.log'
 let g:neomake_python_enabled_makers = ['flake8']
 
+Plug 'Rip-Rip/clang_complete'
+" The following is used to enable support for compilation database
+let g:clang_use_library = 1
+let g:clang_library_path = '/usr/lib64/libclang.so'
+let g:clang_auto_user_options = '.clang_complete, compile_commands.json, epath'
+let g:neomake_cpp_clangcheck_args = ['-extra-arg', '-fno-modules']
+" make neomake use c++11
+let g:neomake_cpp_clang_args = ["-std=c++11"]
+
 " taken from github.com/neomake/neomake/autoload/neomake/makers/ft/python.vim
 " needed to change the arguemnts of flake8
 let g:neomake_python_flake8_maker = {
@@ -149,7 +164,6 @@ Plug 'Chiel92/vim-autoformat'
 let g:formatters_python = ['autopep8']
 autocmd FileType markdown let b:autoformat_remove_trailing_spaces=0
 autocmd FileType fish compiler fish
-
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1
 
@@ -192,6 +206,7 @@ Plug 'shougo/vimproc.vim' ,{'do':'make'}
 Plug 'sheerun/vim-polyglot'
 Plug 'dbakker/vim-projectroot'
 Plug 'tinykeymap'
+Plug 'Shougo/echodoc.vim'
 call plug#end()
 
 """""""""""""""
@@ -312,8 +327,6 @@ augroup END
 "lower tiemout
 set timeoutlen=1000 ttimeoutlen=0
 
-"live subsitution
-set inccommand=split
 
 "Show matching braces, etc.
 set showmatch
@@ -327,9 +340,11 @@ set tabstop=3
 set softtabstop=3
 set shiftwidth=3
 
-"make splits open below and right
+" make splits open below and right
 set splitbelow
 set splitright
+
+set hidden
 
 " ensure vim works in truecolor mode
 if (has('nvim'))
@@ -341,4 +356,3 @@ if (has('termguicolors'))
 endif
 
 colorscheme onedark
-
