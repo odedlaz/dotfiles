@@ -1,1 +1,1 @@
-set -xg TERM "xterm-256color"
+set -xg TERM "tmux-256color"
