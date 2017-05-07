@@ -19,6 +19,32 @@ let g:mapleader = "\\"
 
 call plug#begin('~/.vim/plugged')
 
+" Plugin framework
+Plug 'google/vim-maktaba'
+
+" Easy configuration of maktaba plugins.
+Plug 'google/vim-glaive'
+
+" (Syn)tax (cop)y-p(a)s(te)
+Plug 'google/vim-syncopate'
+
+" Display number of search matches & index of a current match
+Plug 'google/vim-searchindex'
+
+" utility for syntax-aware code formatting
+Plug 'google/vim-codefmt'
+
+augroup autoformat_settings
+  autocmd FileType bzl AutoFormatBuffer buildifier
+  autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+  autocmd FileType dart AutoFormatBuffer dartfmt
+  autocmd FileType go AutoFormatBuffer gofmt
+  autocmd FileType gn AutoFormatBuffer gn
+  autocmd FileType html,css,json AutoFormatBuffer js-beautify
+  autocmd FileType java AutoFormatBuffer google-java-format
+  autocmd FileType python AutoFormatBuffer autopep8
+augroup END
+
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
 map /  <Plug>(incsearch-forward)
@@ -160,10 +186,6 @@ let g:airline#extensions#tabline#enabled = 1
 Plug 'joshdick/onedark.vim'
 let g:airline_theme='onedark'
 
-Plug 'Chiel92/vim-autoformat'
-let g:formatters_python = ['autopep8']
-autocmd FileType markdown let b:autoformat_remove_trailing_spaces=0
-autocmd FileType fish compiler fish
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1
 
@@ -179,15 +201,22 @@ augroup better_whitespace
 augroup END
 
 Plug 'dag/vim-fish'
+autocmd FileType fish compiler fish
+
+" git commit browser
+Plug 'junegunn/gv.vim'
+" shows a git diff in the gutter (sign column) and stages/undoes hunks
+Plug 'airblade/vim-gitgutter'
+
+" :substitute preview
+Plug 'osyo-manga/vim-over'
+
 Plug 'tComment'
 Plug 'fisadev/vim-isort'
 Plug 'jmcantrell/vim-virtualenv'
-Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-Plug 'junegunn/gv.vim'
 Plug 'flazz/vim-colorschemes'
 Plug 'godlygeek/tabular'
-Plug 'osyo-manga/vim-over'
 Plug 'ervandew/supertab'
 Plug 'matchit.zip'
 Plug 'sickill/vim-pasta'
@@ -209,12 +238,23 @@ Plug 'tinykeymap'
 Plug 'Shougo/echodoc.vim'
 call plug#end()
 
+" needs to go after plug#end
+call glaive#Install()
+
+" enable glave keymappings
+Glaive syncopate plugin[mappings]
+
+" syncopate glaive configuration
+Glaive syncopate change_colorscheme=0
+Glaive syncopate clear_bg=0
+Glaive syncopate colorscheme='onedark'
+Glaive syncopate browser='google-chrome'
+
 """""""""""""""
 """functions"""
 """""""""""""""
 
 " Source the vimrc file after saving it
-
 augroup reload_vimrc
    au!
    autocmd BufWritePost init.vim source $MYVIMRC
@@ -244,8 +284,8 @@ endfunction
 """""""""""""""""""
 """anything else"""
 """""""""""""""""""
-"navigation mappings
 
+"navigation mappings
 noremap  <Up> :echo 'use k!'<cr>
 noremap  <Down> :echo 'use j!'<cr>
 noremap  <Left> :echo 'use h!'<cr>
@@ -320,13 +360,15 @@ set relativenumber
 " Change numbering in insert mode
 augroup set_linenumbers_on_enter_and_leave
    au!
+   autocmd FocusLost * :set number
    autocmd InsertEnter * :set number
+
+   autocmd FocusGained * :set relativenumber
    autocmd InsertLeave * :set relativenumber
 augroup END
 
 "lower tiemout
 set timeoutlen=1000 ttimeoutlen=0
-
 
 "Show matching braces, etc.
 set showmatch
