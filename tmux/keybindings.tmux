@@ -1,4 +1,6 @@
 
+bind -T copy-mode-vi M-y send -X copy-pipe "xclip -sel clip -i"
+
 bind-key -n F2 new-window -c "#{pane_current_path}" \; rename-window "-"
 bind-key -n S-F2 new-session
 
