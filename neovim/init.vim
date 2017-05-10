@@ -19,6 +19,16 @@ let g:mapleader = "\\"
 
 call plug#begin('~/.vim/plugged')
 
+Plug 'majutsushi/tagbar'
+let g:tagbar_autofocus = 0
+" auto open tagbar when opening a tagged file
+" does the same as taglist.vim's TlistOpen.
+autocmd VimEnter * nested :call tagbar#autoopen(1)
+
+Plug 'craigemery/vim-autotag'
+" put the tags file in the git directory
+let g:autotagTagsFile=".git/tags"
+
 " Plugin framework
 Plug 'google/vim-maktaba'
 
@@ -35,6 +45,7 @@ Plug 'google/vim-searchindex'
 Plug 'google/vim-codefmt'
 
 augroup autoformat_settings
+  au!
   autocmd FileType bzl AutoFormatBuffer buildifier
   autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
   autocmd FileType dart AutoFormatBuffer dartfmt
@@ -152,11 +163,12 @@ let g:neomake_open_list = 1
 let g:neomake_logfile = '/var/log/neovim/neomake.log'
 let g:neomake_python_enabled_makers = ['flake8']
 
-Plug 'Rip-Rip/clang_complete'
-" The following is used to enable support for compilation database
+Plug 'Rip-Rip/clang_complete', {'do': 'make'}
+" " The following is used to enable support for compilation database
 let g:clang_use_library = 1
 let g:clang_library_path = '/usr/lib64/libclang.so'
-let g:clang_auto_user_options = '.clang_complete, compile_commands.json, epath'
+let g:clang_user_options = '-std=c++11'
+let g:clang_auto_user_options = '.clang_complete, compile_commands.json, path'
 let g:neomake_cpp_clangcheck_args = ['-extra-arg', '-fno-modules']
 " make neomake use c++11
 let g:neomake_cpp_clang_args = ["-std=c++11"]
