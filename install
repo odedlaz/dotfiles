@@ -69,3 +69,4 @@ link "$DIR/tmux" "$HOME/.tmux"
 link "$DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
 
 link "$DIR/redshift.conf" "$HOME/.config/redshift.conf"
+link "$DIR/ctags" "$HOME/.ctags"
