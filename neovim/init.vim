@@ -13,12 +13,43 @@ scriptencoding utf-8
 
 let g:mapleader = "\\"
 
+let g:python_host_prog = '/opt/nvim/python2/bin/python'
+let g:python3_host_prog = '/opt/nvim/python3/bin/python'
+
 """""""""""""
 """plugins"""
 """""""""""""
 
 call plug#begin('~/.vim/plugged')
 
+" Fast, Extensible, Async Completion Framework for Neovim
+Plug 'roxma/nvim-completion-manager'
+
+" don't give |ins-completion-menu| messages.  For example,
+" '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
+set shortmess+=c
+
+" Dark powered asynchronous unite all interfaces for Neovim/Vim8
+Plug 'Shougo/denite.nvim'
+
+" Displays function signatures from completions in the command line.
+Plug 'Shougo/echodoc.vim'
+
+" Language Server Protocol (LSP) support for neovim
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+let g:LanguageClient_autoStart = 1
+let g:LanguageClient_serverCommands = {
+    \'python' : ['/opt/nvim/python3/bin/pyls']
+    \ }
+
+command! GoToDefinition :call LanguageClient_textDocument_definition()
+command! Hover :call LanguageClient_textDocument_hover()
+command! Rename :call LanguageClient_textDocument_rename()
+command! BSymbols :call LanguageClient_textDocument_documentSymbol()
+command! BReferences :call LanguageClient_textDocument_references()
+command! PSymbols :call LanguageClient_workspace_symbol()
+
+" display tags in a window, ordered by scope
 Plug 'majutsushi/tagbar'
 let g:tagbar_autofocus = 0
 " auto open tagbar when opening a tagged file
@@ -26,8 +57,6 @@ let g:tagbar_autofocus = 0
 autocmd VimEnter * nested :call tagbar#autoopen(1)
 
 Plug 'craigemery/vim-autotag'
-" put the tags file in the git directory
-let g:autotagTagsFile=".git/tags"
 
 " Plugin framework
 Plug 'google/vim-maktaba'
@@ -77,25 +106,6 @@ let g:lastplace_ignore_buftype = "quickfix"
 Plug 'chrisbra/Colorizer'
 let g:colorizer_auto_filetype='css,less,html'
 let g:colorizer_skip_comments = 1
-
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-set completeopt+=noselect
-let g:deoplete#enable_at_startup = 1
-
-Plug 'zchee/deoplete-go', { 'do': 'make'}
-let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-let g:deoplete#sources#go#use_cache = 1
-let g:deoplete#sources#go#json_directory = '~/.cache/deoplete/go/$GOOS_$GOARCH'
-let g:deoplete#sources#go#auto_goos = 1
-augroup golang
-   au!
-   au FileType go map <leader>g :!go run %<CR>
-augroup END
-
-Plug 'zchee/deoplete-jedi'
-let g:python_host_prog = '/opt/nvim/python2/bin/python'
-let g:python3_host_prog = '/opt/nvim/python3/bin/python'
 
 Plug 'tmux-plugins/vim-tmux'
 Plug 'christoomey/vim-tmux-navigator'
@@ -245,10 +255,13 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'shougo/vimshell.vim'
 Plug 'shougo/vimproc.vim' ,{'do':'make'}
 Plug 'sheerun/vim-polyglot'
-Plug 'dbakker/vim-projectroot'
 Plug 'tinykeymap'
-Plug 'Shougo/echodoc.vim'
+Plug 'dbakker/vim-projectroot'
+
 call plug#end()
+
+" put the tags file in the git directory
+let g:autotagTagsFile=projectroot#guess()."/.git/tags"
 
 " needs to go after plug#end
 call glaive#Install()
