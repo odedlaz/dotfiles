@@ -11,3 +11,7 @@ end
 function gpob\! --description "git push -f CURRENT-BRANCH"
    gpob -f $argv
 end
+
+function gpub --description 'git pull CURRENT-BRANCH'
+   git pull $argv origin (_git_branch)
+end
