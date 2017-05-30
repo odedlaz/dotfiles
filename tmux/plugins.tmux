@@ -16,4 +16,7 @@ set -g @ipinfo_invalidate_cache_interval 300
 set -g @package_updates_invalidate_cache_interval 1800
 
 set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
+
+set -g @plugin 'tmux-plugins/tmux-yank'
+
 set -g @prefix_highlight_show_copy_mode 'on'
