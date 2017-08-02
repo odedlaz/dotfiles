@@ -22,6 +22,8 @@ let g:python3_host_prog = '/opt/nvim/python3/bin/python'
 
 call plug#begin('~/.vim/plugged')
 
+Plug 'shime/vim-livedown'
+
 " Fast, Extensible, Async Completion Framework for Neovim
 Plug 'roxma/nvim-completion-manager'
 
@@ -39,7 +41,8 @@ Plug 'Shougo/echodoc.vim'
 Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
-    \'python' : ['/opt/nvim/python3/bin/pyls']
+    \'python' : ['/opt/nvim/python3/bin/pyls'],
+    \'go' : ['go-langserver'],
     \ }
 
 command! GoToDefinition :call LanguageClient_textDocument_definition()
@@ -54,7 +57,7 @@ Plug 'majutsushi/tagbar'
 let g:tagbar_autofocus = 0
 " auto open tagbar when opening a tagged file
 " does the same as taglist.vim's TlistOpen.
-autocmd VimEnter * nested :call tagbar#autoopen(1)
+" autocmd VimEnter * nested :call tagbar#autoopen(1)
 
 Plug 'craigemery/vim-autotag'
 
@@ -175,13 +178,13 @@ let g:neomake_python_enabled_makers = ['flake8']
 
 Plug 'Rip-Rip/clang_complete', {'do': 'make'}
 " " The following is used to enable support for compilation database
-let g:clang_use_library = 1
-let g:clang_library_path = '/usr/lib64/libclang.so'
-let g:clang_user_options = '-std=c++11'
-let g:clang_auto_user_options = '.clang_complete, compile_commands.json, path'
-let g:neomake_cpp_clangcheck_args = ['-extra-arg', '-fno-modules']
-" make neomake use c++11
-let g:neomake_cpp_clang_args = ["-std=c++11"]
+" let g:clang_use_library = 1
+" let g:clang_library_path = '/usr/lib64/libclang.so'
+" let g:clang_user_options = '-std=c++11'
+" let g:clang_auto_user_options = '.clang_complete, compile_commands.json, path'
+" let g:neomake_cpp_clangcheck_args = ['-extra-arg', '-fno-modules']
+" " make neomake use c++11
+" let g:neomake_cpp_clang_args = ["-std=c++11"]
 
 " taken from github.com/neomake/neomake/autoload/neomake/makers/ft/python.vim
 " needed to change the arguemnts of flake8
