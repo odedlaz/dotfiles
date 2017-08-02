@@ -13,5 +13,5 @@ function gpob\! --description "git push -f CURRENT-BRANCH"
 end
 
 function gpub --description 'git pull CURRENT-BRANCH'
-   git pull $argv origin (_git_branch)
+   git pull $argv origin (_git_branch) --rebase
 end
