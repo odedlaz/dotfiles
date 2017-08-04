@@ -173,7 +173,6 @@ augroup END
 
 let g:neomake_open_list = 1
 " let g:neomake_verbose = 3
-let g:neomake_logfile = '/var/log/neovim/neomake.log'
 let g:neomake_python_enabled_makers = ['flake8']
 
 Plug 'Rip-Rip/clang_complete', {'do': 'make'}
@@ -236,14 +235,14 @@ Plug 'airblade/vim-gitgutter'
 " :substitute preview
 Plug 'osyo-manga/vim-over'
 
-Plug 'tComment'
+Plug 'vim-scripts/tComment'
 Plug 'fisadev/vim-isort'
 Plug 'jmcantrell/vim-virtualenv'
 Plug 'tpope/vim-fugitive'
 Plug 'flazz/vim-colorschemes'
 Plug 'godlygeek/tabular'
 Plug 'ervandew/supertab'
-Plug 'matchit.zip'
+Plug 'vim-scripts/matchit.zip'
 Plug 'sickill/vim-pasta'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-commentary'
@@ -258,7 +257,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'shougo/vimshell.vim'
 Plug 'shougo/vimproc.vim' ,{'do':'make'}
 Plug 'sheerun/vim-polyglot'
-Plug 'tinykeymap'
+Plug 'vim-scripts/tinykeymap'
 Plug 'dbakker/vim-projectroot'
 
 call plug#end()
