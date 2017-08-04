@@ -1,1 +1,1 @@
-set -gx PATH $PATH $HOME/.fzf/bin
+set PATH $PATH $HOME/.fzf/bin

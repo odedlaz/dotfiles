@@ -1,2 +1,4 @@
-set -gx GOPATH $HOME/Dev/go
-set -gx PATH $PATH $GOROOT/bin $GOPATH/bin
+set GOPATH $HOME/Dev/go
+if test -e $GOPATH
+   set PATH $PATH $GOROOT/bin $GOPATH/bin
+end
