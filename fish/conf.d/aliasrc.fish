@@ -9,3 +9,4 @@ alias pingg "ping google.com"
 alias unpair "sudo $SHELL $SCRIPTS_DIR/unpair.sh"
 alias pair "sudo $SHELL $SCRIPTS_DIR/pair.sh"
 alias fuck='eval "sudo $history[1]"'
+alias fucker='eval "runas root:root $history[1]"'
