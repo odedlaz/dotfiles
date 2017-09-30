@@ -4,7 +4,7 @@ bind -T copy-mode-vi M-y send -X copy-pipe "xclip -sel clip -i"
 bind-key -n F2 new-window -c "#{pane_current_path}" \; rename-window "-"
 bind-key -n F12 copy-mode
 
-bind-key -n C-F8 command-prompt -p "(rename-session) " "rename-session '%%'"
+bind-key -n C-F8 command-prompt -p "(rename-window) " "rename-window '%%'"
 
 # Smart pane switching with awareness of Vim splits.
 # See: https://github.com/christoomey/vim-tmux-navigator
@@ -31,7 +31,6 @@ bind -n WheelDownPane if "[[ #{pane_current_command} =~ vim ]]" "select-pane -t 
 
 # bind-key -n S-F2 new-session
 
-# bind-key -n F8 command-prompt -p "(rename-window) " "rename-window '%%'"
 
 # bind-key -n F3 previous-window
 # bind-key -n F4 next-window
