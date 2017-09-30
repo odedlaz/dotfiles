@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="gnome-shell-extensions">
+  <schema path="/org/gnome/shell/extensions/auto-move-windows/" id="org.gnome.shell.extensions.auto-move-windows">
+    <key type="as" name="application-list">
+      
+      <default>[ ]</default>
+      <summary>Application and workspace list</summary>
+      <description>A list of strings, each containing an application id (desktop file name), followed by a colon and the workspace number</description>
+    </key>
+  </schema>
+</schemalist>
