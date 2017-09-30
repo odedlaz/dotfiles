@@ -14,16 +14,24 @@ for item in $argv
 end
 
 
-function link_base
-   set from $argv[1]
-   set to $argv[2]
+function link -a 'from' 'to'
+   if test (count $rm_flags) -gt 0
+      set_color 'yellow'
+      rm -v $rm_flags $to
+      set_color 'normal'
+   end
 
-   ln -s $from $to
+   if test -d $to ;or test -f $to
+      set_color 'red'
+      echo "can't link '$from' -> '$to': destination already exists"
+      set_color 'normal'
+      return 1
+   end
+
+   ln -v -s $from $to
 end
 
-function link
-	set from $argv[1]
-	set to $argv[2]
+function recursive_link -a 'from' 'to'
 	# if $from is a file -> link it
 	# if $from is a dir, and $to doesn't exist -> link it
 	# otherwise, walk $from
@@ -42,40 +50,35 @@ function link
    end
 
 	if test -f $from; or test -d $from;and not test -d $to
-      if test (count $rm_flags) -gt 0
-         set_color 'yellow'
-         rm -v $rm_flags $to
-         set_color 'normal'
-      end
-
-      if test -e $to
-         set_color 'red'
-         echo "can't link '$from' -> '$to': destination already exists"
-         set_color 'normal'
-         return 1
-      end
-
-      ln -v -s $from $to
+      link $from $to
       return $status
-
 	end
 
 	for path in $from/*
-		link $path $to/(basename $path)
+		recursive_link $path $to/(basename $path)
 	end
 end
 
 
-link "$DIR/fish" "$HOME/.config/fish"
-link "$DIR/oh-my-fish" "$HOME/.config/omf"
+recursive_link "$DIR/fish" "$HOME/.config/fish"
+recursive_link "$DIR/oh-my-fish" "$HOME/.config/omf"
 
-link "$DIR/neovim/init.vim" "$HOME/.vimrc"
-link "$DIR/neovim" "$HOME/.config/nvim"
+recursive_link "$DIR/neovim/init.vim" "$HOME/.vimrc"
+recursive_link "$DIR/neovim" "$HOME/.config/nvim"
 
-link "$DIR/tmux" "$HOME/.tmux"
-link "$DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
+# install vim-plug
+set vim_plug_dir "$HOME/.vim/autoload"
+if not test -f "$vim_plug_dir/plug.vim"
+   echo "installing vim-plug..."
+   mkdir -p "$vim_plug_dir" ;and \
+   curl -sfLo "$vim_plug_dir/plug.vim" --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+end
 
-link "$DIR/ctags" "$HOME/.ctags"
+recursive_link "$DIR/tmux" "$HOME/.tmux"
+recursive_link "$DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
+
+recursive_link "$DIR/ctags" "$HOME/.ctags"
 
 
-link_base "$DIR/gnome-shell/extensions" "$HOME/.local/share/gnome-shell/extensions"
+link "$DIR/gnome-shell/extensions" "$HOME/.local/share/gnome-shell/extensions"
