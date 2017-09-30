@@ -13,10 +13,17 @@ for item in $argv
     end
 end
 
+
+function link_base
+   set from $argv[1]
+   set to $argv[2]
+
+   ln -s $from $to
+end
+
 function link
 	set from $argv[1]
 	set to $argv[2]
-
 	# if $from is a file -> link it
 	# if $from is a dir, and $to doesn't exist -> link it
 	# otherwise, walk $from
@@ -68,5 +75,7 @@ link "$DIR/neovim" "$HOME/.config/nvim"
 link "$DIR/tmux" "$HOME/.tmux"
 link "$DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
 
-link "$DIR/redshift.conf" "$HOME/.config/redshift.conf"
 link "$DIR/ctags" "$HOME/.ctags"
+
+
+link_base "$DIR/gnome-shell/extensions" "$HOME/.local/share/gnome-shell/extensions"
