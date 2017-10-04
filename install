@@ -54,7 +54,7 @@ function recursive_link -a 'from' 'to'
       return $status
 	end
 
-	for path in $from/*
+	for path in $from/{.??,}*
 		recursive_link $path $to/(basename $path)
 	end
 end
@@ -66,8 +66,15 @@ recursive_link "$DIR/oh-my-fish" "$HOME/.config/omf"
 recursive_link "$DIR/neovim/init.vim" "$HOME/.vimrc"
 recursive_link "$DIR/neovim" "$HOME/.config/nvim"
 
+for python_ver in "python3" "python2"
+   mkdir -p "/opt/nvim/$python_ver"
+   link "$DIR/neovim/python/update.fish" "/opt/nvim/$python_ver/update.fish"
+   link "$DIR/neovim/python/requirements.txt" "/opt/nvim/$python_ver/requirements.txt"
+   link "$DIR/neovim/python/$python_ver.envrc" "/opt/nvim/$python_ver/.envrc"
+end
+
 # install vim-plug
-set vim_plug_dir "$HOME/.vim/autoload"
+set vim_plug_dir "$HOME/.local/share/nvim/site/autoload"
 if not test -f "$vim_plug_dir/plug.vim"
    echo "installing vim-plug..."
    mkdir -p "$vim_plug_dir" ;and \
@@ -79,6 +86,5 @@ recursive_link "$DIR/tmux" "$HOME/.tmux"
 recursive_link "$DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
 
 recursive_link "$DIR/ctags" "$HOME/.ctags"
-
 
 link "$DIR/gnome-shell/extensions" "$HOME/.local/share/gnome-shell/extensions"

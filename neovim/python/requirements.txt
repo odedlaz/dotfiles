@@ -1,0 +1,11 @@
+flake8
+pep8
+pyflakes
+neovim
+mccabe
+pycodestyle
+jedi
+pydocstyle
+six
+yapf
+python-language-server
