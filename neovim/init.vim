@@ -37,21 +37,6 @@ Plug 'Shougo/denite.nvim'
 " Displays function signatures from completions in the command line.
 Plug 'Shougo/echodoc.vim'
 
-" Language Server Protocol (LSP) support for neovim
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_serverCommands = {
-    \'python' : ['/opt/nvim/python3/bin/pyls'],
-    \'go' : ['go-langserver'],
-    \ }
-
-command! GoToDefinition :call LanguageClient_textDocument_definition()
-command! Hover :call LanguageClient_textDocument_hover()
-command! Rename :call LanguageClient_textDocument_rename()
-command! BSymbols :call LanguageClient_textDocument_documentSymbol()
-command! BReferences :call LanguageClient_textDocument_references()
-command! PSymbols :call LanguageClient_workspace_symbol()
-
 " display tags in a window, ordered by scope
 Plug 'majutsushi/tagbar'
 let g:tagbar_autofocus = 0
