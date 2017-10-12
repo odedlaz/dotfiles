@@ -9,9 +9,9 @@ function gpob --description 'git push CURRENT-BRANCH'
 end
 
 function gpob\! --description "git push -f CURRENT-BRANCH"
-   gpob -f $argv
+   gpob --force-with-lease $argv
 end
 
 function gpub --description 'git pull CURRENT-BRANCH'
-   git pull $argv origin (_git_branch) --rebase
+   git pull --rebase $argv origin (_git_branch)
 end
