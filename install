@@ -62,6 +62,11 @@ end
 
 recursive_link "$DIR/fish" "$HOME/.config/fish"
 recursive_link "$DIR/oh-my-fish" "$HOME/.config/omf"
+if not test -f "$HOME/.local/share/omf"
+   echo "installing fish plugin manager..."
+   curl -L https://get.oh-my.fish | fish
+end
+
 
 recursive_link "$DIR/neovim/init.vim" "$HOME/.vimrc"
 recursive_link "$DIR/neovim" "$HOME/.config/nvim"
@@ -84,6 +89,10 @@ end
 
 recursive_link "$DIR/tmux" "$HOME/.tmux"
 recursive_link "$DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
+if not test -f "$HOME/.tmux/plugins/tpm"
+   echo "installing tmux plugin manager..."
+   git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+end
 
 recursive_link "$DIR/ctags" "$HOME/.ctags"
 

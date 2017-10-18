@@ -7,3 +7,5 @@ for dir in functions work-functions
       source $path
    end
 end
+
+set -gx PATH $PATH $HOME/.local/bin
