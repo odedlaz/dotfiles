@@ -1,5 +1,7 @@
 #!/usr/bin/env fish
-sudo true
+if not doas true
+   exit $staus
+end
 
 set DIR (dirname (readlink -f (status -f)))
 
@@ -29,7 +31,7 @@ function link -a 'from' 'to'
       return 1
    end
 
-   sudo ln -v -s $from $to
+   doas ln -v -s $from $to
 end
 
 function recursive_link -a 'from' 'to'
@@ -60,6 +62,7 @@ function recursive_link -a 'from' 'to'
 	end
 end
 
+link "$DIR/git/gitconfig" "$HOME/.gitconfig"
 
 recursive_link "$DIR/fish" "$HOME/.config/fish"
 recursive_link "$DIR/oh-my-fish" "$HOME/.config/omf"
@@ -97,11 +100,15 @@ end
 
 recursive_link "$DIR/ctags" "$HOME/.ctags"
 
-for ext_dir in $DIR/gnome-shell/extensions/*
-   rm -rf "$HOME/.local/share/gnome-shell/extensions"
-   mkdir -p "$HOME/.local/share/gnome-shell/extensions"
-   set ext (basename $ext_dir)
-   link "$ext_dir" "$HOME/.local/share/gnome-shell/extensions/$ext"
+
+set exts_dir "$HOME/.local/share/gnome-shell/extensions"
+if not test -f "$exts_dir/.installed"
+   rm -rf "$exts_dir" ;and mkdir -p "$exts_dir"
+   for ext_dir in $DIR/gnome-shell/extensions/*
+      set ext (basename $ext_dir)
+      link "$ext_dir" "$exts_dir/$ext"
+   end
+   touch "$exts_dir/.installed"
 end
 
 for type in "icons" "themes"

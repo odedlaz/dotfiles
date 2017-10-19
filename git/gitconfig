@@ -1,0 +1,11 @@
+[user]
+	signingkey = BECBAF48472CEE04E22AC3DBE4603E8D891A7EEB
+	email = odedlaz@gmail.com
+	name = Oded Lazar
+[commit]
+	gpgsign = true
+[usre]
+[gpg]
+	program = /usr/bin/gpg2
+[pull]
+	rebase = true
