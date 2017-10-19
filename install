@@ -1,8 +1,4 @@
 #!/usr/bin/env fish
-if not doas true
-   exit $staus
-end
-
 set DIR (dirname (readlink -f (status -f)))
 
 fish "$DIR/gnome-terminal/set-profile.fish"
@@ -33,7 +29,7 @@ function link -a 'from' 'to'
       return 1
    end
 
-   doas ln -v -s $from $to
+   ln -v -s $from $to
 end
 
 function recursive_link -a 'from' 'to'
@@ -105,11 +101,8 @@ recursive_link "$DIR/ctags" "$HOME/.ctags"
 
 set exts_dir "$HOME/.local/share/gnome-shell/extensions"
 if not test -f "$exts_dir/.installed"
-   rm -rf "$exts_dir" ;and mkdir -p "$exts_dir"
-   for ext_dir in $DIR/gnome-shell/extensions/*
-      set ext (basename $ext_dir)
-      link "$ext_dir" "$exts_dir/$ext"
-   end
+   rm -rf $exts_dir
+   link "$DIR/gnome-shell/extensions" "$exts_dir"
    touch "$exts_dir/.installed"
 end
 
