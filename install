@@ -5,6 +5,8 @@ end
 
 set DIR (dirname (readlink -f (status -f)))
 
+fish "$DIR/gnome-terminal/set-profile.fish"
+
 # poor mans optarg :)
 set rm_flags
 for item in $argv
