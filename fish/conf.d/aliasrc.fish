@@ -7,7 +7,8 @@ alias venvoff "deactivate"
 alias readme 'pandoc README.md | lynx -stdin'
 alias pingg "ping google.com"
 alias unpair "/usr/local/bin/doas $SHELL $SCRIPTS_DIR/unpair.sh"
-alias pair "/usr/local/bin/doas $SHELL $SCRIPTS_DIR/pair.sh"
-alias fuck='eval "/usr/local/bin/doas $history[1]"'
+alias pair "suex $SHELL $SCRIPTS_DIR/pair.sh"
+alias fuck='eval "suex $history[1]"'
+alias fuck!='eval "/usr/bin/sudo $history[1]"'
 alias sudo!='/usr/bin/sudo'
-alias sudo='/usr/local/bin/doas'
+alias sudo='suex'
