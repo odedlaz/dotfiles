@@ -29,7 +29,9 @@ function link -a 'from' 'to'
       return 1
    end
 
-   ln -v -s $from $to
+   if not ln -v -s $from $to
+      sudo ln -v -s $from $to
+   end
 end
 
 function recursive_link -a 'from' 'to'
