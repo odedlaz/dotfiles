@@ -9,9 +9,10 @@
     "3.18", 
     "3.20", 
     "3.22", 
-    "3.24"
+    "3.24", 
+    "3.26"
   ], 
   "url": "https://github.com/jenslody/gnome-shell-extension-openweather", 
   "uuid": "openweather-extension@jenslody.de", 
-  "version": 90
+  "version": 92
 }

@@ -5,14 +5,10 @@
   "name": "Laine", 
   "settings-schema": "org.gnome.shell.extensions.laine", 
   "shell-version": [
-    "3.14", 
-    "3.16", 
-    "3.18", 
-    "3.20", 
-    "3.22", 
-    "3.24"
+    "3.24", 
+    "3.26"
   ], 
   "url": "https://github.com/johnhoran/Laine", 
   "uuid": "laine@knasher.gmail.com", 
-  "version": 8
+  "version": 9
 }
