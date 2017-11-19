@@ -16,6 +16,11 @@ let g:mapleader = "\\"
 let g:python_host_prog = '/opt/nvim/python2/bin/python'
 let g:python3_host_prog = '/opt/nvim/python3/bin/python'
 
+" some plugins use $TMP to find the temp directory
+" make tmp per user, so they won't collide
+let $TMP = '/tmp/vim/' . $USER
+silent! execute '!mkdir -p ' . $TMP . '> /dev/null 2>&1'
+
 """""""""""""
 """plugins"""
 """""""""""""
@@ -299,7 +304,7 @@ augroup END
 
 function! CreateDirectory (base, ...)
    for l:dir in a:000
-      silent! execute '!mkdir ' a:base . '/' . l:dir . ' > /dev/null 2>&1'
+      silent! execute '!mkdir -p ' a:base . '/' . l:dir . ' > /dev/null 2>&1'
    endfor
 endfunction
 
