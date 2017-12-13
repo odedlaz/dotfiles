@@ -6,9 +6,9 @@
   "name": "Removable Drive Menu", 
   "settings-schema": "org.gnome.shell.extensions.drive-menu", 
   "shell-version": [
-    "3.24"
+    "3.26"
   ], 
-  "url": "http://git.gnome.org/gnome-shell-extensions", 
+  "url": "https://gitlab.gnome.org/GNOME/gnome-shell-extensions", 
   "uuid": "drive-menu@gnome-shell-extensions.gcampax.github.com", 
-  "version": 33
+  "version": 35
 }

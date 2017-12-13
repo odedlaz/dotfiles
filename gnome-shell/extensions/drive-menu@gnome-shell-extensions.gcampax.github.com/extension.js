@@ -103,6 +103,7 @@ const MountMenuItem = new Lang.Class({
     },
 
     _reportFailure: function(exception) {
+	// TRANSLATORS: %s is the filesystem name
 	let msg = _("Ejecting drive “%s” failed:").format(this.mount.get_name());
 	Main.notifyError(msg, exception.message);
     },
@@ -146,7 +147,7 @@ const DriveMenu = new Lang.Class({
 	this._monitor.get_mounts().forEach(Lang.bind(this, this._addMount));
 
 	this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
-	this.menu.addAction(_("Open File"), function(event) {
+	this.menu.addAction(_("Open Files"), function(event) {
 	    let appSystem = Shell.AppSystem.get_default();
 	    let app = appSystem.lookup_app('org.gnome.Nautilus.desktop');
 	    app.activate_full(-1, event.get_time());

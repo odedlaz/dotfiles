@@ -107,13 +107,22 @@ const WindowContextMenu = new Lang.Class({
                                      Lang.bind(this, this._updateMaximizeItem));
         this._updateMaximizeItem();
 
-        let item = new PopupMenu.PopupMenuItem(_("Close"));
-        item.connect('activate', Lang.bind(this, function() {
+        this._closeItem = new PopupMenu.PopupMenuItem(_("Close"));
+        this._closeItem.connect('activate', Lang.bind(this, function() {
             this._metaWindow.delete(global.get_current_time());
         }));
-        this.addMenuItem(item);
+        this.addMenuItem(this._closeItem);
 
         this.actor.connect('destroy', Lang.bind(this, this._onDestroy));
+
+        this.connect('open-state-changed', () => {
+            if (!this.isOpen)
+                return;
+
+            this._minimizeItem.setSensitive(this._metaWindow.can_minimize());
+            this._maximizeItem.setSensitive(this._metaWindow.can_maximize());
+            this._closeItem.setSensitive(this._metaWindow.can_close());
+        });
     },
 
     _updateMinimizeItem: function() {
@@ -781,7 +790,7 @@ const WindowList = new Lang.Class({
         this._monitor = monitor;
 
         this.actor = new St.Widget({ name: 'panel',
-                                     style_class: 'bottom-panel',
+                                     style_class: 'bottom-panel solid',
                                      reactive: true,
                                      track_hover: true,
                                      layout_manager: new Clutter.BinLayout()});

@@ -7,9 +7,9 @@
   "original-author": "zaspire@rambler.ru", 
   "settings-schema": "org.gnome.shell.extensions.windowsNavigator", 
   "shell-version": [
-    "3.24"
+    "3.26"
   ], 
   "url": "http://git.gnome.org/gnome-shell-extensions", 
   "uuid": "windowsNavigator@gnome-shell-extensions.gcampax.github.com", 
-  "version": 37
+  "version": 39
 }

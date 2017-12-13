@@ -62,7 +62,7 @@ const ApplicationMenuItem = new Lang.Class({
 
         let appLabel = new St.Label({ text: app.get_name(), y_expand: true,
                                       y_align: Clutter.ActorAlign.CENTER });
-        this.actor.add_child(appLabel, { expand: true });
+        this.actor.add_child(appLabel);
         this.actor.label_actor = appLabel;
 
         let textureCache = St.TextureCache.get_default();
@@ -358,7 +358,7 @@ const DesktopTarget = new Lang.Class({
             (o, res) => {
                 try {
                     let info = o.query_info_finish(res);
-                    let mode = info.get_attribute_uint32(modeAttr) | 0100;
+                    let mode = info.get_attribute_uint32(modeAttr) | 0o100;
 
                     info.set_attribute_uint32(modeAttr, mode);
                     info.set_attribute_string(trustedAttr, 'yes');
@@ -478,13 +478,6 @@ const ApplicationsButton = new Lang.Class({
                 this.reloadFlag = true;
             }
         }));
-
-        // Since the hot corner uses stage coordinates, Clutter won't
-        // queue relayouts for us when the panel moves. Queue a relayout
-        // when that happens.
-        this._panelBoxChangedId = Main.layoutManager.connect('panel-box-changed', Lang.bind(this, function() {
-            container.queue_relayout();
-        }));
     },
 
     get hotCorner() {
@@ -501,7 +494,6 @@ const ApplicationsButton = new Lang.Class({
     _onDestroy: function() {
         Main.overview.disconnect(this._showingId);
         Main.overview.disconnect(this._hidingId);
-        Main.layoutManager.disconnect(this._panelBoxChangedId);
         appSys.disconnect(this._installedChangedId);
 
         Main.wm.setCustomKeybindingHandler('panel-main-menu',

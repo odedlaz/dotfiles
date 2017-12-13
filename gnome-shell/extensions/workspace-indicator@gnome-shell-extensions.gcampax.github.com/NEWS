@@ -1,3 +1,48 @@
+3.26.1
+======
+* native-window-placement: Adjust to gnome-shell changes
+* updated translations: el, fa, ru, sv
+
+3.26.0
+======
+* updated translations (be, bg, ca, da, eu, fi, is, it, ko, lv, ml,
+  nl, pt_BR, vi, zh_TW)
+
+3.25.91
+=======
+* updated translations (ca, fr, it, pl, pt_BR, sr, sr@latin, tr)
+
+3.25.90
+=======
+* updated translations (es, gl, hr, hu, kk, sl, sv, sv)
+
+3.25.4
+======
+* screenshot-window-sizer: Fix backward cycling
+* updated translations (ar, be, ca, cs, de, fur, id, lt, pl, sk)
+
+3.25.3
+======
+* places-menu: Use mount operation if necessary
+* window-list: Respect MWM hints
+* updated translations (es, fur, kk)
+
+3.25.2
+======
+* places-menu: Make URI launching asynchronous
+* updated translations (de, fur, hr, hu, id, sl)
+
+3.25.1
+======
+* apps-menu: Mark copied launchers as trusted
+* places-menu: Make icon lookup asynchronous
+* updated translations (hr)
+
+3.24.1
+======
+* apps-menu: Allow creating desktop launchers via DND
+* updated translations (el, vi)
+
 3.24.0
 ======
 * updated translations (lv, tr)
