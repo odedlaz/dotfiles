@@ -1,0 +1,4 @@
+while read gem
+  gem install $gem --no-rdoc --no-ri
+end < $DIR/ruby
+gem update (gem list | awk '{ print $1 }')

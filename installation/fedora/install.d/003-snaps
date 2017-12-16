@@ -1,0 +1,3 @@
+while read  pkg
+  snap install $pkg
+end < $DIR/snaps

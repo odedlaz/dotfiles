@@ -1,0 +1,15 @@
+set exts_dir "$HOME/.local/share/gnome-shell/extensions"
+if not test -f "$exts_dir/.installed"
+   sudo rm -rf $exts_dir
+   link "$DIR/gnome-shell/extensions" "$exts_dir"
+   touch "$exts_dir/.installed"
+end
+
+for type in "icons" "themes"
+   for type_dir in $DIR/gnome-shell/$type/*
+      set name (basename $type_dir)
+      link "$type_dir" "/usr/share/$type/$name"
+   end
+end
+
+recursive_link "$DIR/gnome-shell/autostart" "$HOME/.config/autostart"

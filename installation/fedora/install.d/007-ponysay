@@ -1,0 +1,8 @@
+mkdir -p ~/Development
+if not test -d ~/Development/ponysay
+   git clone https://github.com/erkin/ponysay.git ~/Development/ponysay
+end
+
+cd ~/Development/ponysay
+git pull --rebase
+python3.6 setup.py --freedom=partial install

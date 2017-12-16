@@ -1,0 +1,85 @@
+#!/usr/bin/env fish
+
+# poor mans optarg :)
+set rm_flags
+set target ""
+
+for i in (seq (count $argv))
+   set item $argv[$i]
+    switch "$item"
+        case -f --force
+           set rm_flags $rm_flags "-f"
+         case -i --interactive
+            set rm_flags $rm_flags "-i"
+         case -t --target
+            set target $argv[(math $i + 1)]
+    end
+end
+
+function link -a 'from' 'to'
+   if test (count $rm_flags) -gt 0
+      set_color 'yellow'
+      sudo rm -v $rm_flags $to
+      set_color 'normal'
+   end
+
+   if test -d $to ;or test -f $to
+      set_color 'red'
+      echo "can't link '$from' -> '$to': destination already exists"
+      set_color 'normal'
+      return 1
+   end
+
+   if not ln -v -s $from $to
+      set_color 'yellow'
+      echo "trying again as root."
+      set_color 'normal'
+      sudo ln -v -s $from $to
+   end
+end
+
+function recursive_link -a 'from' 'to'
+	# if $from is a file -> link it
+	# if $from is a dir, and $to doesn't exist -> link it
+	# otherwise, walk $from
+
+   if test -d $from
+      if test -e $to; and not test -d $to
+         set_color 'red'
+         echo "'$from' is a directory, '$to' is not: "(file $to)
+         set_color 'normal'
+         return 1
+      end
+
+      if not test -d $to
+         mkdir -p $to
+      end
+   end
+
+	if test -f $from; or test -d $from;and not test -d $to
+      link $from $to
+      return $status
+	end
+
+	for path in $from/{.??,}*
+		recursive_link $path $to/(basename $path)
+	end
+end
+
+set DIR (readlink -f (dirname (status -f))"/..")
+set LINK_DIR $DIR"/installation/configure.d"
+
+
+if test -n $target
+   set path $LINK_DIR"/"$target
+   source $path
+   exit 0
+end
+
+for path in $LINK_DIR/{.??,}*
+   set script (basename $path)
+   set_color 'purple'
+   echo "sourcing "(basename $path)
+   set_color 'normal'
+   source $path $argv
+end

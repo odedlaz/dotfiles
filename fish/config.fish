@@ -4,4 +4,6 @@ for dir in functions work-functions
    end
 end
 
-set -gx PATH $PATH $HOME/.local/bin
+if test -d $HOME/.local/bin
+   set -gx PATH $PATH $HOME/.local/bin
+end

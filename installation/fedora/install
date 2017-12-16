@@ -1,0 +1,44 @@
+#!/usr/bin/env fish
+
+set DIR (readlink -f (dirname (status -f)))"/install.d"
+set target ""
+
+
+for i in (seq (count $argv))
+   set item $argv[$i]
+    switch "$item"
+         case -h --help
+            echo "Usage: "(status -f)" [-l] [-t target]"
+            exit 0
+         case -t --target
+            set target $argv[(math $i + 1)]
+         case -l --list
+               ls $DIR | awk -F '-' '/[0-9]{3}-/ { print $2 }'
+               exit 0
+    end
+end
+
+if test (id -u) != 0
+   sudo fish (status -f) $argv
+   exit 0
+end
+
+if test -n $target
+   set full_target (ls $DIR | grep "[0-9]\{3\}-$target")
+   if test -z $full_target
+      echo "target '$target' doesn't exist"
+      exit 1
+   end
+
+   set path $DIR"/"$full_target
+   source $path
+   exit 0
+end
+
+for path in $DIR/{.??,}*
+   set script (basename $path)
+   set_color 'purple'
+   echo "sourcing "(basename $path)
+   set_color 'normal'
+   source $path $argv
+end

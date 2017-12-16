@@ -1,0 +1,2 @@
+groupadd wheel
+usermod -a -G wheel (whoami)

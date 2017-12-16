@@ -1,1 +1,1 @@
-set PATH $PATH /var/lib/snapd/snap/bin
+set PATH $PATH /snap/bin/

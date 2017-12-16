@@ -12,8 +12,8 @@
 
 function install_fonts
    echo "installing fonts..."
-   # git clone https://github.com/powerline/fonts.git --depth=1 /tmp/fonts
-   # cd /tmp/fonts ;and ./install.sh ;and cd .. ;and rm -rf /tmp/fonts
+   git clone https://github.com/powerline/fonts.git --depth=1 /tmp/fonts
+   cd /tmp/fonts ;and ./install.sh ;and cd .. ;and rm -rf /tmp/fonts
 end
 
 function dset
@@ -48,6 +48,7 @@ set profiles (dconf dump $BASE_KEY/ | \
 if test (count $profiles) -gt 0 ;and test $force = "false"
    echo "profile already exists"
 end
+
 
 for profile_id in $profiles
    set profile_name (dconf read $BASE_KEY/:$profile_id/visible-name)

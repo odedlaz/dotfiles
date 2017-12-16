@@ -1,0 +1,4 @@
+while read pkg
+   yarn global add $pkg
+end < $DIR/nodejs
+yarn global upgrade

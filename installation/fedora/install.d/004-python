@@ -1,0 +1,15 @@
+pip2 install --user --requirement $DIR/python2
+if not test -d /opt/nvim/python2/bin
+   python2 -m virtualenv /opt/nvim/python2
+end
+
+pip3 install --user --requirement $DIR/python3
+if not test -d /opt/nvim/python3.6/bin
+   python3.6 -m venv /opt/nvim/python3
+end
+
+for v in "python2" "python3"
+	source /opt/nvim/$v/bin/activate.fish
+	source /opt/nvim/$v/update.fish
+	deactivate
+end
