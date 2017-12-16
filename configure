@@ -71,6 +71,10 @@ set CONFIGDIR $ROOTDIR"/config.d"
 
 if test -n $target
    set path $CONFIGDIR"/"$target
+   if not test -e $path
+      echo "target '$target' doesn't exit"
+      exit 1
+   end
    source $path
    exit 0
 end
