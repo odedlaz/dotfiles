@@ -5,7 +5,7 @@ set distribution (cat /etc/*-release | \
    awk -F '=' '/^NAME=/ { print tolower($2) }' | \
    sed 's/\"//g')
 
-set distdir "$DIR/install.d/$distribution"
+set distdir "$DIR/distrib.d/$distribution"
 
 if test -z $distribution  -o ! -d $distdir
    echo "distribution '$distribution' not supported"

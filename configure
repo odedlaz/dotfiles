@@ -67,7 +67,7 @@ end
 
 set ROOTDIR (readlink -f (dirname (status -f)))
 set DIR $ROOTDIR"/files"
-set CONFIGDIR $ROOTDIR"/configure.d"
+set CONFIGDIR $ROOTDIR"/config.d"
 
 if test -n $target
    set path $CONFIGDIR"/"$target
