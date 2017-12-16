@@ -1,0 +1,4 @@
+mkdir -p "$HOME/.rtorrent"
+mkdir -p "$HOME/Downloads/rtorrent"
+
+link "$DIR/rtorrent/rtorrent.rc" "$HOME/.rtorrent.rc"
