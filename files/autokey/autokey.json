@@ -28,7 +28,7 @@
         "scriptGlobals": {}
     },
     "folders": [
-        "/opt/dotfiles/autokey/Phrases"
+        "/opt/dotfiles/files/autokey/Phrases"
     ],
     "toggleServiceHotkey": {
         "enabled": true,
