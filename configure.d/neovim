@@ -3,9 +3,6 @@ recursive_link "$DIR/neovim" "$HOME/.config/nvim"
 
 sudo chmod -R 777 /opt/nvim
 sudo mkdir -p /opt/nvim
-echo $status
-echo "got here"
-echo $status
 
 for python_ver in "python3" "python2"
    mkdir -p "/opt/nvim/$python_ver"
