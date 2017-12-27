@@ -1,0 +1,168 @@
+set $altkey Mod1
+set $winkey Mod4
+
+set $onedark_black #282c34
+set $onedark_blue #61afef
+set $onedark_yellow #e5c07b
+set $onedark_red #e06c75
+set $onedark_white #aab2bf
+set $onedark_green #98c379
+set $onedark_visual_grey #3e4452
+set $onedark_comment_grey #5c6370
+
+client.focused             $onedark_blue           $onedark_blue           $onedark_black
+client.focused_inactive    $onedark_comment_grey   $onedark_comment_grey   $onedark_white          $onedark_visual_grey    $onedark_comment_grey
+client.unfocused           $onedark_comment_grey   $onedark_comment_grey   $onedark_white          $onedark_visual_grey    $onedark_comment_grey
+client.urgent              $onedark_red            $onedark_red            $onedark_white          $onedark_red            $onedark_red
+client.placeholder         $onedark_black          $onedark_comment_grey   $onedark_visual_grey    $onedark_black          $onedark_comment_grey
+client.background          $onedark_black
+
+font pango:DejaVu Sans Mono 11
+
+# Use Mouse+$altkey to drag floating windows to their wanted position
+floating_modifier $altkey
+
+# start a terminal
+bindsym $altkey+Return exec gnome-terminal
+
+# kill focused window
+bindsym $altkey+Shift+q kill
+
+bindsym $winkey+Return exec --no-startup-id /usr/local/bin/rofi -show combi
+
+# change focus
+bindsym $altkey+h focus left
+bindsym $altkey+j focus down
+bindsym $altkey+k focus up
+bindsym $altkey+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $altkey+Left focus left
+bindsym $altkey+Down focus down
+bindsym $altkey+Up focus up
+bindsym $altkey+Right focus right
+
+# move focused window
+bindsym $altkey+Shift+h move left
+bindsym $altkey+Shift+j move down
+bindsym $altkey+Shift+k move up
+bindsym $altkey+Shift+l move right
+
+# alternatively, you can use the cursor keys:
+bindsym $altkey+Shift+Left move left
+bindsym $altkey+Shift+Down move down
+bindsym $altkey+Shift+Up move up
+bindsym $altkey+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $altkey+backslash split horizontal
+
+# exec split v
+# split in vertical orientation
+bindsym $altkey+minus split vertical
+
+# enter fullscreen mode for the focused container
+bindsym $altkey+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $altkey+e layout toggle split
+
+# scratchpad
+bindsym $altkey+Shift+s move scratchpad
+bindsym $altkey+s scratchpad show
+
+# toggle tiling / floating
+bindsym $altkey+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $altkey+space focus mode_toggle
+
+# focus the parent container
+bindsym $altkey+a focus parent
+
+# focus the child container
+#bindsym $altkey+d focus child
+
+# switch to workspace
+bindsym $altkey+1 workspace 1
+bindsym $altkey+2 workspace 2
+bindsym $altkey+3 workspace 3
+bindsym $altkey+4 workspace 4
+bindsym $altkey+5 workspace 5
+bindsym $altkey+6 workspace 6
+bindsym $altkey+7 workspace 7
+bindsym $altkey+8 workspace 8
+bindsym $altkey+9 workspace 9
+bindsym $altkey+0 workspace 10
+
+# move focused container to workspace
+bindsym $altkey+Shift+1 move container to workspace 1
+bindsym $altkey+Shift+2 move container to workspace 2
+bindsym $altkey+Shift+3 move container to workspace 3
+bindsym $altkey+Shift+4 move container to workspace 4
+bindsym $altkey+Shift+5 move container to workspace 5
+bindsym $altkey+Shift+6 move container to workspace 6
+bindsym $altkey+Shift+7 move container to workspace 7
+bindsym $altkey+Shift+8 move container to workspace 8
+bindsym $altkey+Shift+9 move container to workspace 9
+bindsym $altkey+Shift+0 move container to workspace 10
+
+# reload the configuration file
+bindsym $altkey+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $altkey+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym $altkey+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+bindsym $winkey+l exec "mylock"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $altkey+r mode "resize"
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +20% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -20% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+
+# Sreen brightness controls
+bindsym XF86MonBrightnessUp exec light -A 10 # increase screen brightness
+bindsym XF86MonBrightnessDown exec light -U 10 # decrease screen brightness
+
+exec_always --no-startup-id fish $HOME/.config/polybar/launch
+exec --no-startup-id /usr/local/bin/autokey-gtk
+exec --no-startup-id /usr/bin/insync start
+
+# Pulse Audio controls
+
+exec setxkbmap -layout us,il
+exec setxkbmap -option 'grp:win_space_toggle'
+exec_always --no-startup-id feh --bg-scale $HOME/Pictures/wallpapers/i-\<3-linux-asian.jpg
+
+exec --no-startup-id xinput set-prop 12 279 1
+
+# exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-xsettings
+# exec_always --no-startup-id gnome-power-manager
+
