@@ -87,8 +87,11 @@ dset bold-color "'#ABB2BF'"
 dset bold-color-same-as-fg "true"
 dset use-theme-colors "false"
 dset use-theme-background "false"
-dset use-custom-command "true"
-dset custom-command "'tmux new -A -s 0'"
+
+# if you want to use tmux - uncomment:
+# dset use-custom-command "true"
+# dset custom-command "'tmux new -A -s 0'"
+
 dset use-system-font "false"
 dset font "'Source Code Pro for Powerline Light 12'"
 
