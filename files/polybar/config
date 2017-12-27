@@ -1,0 +1,227 @@
+
+[onedark]
+
+black = #282c34
+blue = #61afef
+yellow = #e5c07b
+red = #e06c75
+white = #aab2bf
+green = #98c379
+visual_grey = #3e4452
+comment_grey = #5c6370
+
+[bar/mytux]
+
+width = 100%
+height = 27
+radius = 6.0
+fixed-center = true
+
+background = ${onedark.black}
+foreground = ${onedark.white}
+
+line-size = 1
+line-color = ${onedark.black}
+
+border-size = 3
+border-color = ${onedark.black}
+
+padding-left = 2
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = "FontAwesome:pixelsize=11;0"
+font-1 = "Roboto:size=11"
+
+modules-left = i3
+modules-center = time date weather
+modules-right = pkgupdates xkeyboard wlan eth memory battery volume
+
+tray-position = right
+tray-padding = 0
+
+wm-restack = i3
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+[module/ipinfo]
+type = custom/script
+exec =  $HOME/.config/polybar/plugins/ipinfo/exec
+
+format-prefix = "  "
+format-prefix-foreground = ${onedark.comment_grey}
+tail = false
+interval = 30
+
+[module/weather]
+type = custom/script
+exec =  $HOME/.config/polybar/plugins/exec weather
+
+format-prefix = "  "
+format-prefix-foreground = ${onedark.comment_grey}
+tail = false
+interval = 30
+
+[module/pkgupdates]
+type = custom/script
+exec = $HOME/.config/polybar/plugins/exec pkgupdates
+exec-if = $HOME/.config/polybar/plugins/exec-if pkgupdates
+format-foreground = ${onedark.yellow}
+
+format-prefix = " "
+format-prefix-foreground = ${onedark.red}
+tail = false
+interval = 3
+
+[module/i3]
+type = internal/i3
+
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+
+label-mode-padding = 2
+label-mode-foreground = ${onedark.black}
+label-mode-background = ${onedark.yellow}
+
+label-focused = %index%
+label-focused-background = ${onedark.blue}
+label-focused-foreground = ${onedark.black}
+label-focused-padding = 2
+
+label-occupied = %index%
+label-occupied-padding = 2
+
+label-urgent = %index%!
+label-urgent-background = ${onedark.red}
+label-urgent-padding = 2
+
+label-empty = %index%
+label-empty-foreground = ${onedark.comment_grey}
+label-empty-padding = 2
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...%
+
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+
+format-prefix = "  "
+format-prefix-foreground = ${onedark.comment_grey}
+
+label-layout = %layout%
+
+label-indicator-padding = 2
+label-indicator-margin = 1
+label-indicator-background = ${onedark.blue}
+label-indicator-foreground = ${onedark.black}
+
+[module/memory]
+type = internal/memory
+interval = 5.0
+format-prefix = " "
+format-prefix-foreground = ${onedark.comment_grey}
+label = %gb_free%
+
+[module/wlan]
+type = internal/network
+interface = wlp3s0
+interval = 3.0
+
+format-connected-prefix="  "
+format-connected-prefix-foreground=${onedark.comment_grey}
+format-connected = <label-connected>
+label-connected = %essid%
+
+[module/eth]
+type = internal/network
+interface = enp0s25
+
+[module/date]
+
+type = internal/date
+interval = 5
+
+date = %d.%m.%Y
+
+format-prefix = "  "
+format-prefix-foreground = ${onedark.comment_grey}
+
+label = "%date%"
+
+[module/time]
+type = internal/date
+interval = 5
+
+time = %H:%M
+
+format-prefix = "  "
+format-prefix-foreground = ${onedark.comment_grey}
+
+label = "%time%"
+
+[module/volume]
+type = internal/volume
+
+master-mixer = Master
+
+format-volume = <label-volume> <bar-volume>
+label-volume = 
+label-volume-foreground = ${onedark.comment_grey}
+
+label-muted = " muted"
+format-muted-foreground = ${onedark.comment_grey}
+
+bar-volume-width = 5
+bar-volume-foreground-0 = ${onedark.white}
+bar-volume-gradient = true
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${onedark.comment_grey}
+
+[module/battery]
+type = internal/battery
+battery = BAT1
+adapter = AC
+full-at = 98
+
+format-charging = <animation-charging> <label-charging>
+label-charging = %percentage%%
+
+format-discharging = <ramp-capacity> <label-discharging>
+label-discharging = %percentage%%
+
+format-full = <ramp-capacity> <label-full>
+label-full = Fully charged
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-framerate = 750
+
+[settings]
+screenchange-reload = true
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5

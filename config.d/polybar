@@ -1,0 +1,7 @@
+recursive_link "$DIR/polybar" "$HOME/.config/polybar"
+set plugins_dir "$HOME/.config/polybar/plugins"
+python3 -m venv --without-pip "$plugins_dir/.venv"
+source $plugins_dir/.venv/bin/activate.fish
+curl -sL https://bootstrap.pypa.io/get-pip.py | python
+pip install -r $plugins_dir/requirements.txt
+deactivate
