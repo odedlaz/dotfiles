@@ -66,7 +66,7 @@ function recursive_link -a 'from' 'to'
 end
 
 set ROOTDIR (readlink -f (dirname (status -f)))
-set DIR $ROOTDIR"/files"
+set DIR $ROOTDIR"/dotfiles"
 set CONFIGDIR $ROOTDIR"/config.d"
 
 if test -n $target
