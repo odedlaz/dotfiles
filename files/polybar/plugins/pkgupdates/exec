@@ -1,0 +1,12 @@
+#!/usr/bin/env fish
+
+function updates_available
+   dnf -q check-update 2>&1 > /dev/null
+   echo $status
+end
+
+
+if test (updates_available) = 100
+   echo "updates available"
+end
+

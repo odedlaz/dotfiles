@@ -1,0 +1,3 @@
+#!/usr/bin/env fish
+set DIR (readlink -f (dirname (status -f)))
+source $DIR/exec_ $argv[1] "exec"

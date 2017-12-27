@@ -1,0 +1,10 @@
+#!/usr/bin/env fish
+set DIR (readlink -f (dirname (status -f)))
+set plugin $argv[1]
+set type $argv[2]
+
+source $DIR/.venv/bin/activate.fish
+eval "$DIR/$plugin/$type"
+set exitcode $status
+deactivate
+exit $exitcode

@@ -1,0 +1,5 @@
+#!/usr/bin/env fish
+curl -sL "https://ipinfo.io/json" | \
+jq -r .org | \
+awk '{ $1=""; print $0 }' | \
+sed 's/^ //'

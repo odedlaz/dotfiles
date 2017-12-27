@@ -1,4 +1,5 @@
-plugins/
 *cybereason*
 work-functions/
 .installed
+googleapi_key
+openweathermap_key

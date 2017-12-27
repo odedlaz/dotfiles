@@ -1,0 +1,63 @@
+#!/usr/bin/env python
+# sh is mighty! have a look: https://github.com/amoffat/sh
+from sh import awk, iwlist
+import requests
+import sys
+import os
+
+__dir__ = os.path.dirname(os.path.realpath(__file__))
+
+
+def get_geolocation():
+    keypath = f"{__dir__}/googleapi_key"
+    if not os.path.exists(keypath):
+        print(f"'{keypath}' doesn't exist", file=sys.stderr)
+        sys.exit(1)
+
+    access_points = [{"macAddress": hwaddr.strip().lower()}
+                     for hwaddr in awk(iwlist("scan"),
+                                       "/Cell\s+[0-9]+/ { print $5 }")]
+
+    data = {"considerIp": True,
+            "wifiAccessPoints": access_points}
+
+    params = {"key": open(keypath, "r").read().strip()}
+
+    r = requests.post("https://www.googleapis.com/geolocation/v1/geolocate",
+                      json=data, params=params)
+    if not r.ok:
+        print(r.text, file=sys.stderr)
+        sys.exit(1)
+
+    location = r.json()["location"]
+    return location["lng"], location["lat"]
+
+
+def get_weather_forecast(longitude, latitude):
+    keypath = f"{__dir__}/openweathermap_key"
+    if not os.path.exists(keypath):
+        print(f"'{keypath}' doesn't exist", file=sys.stderr)
+        sys.exit(2)
+
+    params = {"units": "metric",
+              "appid": open(keypath, "r").read().strip(),
+              "lat": latitude, "lon": longitude}
+
+    resp = requests.post("https://api.openweathermap.org/data/2.5/weather",
+                         params=params)
+    if not resp.ok:
+        print(resp.text, file=sys.stderr)
+        sys.exit(2)
+
+    return resp.json()
+
+
+if __name__ == "__main__":
+    longitude, latitude = get_geolocation()
+    forecast = get_weather_forecast(longitude, latitude)
+
+    location = forecast["name"]
+    temperature = forecast["main"]["temp"]
+    condition = forecast["weather"][0]["main"]
+
+    print(f"{location}, {temperature}°C [{condition}]")

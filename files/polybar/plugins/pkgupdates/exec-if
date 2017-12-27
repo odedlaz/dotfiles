@@ -1,0 +1,7 @@
+#!/usr/bin/env fish
+
+if pgrep dnf > /dev/null
+   exit 1
+end
+
+exit 0
