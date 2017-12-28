@@ -23,7 +23,7 @@ font pango:DejaVu Sans Mono 11
 floating_modifier $altkey
 
 # start a terminal
-bindsym $altkey+Return exec gnome-terminal
+bindsym $altkey+Return exec st
 
 # kill focused window
 bindsym $altkey+Shift+q kill
