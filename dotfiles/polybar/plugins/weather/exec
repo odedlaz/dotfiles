@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # sh is mighty! have a look: https://github.com/amoffat/sh
-from sh import awk, iwlist
+from sh import grep, iw, iwconfig, awk
 import requests
 import sys
 import os
@@ -14,9 +14,14 @@ def get_geolocation():
         print(f"'{keypath}' doesn't exist", file=sys.stderr)
         sys.exit(1)
 
+    wlan = awk(iwconfig(), "/IEEE/ { print $1 }").split('\n')
+    if not wlan:
+        print(f"couldn't find a wireless interface", file=sys.stderr)
+        sys.exit(1)
+
     access_points = [{"macAddress": hwaddr.strip().lower()}
-                     for hwaddr in awk(iwlist("scan"),
-                                       "/Cell\s+[0-9]+/ { print $5 }")]
+                     for hwaddr in grep(iw(wlan[0].strip(), "scan"), "-o", "-h", "-i",
+                                        "[0-9A-F]\{2\}\(:[0-9A-F]\{2\}\)\{5\}")]
 
     data = {"considerIp": True,
             "wifiAccessPoints": access_points}
