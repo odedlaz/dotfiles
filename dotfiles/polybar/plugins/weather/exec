@@ -67,6 +67,7 @@ if __name__ == "__main__":
 
     location = forecast["name"]
     temperature = forecast["main"]["temp"]
-    condition = forecast["weather"][0]["main"]
+    # extracting the weather symbol using owfont
+    owfont_character = chr(60000 + forecast["weather"][0]["id"])
 
-    print(f"{location}, {temperature}°C [{condition}]")
+    print(f"{owfont_character} {location}, {temperature}°C")
