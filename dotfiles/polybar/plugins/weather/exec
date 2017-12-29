@@ -14,13 +14,17 @@ def get_geolocation():
         print(f"'{keypath}' doesn't exist", file=sys.stderr)
         sys.exit(1)
 
-    wlan = awk(iwconfig(), "/IEEE/ { print $1 }").split('\n')
-    if not wlan:
+    # get all wireless interfaces
+    ifaces = awk(iwconfig(), "/IEEE/ { print $1 }").split('\n')
+    if not ifaces:
         print(f"couldn't find a wireless interface", file=sys.stderr)
         sys.exit(1)
 
+    # just pick the first one
+    iface = ifaces[0].strip()
+
     access_points = [{"macAddress": hwaddr.strip().lower()}
-                     for hwaddr in grep(iw(wlan[0].strip(), "scan"), "-o", "-h", "-i",
+                     for hwaddr in grep(iw(iface, "scan"), "-o", "-i",
                                         "[0-9A-F]\{2\}\(:[0-9A-F]\{2\}\)\{5\}")]
 
     data = {"considerIp": True,
