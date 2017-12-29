@@ -11,6 +11,9 @@ setglobal encoding=utf-8
 setglobal fileencoding=utf-8
 scriptencoding utf-8
 
+" use system clipboard for copy-paste
+set clipboard=unnamedplus
+
 let g:mapleader = "\\"
 
 let g:python_host_prog = '/opt/nvim/python2/bin/python'
