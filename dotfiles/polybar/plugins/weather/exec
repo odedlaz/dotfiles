@@ -1,31 +1,56 @@
 #!/usr/bin/env python
 # sh is mighty! have a look: https://github.com/amoffat/sh
-from sh import grep, iw, iwconfig, awk
+import sh
 import requests
 import sys
 import os
+import functools
+from tempfile import gettempdir as tmpdir
+import logging
 
+logging.basicConfig(format='%(asctime)s - %(name)s - %(message)s',
+                    filename=os.path.join(tmpdir(), 'polybar.log'),
+                    level=logging.ERROR,
+                    filemode="a+")
+
+logger = logging.getLogger("polybar.plugins.weather")
 __dir__ = os.path.dirname(os.path.realpath(__file__))
 
 
+def exit_on_exception(exitcode):
+    def decorator(fn):
+        @functools.wraps(fn)
+        def wrapper(*args, **kwargs):
+            try:
+                return fn(*args, **kwargs)
+            except sh.ErrorReturnCode as e:
+                cmd = e.full_cmd.strip()
+                errtxt = e.stderr.decode('utf-8').strip()
+                logger.error(f"[{cmd}] - {errtxt}")
+                sys.exit(exitcode)
+            except Exception as e:
+                sys.exit(exitcode)
+        return wrapper
+    return decorator
+
+
+@exit_on_exception(exitcode=1)
 def get_geolocation():
     keypath = f"{__dir__}/googleapi_key"
     if not os.path.exists(keypath):
-        print(f"'{keypath}' doesn't exist", file=sys.stderr)
-        sys.exit(1)
+        raise IOError(f"'{keypath}' doesn't exist")
 
     # get all wireless interfaces
-    ifaces = awk(iwconfig(), "/IEEE/ { print $1 }").split('\n')
+    ifaces = sh.awk(sh.iwconfig(), "/IEEE/ { print $1 }").split('\n')
     if not ifaces:
-        print(f"couldn't find a wireless interface", file=sys.stderr)
-        sys.exit(1)
+        raise IOError(f"couldn't find a wireless interface")
 
     # just pick the first one
     iface = ifaces[0].strip()
 
     access_points = [{"macAddress": hwaddr.strip().lower()}
-                     for hwaddr in grep(iw(iface, "scan"), "-o", "-i",
-                                        "[0-9A-F]\{2\}\(:[0-9A-F]\{2\}\)\{5\}")]
+                     for hwaddr in sh.grep(sh.iw(iface, "scan"), "-o", "-i",
+                                           "[0-9A-F]\{2\}\(:[0-9A-F]\{2\}\)\{5\}")]
 
     data = {"considerIp": True,
             "wifiAccessPoints": access_points}
@@ -35,39 +60,41 @@ def get_geolocation():
     r = requests.post("https://www.googleapis.com/geolocation/v1/geolocate",
                       json=data, params=params)
     if not r.ok:
-        print(r.text, file=sys.stderr)
-        sys.exit(1)
+        raise IOError(r.text)
 
     location = r.json()["location"]
     return location["lng"], location["lat"]
 
 
+@exit_on_exception(exitcode=2)
 def get_weather_forecast(longitude, latitude):
     keypath = f"{__dir__}/openweathermap_key"
     if not os.path.exists(keypath):
-        print(f"'{keypath}' doesn't exist", file=sys.stderr)
-        sys.exit(2)
+        raise IOError(f"'{keypath}' doesn't exist")
 
     params = {"units": "metric",
               "appid": open(keypath, "r").read().strip(),
               "lat": latitude, "lon": longitude}
 
-    resp = requests.post("https://api.openweathermap.org/data/2.5/weather",
-                         params=params)
+    resp = requests.get("https://api.openweathermap.org/data/2.5/weather",
+                        params=params)
     if not resp.ok:
-        print(resp.text, file=sys.stderr)
-        sys.exit(2)
+        raise IOError(resp.text)
 
     return resp.json()
 
 
-if __name__ == "__main__":
-    longitude, latitude = get_geolocation()
-    forecast = get_weather_forecast(longitude, latitude)
-
+@exit_on_exception(exitcode=3)
+def echo(forecast):
     location = forecast["name"]
     temperature = forecast["main"]["temp"]
     # extracting the weather symbol using owfont
     owfont_character = chr(60000 + forecast["weather"][0]["id"])
 
     print(f"{owfont_character} {location}, {temperature}°C")
+
+
+if __name__ == "__main__":
+    longitude, latitude = get_geolocation()
+    forecast = get_weather_forecast(longitude, latitude)
+    echo(forecast)
