@@ -316,11 +316,6 @@ endfunction
 """""""""""""""""""
 
 "navigation mappings
-noremap  <Up> :echo 'use k!'<cr>
-noremap  <Down> :echo 'use j!'<cr>
-noremap  <Left> :echo 'use h!'<cr>
-noremap  <Right> :echo 'use l!'<cr>
-
 nnoremap <C-Up> :wincmd +<cr>
 nnoremap <C-Down> :wincmd -<cr>
 nnoremap <C-Left> :wincmd <<cr>
