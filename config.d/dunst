@@ -1,0 +1,2 @@
+mkdir -p $HOME/.config/dunst
+link "$DIR/dunst/dunstrc" "$HOME/.config/dunst/dunstrc"
