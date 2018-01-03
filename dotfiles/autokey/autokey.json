@@ -12,10 +12,10 @@
         "interfaceType": "XRecord",
         "undoUsingBackspace": true,
         "windowDefaultSize": [
-            1920,
-            1025
+            956,
+            1021
         ],
-        "hPanePosition": 482,
+        "hPanePosition": 240,
         "columnWidths": [
             150,
             50,
@@ -28,7 +28,7 @@
         "scriptGlobals": {}
     },
     "folders": [
-        "/opt/dotfiles/files/autokey/Phrases"
+        "/opt/dotfiles/dotfiles/autokey/Phrases"
     ],
     "toggleServiceHotkey": {
         "enabled": true,
