@@ -4,9 +4,9 @@ import sh
 import requests
 import sys
 import os
+import logging
 import functools
 from tempfile import gettempdir as tmpdir
-import logging
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(message)s',
                     filename=os.path.join(tmpdir(), 'polybar.log'),
@@ -29,6 +29,7 @@ def exit_on_exception(exitcode):
                 logger.error(f"[{cmd}] - {errtxt}")
                 sys.exit(exitcode)
             except Exception as e:
+                logger.error(e)
                 sys.exit(exitcode)
         return wrapper
     return decorator
@@ -52,7 +53,7 @@ def get_geolocation():
                      for hwaddr in sh.grep(sh.iw(iface, "scan"), "-o", "-i",
                                            "[0-9A-F]\{2\}\(:[0-9A-F]\{2\}\)\{5\}")]
 
-    data = {"considerIp": True,
+    data = {"considerIp": False,
             "wifiAccessPoints": access_points}
 
     params = {"key": open(keypath, "r").read().strip()}
@@ -64,6 +65,26 @@ def get_geolocation():
 
     location = r.json()["location"]
     return location["lng"], location["lat"]
+
+
+@exit_on_exception(exitcode=3)
+def get_geocode(latitude, longitude):
+    keypath = f"{__dir__}/googleapi_key"
+    if not os.path.exists(keypath):
+        raise IOError(f"'{keypath}' doesn't exist")
+
+    params = {"key": open(keypath, "r").read().strip(),
+              "latlng": f"{latitude},{longitude}"}
+
+    r = requests.get("https://maps.googleapis.com/maps/api/geocode/json",
+                     params=params)
+    if not r.ok:
+        raise IOError(r.text)
+
+    for res in r.json()['results']:
+        for address in res['address_components']:
+            if 'locality' in address['types']:
+                return address['short_name']
 
 
 @exit_on_exception(exitcode=2)
@@ -84,17 +105,22 @@ def get_weather_forecast(longitude, latitude):
     return resp.json()
 
 
-@exit_on_exception(exitcode=3)
-def echo(forecast):
-    location = forecast["name"]
+@exit_on_exception(exitcode=4)
+def echo(location, forecast):
     temperature = forecast["main"]["temp"]
+    condition = forecast["weather"][0]["main"]
     # extracting the weather symbol using owfont
     owfont_character = chr(60000 + forecast["weather"][0]["id"])
 
-    print(f"{owfont_character} {location}, {temperature}°C")
+    print(f"{owfont_character} {location}, {temperature}°C [{condition}]")
 
 
 if __name__ == "__main__":
+    # get geolocation using google maps api
     longitude, latitude = get_geolocation()
+    # get geo code using google maps api
+    location = get_geocode(latitude, longitude)
+    # get weather data from open weather map
     forecast = get_weather_forecast(longitude, latitude)
-    echo(forecast)
+    # format and dump to stdout
+    echo(location, forecast)
