@@ -1,0 +1,8 @@
+set gtk_themes_dir $CONFIGDIR/gtk-themes
+for dir in $gtk_themes_dir/*
+   set theme_name (basename $dir)
+   link $gtk_themes_dir/$theme_name "$HOME/.icons/$theme"
+end
+
+link "$DOTDIR/gtk/gtk-2.0" "$HOME/.gtkrc-2.0"
+link "$DOTDIR/gtk/gtk-3.0" "$HOME/.config/gtk-3.0/settings.ini"
