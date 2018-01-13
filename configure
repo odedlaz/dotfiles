@@ -81,6 +81,15 @@ end
 
 for path in $CONFIGDIR/{.??,}*
    set script (basename $path)
+   if echo $script | grep ".disabled\$" > /dev/null
+      set script (echo $script | \
+                awk -F '.disabled' '{print $1}')
+      set_color 'yellow'
+      echo "not sourcing $script - disabled."
+      set_color 'normal'
+      continue
+   end
+
    set_color 'purple'
    echo "sourcing "(basename $path)
    set_color 'normal'
