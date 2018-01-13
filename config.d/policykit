@@ -1,0 +1,1 @@
+link "$DOTDIR/policykit/wheel-nopasswd.rules" "/etc/polkit-1/rules.d/00-wheel-nopasswd.rules"
