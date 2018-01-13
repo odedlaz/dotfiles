@@ -8,4 +8,5 @@ while pgrep -u (id -u) -x polybar > /dev/null
    sleep 1
 end
 
-polybar mytux -r &
+polybar bottom -r &
+polybar top -r &

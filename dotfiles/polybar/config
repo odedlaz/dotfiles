@@ -10,12 +10,13 @@ green = #98c379
 visual_grey = #3e4452
 comment_grey = #5c6370
 
-[bar/mytux]
+[bar/top]
 
 width = 100%
-height = 27
+height = 25
 radius = 6.0
 fixed-center = true
+bottom = false
 
 background = ${onedark.black}
 foreground = ${onedark.white}
@@ -38,12 +39,12 @@ font-2 = "owf\-regular:size=16"
 
 modules-left = i3
 modules-center = time date weather
-modules-right = pkgupdates xkeyboard wlan eth memory battery volume
 
 tray-position = right
 tray-padding = 0
 
-wm-restack = i3
+;wm-restack = i3
+override-redirect = false
 
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
@@ -51,11 +52,59 @@ scroll-down = i3wm-wsprev
 cursor-click = pointer
 cursor-scroll = ns-resize
 
+[bar/bottom]
+
+width = 100%
+height = 23
+radius = 6.0
+fixed-center = true
+bottom = true
+
+background = ${onedark.black}
+foreground = ${onedark.white}
+
+line-size = 1
+line-color = ${onedark.black}
+
+border-size = 3
+border-color = ${onedark.black}
+
+padding-left = 2
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = "FontAwesome:pixelsize=11;0"
+font-1 = "Roboto:size=11"
+font-2 = "owf\-regular:size=16"
+
+modules-left = uptime ipinfo
+modules-right = pkgupdates xkeyboard memory battery
+
+;wm-restack = i3
+override-redirect = false
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+[module/uptime]
+type = custom/script
+exec =  $HOME/.config/polybar/plugins/uptime/exec
+
+format-prefix = " "
+format-prefix-foreground = ${onedark.comment_grey}
+tail = false
+interval = 1
+
 [module/ipinfo]
 type = custom/script
 exec =  $HOME/.config/polybar/plugins/ipinfo/exec
 
-format-prefix = "  "
+format-prefix = " "
 format-prefix-foreground = ${onedark.comment_grey}
 tail = false
 interval = 30
@@ -64,9 +113,10 @@ interval = 30
 type = custom/script
 exec =  $HOME/.config/polybar/plugins/exec weather
 
+format-prefix = "  "
 format-prefix-foreground = ${onedark.comment_grey}
 tail = false
-interval = 30
+interval = 12
 
 [module/pkgupdates]
 type = custom/script
@@ -165,7 +215,6 @@ time = %H:%M
 
 format-prefix = "  "
 format-prefix-foreground = ${onedark.comment_grey}
-
 label = "%time%"
 
 [module/volume]
@@ -218,6 +267,21 @@ animation-charging-2 = 
 animation-charging-3 = 
 animation-charging-4 = 
 animation-charging-framerate = 750
+
+[module/github]
+type = internal/github
+
+format =  <label>
+label = %notifications%
+
+; Accessing an access token stored in file
+token = ${file://$HOME/.config/polybar/gh_access.token}
+
+; Whether empty notifications should be displayed or not
+empty-notifications = true
+
+; Number of seconds in between requests
+interval = 10
 
 [settings]
 screenchange-reload = true

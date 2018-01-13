@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 # sh is mighty! have a look: https://github.com/amoffat/sh
 import sh
+from contextlib import contextmanager
 import requests
 import sys
 import os
+import re
 import logging
 import functools
+from time import time
 from tempfile import gettempdir as tmpdir
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(message)s',
@@ -15,6 +18,17 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(message)s',
 
 logger = logging.getLogger("polybar.plugins.weather")
 __dir__ = os.path.dirname(os.path.realpath(__file__))
+
+
+def printf(fmt, *args, **kwargs):
+    print(fmt.format(*args, **kwargs))
+
+
+@contextmanager
+def timeit(op):
+    now = time()
+    yield
+    print(f"'{op}' took: {time() - now:.2f} secs")
 
 
 def exit_on_exception(exitcode):
@@ -35,25 +49,31 @@ def exit_on_exception(exitcode):
     return decorator
 
 
+def get_wireless_interfaces():
+    rx = re.compile('^(.*): ')
+    # get all wireless interfaces
+    yield from (m.group(1) for m
+                in map(rx.match, open('/proc/net/wireless'))
+                if m)
+
+
+def get_access_points():
+    rx = re.compile('([0-9A-F]{2}(:[0-9A-F]{2}){5})', re.IGNORECASE)
+    for iface in get_wireless_interfaces():
+        matches = rx.findall(sh.iw(iface, "scan").stdout.decode('utf-8'))
+        yield from (x[0].strip().lower() for x in matches)
+
+
 @exit_on_exception(exitcode=1)
 def get_geolocation():
     keypath = f"{__dir__}/googleapi_key"
     if not os.path.exists(keypath):
         raise IOError(f"'{keypath}' doesn't exist")
 
-    # get all wireless interfaces
-    ifaces = sh.awk(sh.iwconfig(), "/IEEE/ { print $1 }").split('\n')
-    if not ifaces:
-        raise IOError(f"couldn't find a wireless interface")
+    access_points = [{"macAddress": hwaddr}
+                     for hwaddr in set(get_access_points())]
 
-    # just pick the first one
-    iface = ifaces[0].strip()
-
-    access_points = [{"macAddress": hwaddr.strip().lower()}
-                     for hwaddr in sh.grep(sh.iw(iface, "scan"), "-o", "-i",
-                                           "[0-9A-F]\{2\}\(:[0-9A-F]\{2\}\)\{5\}")]
-
-    data = {"considerIp": False,
+    data = {"considerIp": True,
             "wifiAccessPoints": access_points}
 
     params = {"key": open(keypath, "r").read().strip()}
@@ -107,15 +127,13 @@ def get_weather_forecast(longitude, latitude):
 
 @exit_on_exception(exitcode=4)
 def echo(location, forecast):
-    temperature = forecast["main"]["temp"]
-    condition = forecast["weather"][0]["main"]
-    # extracting the weather symbol using owfont
-    owfont_character = chr(60000 + forecast["weather"][0]["id"])
-
-    print(f"{owfont_character} {location}, {temperature}°C [{condition}]")
+    print((f"{location}"
+           f" {forecast['main']['temp']:.0f}°C"
+           f" [{forecast['weather'][0]['main']}]"))
 
 
 if __name__ == "__main__":
+
     # get geolocation using google maps api
     longitude, latitude = get_geolocation()
     # get geo code using google maps api
