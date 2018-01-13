@@ -1,5 +1,5 @@
-recursive_link "$DIR/fish" "$HOME/.config/fish"
-recursive_link "$DIR/oh-my-fish" "$HOME/.config/omf"
+recursive_link "$DOTDIR/fish" "$HOME/.config/fish"
+recursive_link "$DOTDIR/oh-my-fish" "$HOME/.config/omf"
 if not test -d "$HOME/.local/share/omf/"
    echo "installing fish plugin manager..."
    curl -L https://get.oh-my.fish | fish

@@ -1,1 +1,1 @@
-recursive_link "$DIR/i3" "$HOME/.config/i3"
+recursive_link "$DOTDIR/i3" "$HOME/.config/i3"

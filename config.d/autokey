@@ -1,4 +1,4 @@
 set AUTOKEY_DIR "$HOME/.config/autokey"
 
 mkdir -p "$AUTOKEY_DIR"
-link "$DIR/autokey/autokey.json" "$AUTOKEY_DIR/autokey.json"
+link "$DOTDIR/autokey/autokey.json" "$AUTOKEY_DIR/autokey.json"

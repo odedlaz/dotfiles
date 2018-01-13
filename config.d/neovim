@@ -1,14 +1,14 @@
-recursive_link "$DIR/neovim/init.vim" "$HOME/.vimrc"
-recursive_link "$DIR/neovim" "$HOME/.config/nvim"
+recursive_link "$DOTDIR/neovim/init.vim" "$HOME/.vimrc"
+recursive_link "$DOTDIR/neovim" "$HOME/.config/nvim"
 
 sudo chmod -R 777 /opt/nvim
 sudo mkdir -p /opt/nvim
 
 for python_ver in "python3" "python2"
    mkdir -p "/opt/nvim/$python_ver"
-   link "$DIR/neovim/python/update.fish" "/opt/nvim/$python_ver/update.fish"
-   link "$DIR/neovim/python/requirements.txt" "/opt/nvim/$python_ver/requirements.txt"
-   link "$DIR/neovim/python/$python_ver.envrc" "/opt/nvim/$python_ver/.envrc"
+   link "$DOTDIR/neovim/python/update.fish" "/opt/nvim/$python_ver/update.fish"
+   link "$DOTDIR/neovim/python/requirements.txt" "/opt/nvim/$python_ver/requirements.txt"
+   link "$DOTDIR/neovim/python/$python_ver.envrc" "/opt/nvim/$python_ver/.envrc"
 end
 
 # install vim-plug

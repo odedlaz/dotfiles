@@ -1,1 +1,1 @@
-link "$DIR/git/gitconfig" "$HOME/.gitconfig"
+link "$DOTDIR/git/gitconfig" "$HOME/.gitconfig"

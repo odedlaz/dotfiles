@@ -1,1 +1,1 @@
-recursive_link "$DIR/ctags/ctags" "$HOME/.ctags"
+recursive_link "$DOTDIR/ctags/ctags" "$HOME/.ctags"
