@@ -28,7 +28,8 @@ bindsym $altkey+Return exec st
 # kill focused window
 bindsym $altkey+Shift+q kill
 
-bindsym $winkey+Return exec --no-startup-id /usr/local/bin/rofi -show combi
+bindsym $altkey+Tab exec --no-startup-id /usr/local/bin/rofi -show window
+bindsym $altkey+grave exec --no-startup-id "/usr/local/bin/rofi -modi drun,run -sidebar-mode -show drun"
 
 # change focus
 bindsym $altkey+h focus left
@@ -66,7 +67,7 @@ bindsym $altkey+f fullscreen toggle
 # change container layout (stacked, tabbed, toggle split)
 bindsym $altkey+e layout toggle split
 bindsym $altkey+s layout stacked
-bindsym $altkey+t layout tabbed
+bindsym $altkey+w layout tabbed
 
 # scratchpad
 bindsym $altkey+Shift+p move scratchpad
@@ -144,6 +145,7 @@ mode "resize" {
 
 bindsym $altkey+r mode "resize"
 
+# Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +20% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -20% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
@@ -152,19 +154,22 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute s
 bindsym XF86MonBrightnessUp exec light -A 10 # increase screen brightness
 bindsym XF86MonBrightnessDown exec light -U 10 # decrease screen brightness
 
+# startup things
 exec_always --no-startup-id fish $HOME/.config/polybar/launch
 exec --no-startup-id /usr/local/bin/autokey-gtk
 exec --no-startup-id /usr/bin/insync start
 exec --no-startup-id /usr/bin/redshift-gtk
 exec --no-startup-id /usr/local/bin/udiskie -t
+exec --no-startup-id /usr/bin/nm-applet
+exec --no-startup-id /usr/bin/pasystray
+exec --no-startup-id /usr/bin/lxpolkit
+exec --no-startup-id /usr/bin/blueman-tray
 
-# Pulse Audio controls
-
-exec setxkbmap -layout us,il
-exec setxkbmap -option 'grp:win_space_toggle'
+# configuration
+exec_always setxkbmap -layout us,il
+exec_always setxkbmap -option 'grp:win_space_toggle'
 exec_always --no-startup-id feh --bg-scale $HOME/Pictures/wallpapers/i-\<3-linux-asian.jpg
-
-exec --no-startup-id xinput set-prop 12 279 1
+exec_always --no-startup-id xinput set-prop 'Synaptics TM3053-004' 'libinput Tapping Enabled' 1
 
 exec_always xmodmap -e "clear lock" #disable caps lock switch
 exec_always xmodmap -e "keysym Caps_Lock = Escape" #set caps_lock as escape
