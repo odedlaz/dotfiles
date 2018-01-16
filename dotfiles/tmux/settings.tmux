@@ -1,3 +1,4 @@
+set-option -g pane-index 1
 set-window-option -g pane-base-index 1
 set -sg escape-time 0
 set-option -g prefix C-f
