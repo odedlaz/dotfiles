@@ -37,16 +37,16 @@ bind-key -n M-0 if-shell 'tmux select-window -t 10' '' 'new-window -t 10'
 
 
 # Change current pane to next window
-bind-key 1 if-shell 'tmux join-pane -t :1' '' 'new-window -d -t 1; join-pane -t :1 ; kill-pane -a'
-bind-key 2 if-shell 'tmux join-pane -t :2' '' 'new-window -d -t 2; join-pane -t :2 ; kill-pane -a'
-bind-key 3 if-shell 'tmux join-pane -t :3' '' 'new-window -d -t 3; join-pane -t :3 ; kill-pane -a'
-bind-key 4 if-shell 'tmux join-pane -t :4' '' 'new-window -d -t 4; join-pane -t :4 ; kill-pane -a'
-bind-key 5 if-shell 'tmux join-pane -t :5' '' 'new-window -d -t 5; join-pane -t :5 ; kill-pane -a'
-bind-key 6 if-shell 'tmux join-pane -t :6' '' 'new-window -d -t 6; join-pane -t :6 ; kill-pane -a'
-bind-key 7 if-shell 'tmux join-pane -t :7' '' 'new-window -d -t 7; join-pane -t :7 ; kill-pane -a'
-bind-key 8 if-shell 'tmux join-pane -t :8' '' 'new-window -d -t 8; join-pane -t :8 ; kill-pane -a'
-bind-key 9 if-shell 'tmux join-pane -t :9' '' 'new-window -d -t 9; join-pane -t :9 ; kill-pane -a'
-bind-key 0 if-shell 'tmux join-pane -t :10' '' 'new-window -d -t 10; join-pane -t :10 ; kill-pane -a'
+bind-key -n M-'!' if-shell 'tmux join-pane -t :1' '' 'new-window -d -t 1; join-pane -t :1 ; kill-pane -a'
+bind-key -n M-'@' if-shell 'tmux join-pane -t :2' '' 'new-window -d -t 2; join-pane -t :2 ; kill-pane -a'
+bind-key -n M-'#' if-shell 'tmux join-pane -t :3' '' 'new-window -d -t 3; join-pane -t :3 ; kill-pane -a'
+bind-key -n M-'$' if-shell 'tmux join-pane -t :4' '' 'new-window -d -t 4; join-pane -t :4 ; kill-pane -a'
+bind-key -n M-'%' if-shell 'tmux join-pane -t :5' '' 'new-window -d -t 5; join-pane -t :5 ; kill-pane -a'
+bind-key -n M-'^' if-shell 'tmux join-pane -t :6' '' 'new-window -d -t 6; join-pane -t :6 ; kill-pane -a'
+bind-key -n M-'&' if-shell 'tmux join-pane -t :7' '' 'new-window -d -t 7; join-pane -t :7 ; kill-pane -a'
+bind-key -n M-'*' if-shell 'tmux join-pane -t :8' '' 'new-window -d -t 8; join-pane -t :8 ; kill-pane -a'
+bind-key -n M-'(' if-shell 'tmux join-pane -t :9' '' 'new-window -d -t 9; join-pane -t :9 ; kill-pane -a'
+bind-key -n M-')' if-shell 'tmux join-pane -t :10' '' 'new-window -d -t 10; join-pane -t :10 ; kill-pane -a'
 
 # Kill Selected Pane
 bind-key q kill-pane
