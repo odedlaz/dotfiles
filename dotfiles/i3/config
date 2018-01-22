@@ -1,5 +1,8 @@
 set $altkey Mod1
 set $winkey Mod4
+#
+# remove title bar
+for_window [class="^.*"] border pixel 2
 
 set $onedark_black #282c34
 set $onedark_blue #61afef
@@ -63,6 +66,7 @@ bindsym $altkey+minus split vertical
 
 # enter fullscreen mode for the focused container
 bindsym $altkey+f fullscreen toggle
+popup_during_fullscreen smart
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $altkey+e layout toggle split
@@ -81,9 +85,6 @@ bindsym $altkey+space focus mode_toggle
 
 # focus the parent container
 bindsym $altkey+a focus parent
-
-# focus the child container
-#bindsym $altkey+d focus child
 
 # switch to workspace
 bindsym $altkey+1 workspace 1
@@ -111,6 +112,7 @@ bindsym $altkey+Shift+0 move container to workspace 10
 
 # reload the configuration file
 bindsym $altkey+Shift+c reload
+
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $altkey+Shift+r restart
 
@@ -163,7 +165,7 @@ exec --no-startup-id /usr/local/bin/udiskie -t
 exec --no-startup-id /usr/bin/nm-applet
 exec --no-startup-id /usr/bin/pasystray
 exec --no-startup-id /usr/bin/lxpolkit
-exec --no-startup-id /usr/bin/blueman-tray
+exec --no-startup-id /usr/bin/blueberry-tray
 
 # configuration
 exec_always setxkbmap -layout us,il
