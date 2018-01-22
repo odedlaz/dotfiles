@@ -12,7 +12,7 @@ setglobal fileencoding=utf-8
 scriptencoding utf-8
 
 " use system clipboard for copy-paste
-set clipboard=unnamedplus
+"set clipboard=unnamedplus
 
 let g:mapleader = "\\"
 
@@ -88,6 +88,12 @@ augroup autoformat_settings
   autocmd FileType java AutoFormatBuffer google-java-format
   autocmd FileType python AutoFormatBuffer autopep8
 augroup END
+
+Plug 'rhysd/vim-clang-format'
+
+let g:clang_format#code_style = "google"
+let g:clang_format#detect_style_file = 1
+let g:clang_format#auto_format = 0
 
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
