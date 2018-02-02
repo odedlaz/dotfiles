@@ -49,6 +49,7 @@ Plug 'Shougo/echodoc.vim'
 Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
+    \'rust' : [ $HOME . '/.cargo/bin/rls' , $HOME . '/.cargo/bin/rustup' ],
     \'python' : ['/opt/nvim/python3/bin/pyls'],
     \'go' : ['go-langserver'],
     \ }
@@ -89,6 +90,10 @@ augroup autoformat_settings
   autocmd FileType python AutoFormatBuffer autopep8
 augroup END
 
+
+Plug 'mattn/webapi-vim'
+Plug 'rust-lang/rust.vim'
+let g:rustfmt_autosave = 1
 Plug 'rhysd/vim-clang-format'
 
 let g:clang_format#code_style = "google"
