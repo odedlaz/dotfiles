@@ -2,7 +2,8 @@
 set SCRIPTS_DIR "$HOME/Dev/scripts"
 
 alias vi "nvim"
-alias vim "nvim"
+alias reload "source $HOME/.config/fish/config.fish"
+alias em "emacsclient -cnq"
 alias venvoff "deactivate"
 alias readme 'pandoc README.md | lynx -stdin'
 alias pingg "ping google.com"

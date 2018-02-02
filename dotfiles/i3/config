@@ -166,6 +166,7 @@ exec --no-startup-id /usr/bin/nm-applet
 exec --no-startup-id /usr/bin/pasystray
 exec --no-startup-id /usr/bin/lxpolkit
 exec --no-startup-id /usr/bin/blueberry-tray
+exec --no-startup-id /usr/bin/emacs --daemon
 
 # configuration
 exec_always setxkbmap -layout us,il
