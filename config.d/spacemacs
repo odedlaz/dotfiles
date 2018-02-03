@@ -1,5 +1,5 @@
 link "$DOTDIR/spacemacs/spacemacs" "$HOME/.spacemacs"
-if not test -f "$HOME/.emacs.d"
+if not test -d "$HOME/.emacs.d"
    echo "installing spacemacs ..."
    git clone https://github.com/syl20bnr/spacemacs $HOME/.emacs.d
 end
@@ -9,4 +9,4 @@ if test -f "$shortcut"
    sudo mv "$shortcut" "$shortcut.bak"
 end
 
-link "$DOTDIR/spacemacs/spacemacs.desktop" "$HOME/.local/share/applications/spacemacs.desktop"
+link "$CONFIGDIR/spacemacs.d/spacemacs.desktop" "$HOME/.local/share/applications/spacemacs.desktop"
