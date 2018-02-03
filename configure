@@ -7,7 +7,7 @@ for i in (seq (count $argv))
    set item $argv[$i]
     switch "$item"
         case -f --force
-           set rm_flags $rm_flags "-f"
+           set rm_flags $rm_flags "-rf"
          case -i --interactive
             set rm_flags $rm_flags "-i"
          case -t --target
