@@ -3,3 +3,10 @@ if not test -f "$HOME/.emacs.d"
    echo "installing spacemacs ..."
    git clone https://github.com/syl20bnr/spacemacs $HOME/.emacs.d
 end
+
+set shortcut "/usr/share/applications/emacs.desktop"
+if test -f "$shortcut"
+   sudo mv "$shortcut" "$shortcut.bak"
+end
+
+link "$DOTDIR/spacemacs/spacemacs.desktop" "$HOME/.local/share/applications/spacemacs.desktop"
