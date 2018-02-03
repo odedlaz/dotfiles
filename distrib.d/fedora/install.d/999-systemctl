@@ -1,2 +1,0 @@
-systemctl enable sshd ;and systemctl start sshd
-systemctl enable docker ;and systemctl start docker

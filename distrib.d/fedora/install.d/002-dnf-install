@@ -1,9 +1,0 @@
-for path in $DIR/../yum.repos.d/{.??,}*
-   set repo "/etc/yum.repos.d/"(basename $path)
-   if test -e $repo ;or test -L $repo
-      rm -rv $repo
-   end
-   ln -v -s $path $repo
-end
-
-dnf install -y --nogpgcheck (cat $DIR/packages)
