@@ -80,7 +80,7 @@ font-1 = "Roboto:size=11"
 font-2 = "owf\-regular:size=16"
 
 modules-left = uptime ipinfo
-modules-right = pkgupdates xkeyboard memory internal-battery external-battery
+modules-right = pkgupdates xkeyboard memory external-battery
 
 ;wm-restack = i3
 override-redirect = false
@@ -107,7 +107,7 @@ exec =  $HOME/.config/polybar/plugins/ipinfo/exec
 format-prefix = " "
 format-prefix-foreground = ${onedark.comment_grey}
 tail = false
-interval = 30
+interval = 90
 
 [module/weather]
 type = custom/script
@@ -272,7 +272,7 @@ animation-charging-framerate = 750
 type = internal/battery
 battery = BAT1
 adapter = AC
-full-at = 98
+full-at = 88
 
 format-charging = <animation-charging> <label-charging>
 label-charging = %percentage%%
