@@ -1,5 +1,14 @@
 #!/usr/bin/env fish
-curl -sL "https://ipinfo.io/json" | \
-jq -r .org | \
-awk '{ $1=""; print $0 }' | \
-sed 's/^ //'
+set resp (curl -sLw '%{http_code}' "https://ipinfo.io/json")
+set status_code (echo $resp | tail -c 4)
+set body (echo $resp |  sed 's/...$//')
+
+if test $status_code -ne 200
+   echo "$body" >> /dev/stderr
+   exit 1
+end
+
+echo $body | \
+   jq -r .org | \
+   awk '{ $1=""; print $0 }' | \
+   sed 's/^ //'
