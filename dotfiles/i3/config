@@ -26,7 +26,7 @@ font pango:Source Code Pro for Powerline 11
 floating_modifier $altkey
 
 # start a terminal
-bindsym $altkey+Return exec st
+bindsym $altkey+Return exec ~/.config/i3/exec_st
 
 # kill focused window
 bindsym $altkey+Shift+q kill
