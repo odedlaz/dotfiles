@@ -16,12 +16,8 @@ bind-key -n C-Down resize-pane -D
 bind-key -n C-Left resize-pane -L
 bind-key -n C-Right resize-pane -R
 
-bind-key -n "_" split-window -v -c "#{pane_current_path}"
-
 # Choose Window
 bind-key w choose-window
-
-bind R source-file ~/.tmux.conf \; display-message "Config reloaded"
 
 # Switch windows alt+number
 bind-key -n M-1 if-shell 'tmux select-window -t 1' '' 'new-window -t 1'
@@ -49,4 +45,5 @@ bind-key -n M-'(' if-shell 'tmux join-pane -t :9' '' 'new-window -d -t 9; join-p
 bind-key -n M-')' if-shell 'tmux join-pane -t :10' '' 'new-window -d -t 10; join-pane -t :10 ; kill-pane -a'
 
 # Kill Selected Pane
-bind-key q kill-pane
+bind-key -n M-Q kill-pane
+bind-key -n M-R source-file ~/.tmux.conf \; display-message "Config reloaded"
