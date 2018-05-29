@@ -11,9 +11,6 @@ setglobal encoding=utf-8
 setglobal fileencoding=utf-8
 scriptencoding utf-8
 
-" use system clipboard for copy-paste
-"set clipboard=unnamedplus
-
 let g:mapleader = "\\"
 
 let g:python_host_prog = '/opt/nvim/python2/bin/python'
@@ -30,10 +27,8 @@ silent! execute '!mkdir -p ' . $TMP . '> /dev/null 2>&1'
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'shime/vim-livedown'
-
-" Fast, Extensible, Async Completion Framework for Neovim
-Plug 'roxma/nvim-completion-manager'
+Plug 'vim-scripts/vim-auto-save'
+let g:auto_save = 1
 
 " don't give |ins-completion-menu| messages.  For example,
 " '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
@@ -41,6 +36,9 @@ set shortmess+=c
 
 " Dark powered asynchronous unite all interfaces for Neovim/Vim8
 Plug 'Shougo/denite.nvim'
+
+" asynchronous completion framework for neovim/Vim8
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " Displays function signatures from completions in the command line.
 Plug 'Shougo/echodoc.vim'
@@ -54,59 +52,15 @@ let g:LanguageClient_serverCommands = {
     \'go' : ['go-langserver'],
     \ }
 
-" display tags in a window, ordered by scope
-Plug 'majutsushi/tagbar'
-let g:tagbar_autofocus = 0
-" auto open tagbar when opening a tagged file
-" does the same as taglist.vim's TlistOpen.
-" autocmd VimEnter * nested :call tagbar#autoopen(1)
-
-Plug 'craigemery/vim-autotag'
-
-" Plugin framework
-Plug 'google/vim-maktaba'
-
-" Easy configuration of maktaba plugins.
-Plug 'google/vim-glaive'
-
-" (Syn)tax (cop)y-p(a)s(te)
-Plug 'google/vim-syncopate'
-
-" Display number of search matches & index of a current match
+" display number of search matches & index of a current match
 Plug 'google/vim-searchindex'
 
-" utility for syntax-aware code formatting
-Plug 'google/vim-codefmt'
-
-augroup autoformat_settings
-  au!
-  autocmd FileType bzl AutoFormatBuffer buildifier
-  "autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
-  autocmd FileType dart AutoFormatBuffer dartfmt
-  autocmd FileType go AutoFormatBuffer gofmt
-  autocmd FileType gn AutoFormatBuffer gn
-  autocmd FileType html,css,json AutoFormatBuffer js-beautify
-  autocmd FileType java AutoFormatBuffer google-java-format
-  autocmd FileType python AutoFormatBuffer autopep8
-augroup END
-
-
-Plug 'mattn/webapi-vim'
-Plug 'rust-lang/rust.vim'
-let g:rustfmt_autosave = 1
-Plug 'rhysd/vim-clang-format'
-
-let g:clang_format#code_style = "google"
-let g:clang_format#detect_style_file = 1
-let g:clang_format#auto_format = 0
-
+" improved incremental searching for Vim
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
-
-" Unset "last search pattern" register on <CR>
 
 " Clear highlighting on escape in normal mode
 nnoremap <esc> :noh<return><esc>
@@ -115,9 +69,15 @@ nnoremap <esc>^[ <esc>^[
 "live subsitution
 set inccommand=split
 
+"show tabs as characters
+set list
+:set listchars=eol:⏎,tab:␉·,trail:␠,nbsp:⎵
+
+" Intelligently reopen files at your last edit position
 Plug 'farmergreg/vim-lastplace'
 let g:lastplace_ignore_buftype = "quickfix"
 
+" colorize all text in the form #rrggbb or #rgb
 Plug 'chrisbra/Colorizer'
 let g:colorizer_auto_filetype='css,less,html'
 let g:colorizer_skip_comments = 1
@@ -125,36 +85,18 @@ let g:colorizer_skip_comments = 1
 Plug 'tmux-plugins/vim-tmux'
 Plug 'christoomey/vim-tmux-navigator'
 let g:tmux_navigator_no_mappings = 1
-nnoremap <silent> <S-Up> :TmuxNavigateUp<cr>
-nnoremap <silent> <S-Down> :TmuxNavigateDown<cr>
-nnoremap <silent> <S-Left> :TmuxNavigateLeft<cr>
-nnoremap <silent> <S-Right> :TmuxNavigateRight<cr>
+nnoremap <silent> <M-Up> :TmuxNavigateUp<cr>
+nnoremap <silent> <M-Down> :TmuxNavigateDown<cr>
+nnoremap <silent> <M-Left> :TmuxNavigateLeft<cr>
+nnoremap <silent> <M-Right> :TmuxNavigateRight<cr>
 nnoremap <silent> <c-\> :TmuxNavigatePrevious<cr>
 
 Plug 'gcmt/wildfire.vim'
 map <SPACE> <Plug>(wildfire-fuel)
 vmap <C-SPACE> <Plug>(wildfire-water)
 
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-nnoremap <leader>nt :NERDTreeToggle<cr>
-
-augroup nerdtree
-   au!
-   " open nerdtree when editing a directory
-   autocmd StdinReadPre * let s:std_in=1
-   autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-
-   "close vim if the only window left open is a NERDTree
-   autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-augroup END
-
 "disable the builtin, bloated netrw plugin. We don’t need two filebrowsers.
 let g:loaded_netrwPlugin=1
-"let NERDTree respect the vim wildignore setting
-"Rootignore converts .gitignore into wildignore
-"thus making NERDTree respect gitignore!
-let g:NERDTreeRespectWildIgnore=1
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -163,19 +105,18 @@ Plug 'junegunn/fzf.vim'
 nnoremap <c-p> :execute ':Files ' projectroot#guess()<cr>
 let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
 
-Plug 'dyng/ctrlsf.vim'
-nnoremap <c-t> :CtrlSF<Space>
-nnoremap <leader>ct :CtrlSFToggle<cr>
-
-Plug 'troydm/zoomwintab.vim'
-nnoremap <leader>z :ZoomWinTabToggle<cr>
-
-Plug 'janko-m/vim-test'
-nmap <silent> <leader>tf :TestFile<CR>
-nmap <silent> <leader>ts :TestSuite<CR>
-nmap <silent> <leader>tl :TestLast<CR>
-nmap <silent> <leader>tn :TestNearest<CR>
-nmap <silent> <leader>tv :TestVisit<CR>
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+nnoremap <c-t> :Find<Space>
 
 Plug 'neomake/neomake'
 augroup neomake_hooks
@@ -183,21 +124,11 @@ augroup neomake_hooks
    autocmd BufWritePost * update | Neomake
 augroup END
 
-let g:neomake_open_list = 1
+let g:neomake_open_list = 2
 " let g:neomake_verbose = 3
 let g:neomake_cpp_enabled_makers = []
 let g:neomake_c_enabled_makers = []
 let g:neomake_python_enabled_makers = ['flake8']
-
-Plug 'Rip-Rip/clang_complete', {'do': 'make'}
-" " The following is used to enable support for compilation database
-" let g:clang_use_library = 1
-" let g:clang_library_path = '/usr/lib64/libclang.so'
-" let g:clang_user_options = '-std=c++11'
-" let g:clang_auto_user_options = '.clang_complete, compile_commands.json, path'
-" let g:neomake_cpp_clangcheck_args = ['-extra-arg', '-fno-modules']
-" " make neomake use c++11
-" let g:neomake_cpp_clang_args = ["-std=c++11"]
 
 " taken from github.com/neomake/neomake/autoload/neomake/makers/ft/python.vim
 " needed to change the arguemnts of flake8
@@ -211,16 +142,12 @@ let g:neomake_python_flake8_maker = {
          \ 'postprocess': function('neomake#makers#ft#python#Flake8EntryProcess')
          \ }
 
-let g:neomake_go_enabled_makers = ['golint', 'govet', 'errcheck']
-
-Plug 'fatih/vim-go'
-let g:go_fmt_command = 'goimports'
-
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
+" rainbow parenthesis
 Plug 'joshdick/onedark.vim'
 let g:airline_theme='onedark'
 
@@ -241,37 +168,24 @@ augroup END
 Plug 'dag/vim-fish'
 autocmd FileType fish compiler fish
 
-" git commit browser
-Plug 'junegunn/gv.vim'
-" shows a git diff in the gutter (sign column) and stages/undoes hunks
-Plug 'airblade/vim-gitgutter'
-
-" :substitute preview
-Plug 'osyo-manga/vim-over'
-
-Plug 'vim-scripts/tComment'
-Plug 'fisadev/vim-isort'
-Plug 'jmcantrell/vim-virtualenv'
-Plug 'tpope/vim-fugitive'
-Plug 'flazz/vim-colorschemes'
-Plug 'godlygeek/tabular'
-Plug 'ervandew/supertab'
-Plug 'vim-scripts/matchit.zip'
-Plug 'sickill/vim-pasta'
+" file sensible comments
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-commentary'
+Plug 'vim-scripts/tComment'
+
+" remaps . in a way that plugins can tap into it
 Plug 'tpope/vim-repeat'
-Plug 'jiangmiao/auto-pairs'
+
+" provides mappings to easily delete, change and add such surroundings in pairs
 Plug 'tpope/vim-surround'
+
+" True Sublime Text style multiple selections
 Plug 'terryma/vim-multiple-cursors'
+
+" visually displaying indent levels
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'chriskempson/base16-vim'
-Plug 'mhinz/vim-startify'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'shougo/vimshell.vim'
-Plug 'shougo/vimproc.vim' ,{'do':'make'}
-Plug 'sheerun/vim-polyglot'
-Plug 'vim-scripts/tinykeymap'
+
+" find out which project a file belongs to, easy to use in scripts/mappings
 Plug 'dbakker/vim-projectroot'
 
 call plug#end()
@@ -279,22 +193,9 @@ call plug#end()
 " put the tags file in the git directory
 let g:autotagTagsFile=projectroot#guess()."/.git/tags"
 
-" needs to go after plug#end
-call glaive#Install()
-
-" enable glave keymappings
-Glaive syncopate plugin[mappings]
-
-" syncopate glaive configuration
-Glaive syncopate change_colorscheme=0
-Glaive syncopate clear_bg=0
-Glaive syncopate colorscheme='onedark'
-Glaive syncopate browser='google-chrome'
-
 """""""""""""""
 """functions"""
 """""""""""""""
-
 " Source the vimrc file after saving it
 augroup reload_vimrc
    au!
@@ -340,7 +241,7 @@ nnoremap <C-Right> :wincmd ><cr>
 silent! set winheight=30
 silent! set winminheight=5
 
-" reload buffer it was edited outside of vim
+" reload buffer if it was edited outside of vim
 " Change numbering in insert mode
 augroup set_update
    au!
@@ -389,19 +290,6 @@ set cursorline
 "Set the term title
 set title
 set titlestring=%F
-
-"Show line number and position
-set relativenumber
-
-" Change numbering in insert mode
-augroup set_linenumbers_on_enter_and_leave
-   au!
-   autocmd FocusLost * :set number
-   autocmd InsertEnter * :set number
-
-   autocmd FocusGained * :set relativenumber
-   autocmd InsertLeave * :set relativenumber
-augroup END
 
 "lower tiemout
 set timeoutlen=1000 ttimeoutlen=0
