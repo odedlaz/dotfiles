@@ -3,13 +3,9 @@ set SCRIPTS_DIR "$HOME/Dev/scripts"
 
 alias vi "nvim"
 alias reload "source $HOME/.config/fish/config.fish"
-alias em "emacsclient -cnq"
 alias venvoff "deactivate"
 alias readme 'pandoc README.md | lynx -stdin'
 alias pingg "ping google.com"
 alias unpair "/usr/local/bin/doas $SHELL $SCRIPTS_DIR/unpair.sh"
-alias pair "suex $SHELL $SCRIPTS_DIR/pair.sh"
-alias fuck='eval "suex $history[1]"'
-alias fuck!='eval "/usr/bin/sudo $history[1]"'
-alias sudo!='/usr/bin/sudo'
-alias sudo='suex'
+alias pair "sudo $SHELL $SCRIPTS_DIR/pair.sh"
+alias fuck='eval "sudo $history[1]"'
