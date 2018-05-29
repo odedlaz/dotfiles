@@ -1,5 +1,6 @@
-set-option -g pane-index 1
+set -g base-index 1
 set-window-option -g pane-base-index 1
+
 set -sg escape-time 0
 set-option -g prefix C-f
 
@@ -23,11 +24,9 @@ set -g terminal-overrides 'xterm*:smcup@:rmcup@'
 set-option -ga terminal-overrides ",$TERM:Tc"
 
 # Must set default-command to $SHELL, in order to not source ~/.profile
-# BUG: Should *not* hardcode /bin/bash here
-set -g default-command $SHELL
+set -g default-command /usr/bin/fish
 set -g default-shell /usr/bin/bash
 
 set -g status-interval 60
 set -g message-fg white
 set -g mouse on
-
