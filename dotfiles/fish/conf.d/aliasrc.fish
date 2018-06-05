@@ -2,6 +2,7 @@
 set SCRIPTS_DIR "$HOME/Dev/scripts"
 
 alias vi "nvim"
+alias cat "bat --theme TwoDark"
 alias reload "source $HOME/.config/fish/config.fish"
 alias venvoff "deactivate"
 alias readme 'pandoc README.md | lynx -stdin'
