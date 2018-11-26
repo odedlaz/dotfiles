@@ -1,5 +1,8 @@
 """""""""""""""""""
 """odedlaz vimrc"""
+" Plug 'vim-scripts/vim-auto-save'
+" let g:auto_save = 0
+
 """""""""""""""""""
 
 " fish is not posix, and breaks many plugins
@@ -13,8 +16,8 @@ scriptencoding utf-8
 
 let g:mapleader = "\\"
 
-let g:python_host_prog = '/opt/nvim/python2/bin/python'
-let g:python3_host_prog = '/opt/nvim/python3/bin/python'
+let g:python_host_prog = '/usr/bin/python2'
+let g:python3_host_prog = '/usr/bin/python3'
 
 " some plugins use $TMP to find the temp directory
 " make tmp per user, so they won't collide
@@ -26,9 +29,6 @@ silent! execute '!mkdir -p ' . $TMP . '> /dev/null 2>&1'
 """""""""""""
 
 call plug#begin('~/.vim/plugged')
-
-Plug 'vim-scripts/vim-auto-save'
-let g:auto_save = 1
 
 " don't give |ins-completion-menu| messages.  For example,
 " '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
@@ -82,15 +82,6 @@ Plug 'chrisbra/Colorizer'
 let g:colorizer_auto_filetype='css,less,html'
 let g:colorizer_skip_comments = 1
 
-Plug 'tmux-plugins/vim-tmux'
-Plug 'christoomey/vim-tmux-navigator'
-let g:tmux_navigator_no_mappings = 1
-nnoremap <silent> <M-Up> :TmuxNavigateUp<cr>
-nnoremap <silent> <M-Down> :TmuxNavigateDown<cr>
-nnoremap <silent> <M-Left> :TmuxNavigateLeft<cr>
-nnoremap <silent> <M-Right> :TmuxNavigateRight<cr>
-nnoremap <silent> <c-\> :TmuxNavigatePrevious<cr>
-
 Plug 'gcmt/wildfire.vim'
 map <SPACE> <Plug>(wildfire-fuel)
 vmap <C-SPACE> <Plug>(wildfire-water)
@@ -103,7 +94,13 @@ Plug 'junegunn/fzf.vim'
 
 "make sure files run in the right directory
 nnoremap <c-p> :execute ':Files ' projectroot#guess()<cr>
-let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
+
+" --files: List files that would be searched but do not search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+let $FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 
 " --column: Show column number
 " --line-number: Show line number
