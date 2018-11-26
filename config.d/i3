@@ -1,1 +1,7 @@
 recursive_link "$DOTDIR/i3" "$HOME/.config/i3"
+
+mkdir -p "$HOME/.config/i3/utils"
+
+for f in $CONFIGDIR/i3.d/*
+   link "$f" "$HOME/.config/i3/utils/"(basename $f)
+end

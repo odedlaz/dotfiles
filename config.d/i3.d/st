@@ -16,4 +16,4 @@ if test -n $window_pid
    end
 end
 
-cd $cwd;and exec st
+cd $cwd;and exec st fish

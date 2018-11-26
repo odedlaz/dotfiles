@@ -1,0 +1,41 @@
+#!/usr/bin/env fish
+
+xinput set-prop 12 142 1
+xinput set-prop 12 144 1.000000 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
+xinput set-prop 12 269 1
+xinput set-prop 12 270 2.500000
+xinput set-prop 12 271 1.000000
+xinput set-prop 12 272 12.500000
+xinput set-prop 12 273 50 1223, 36, 636
+xinput set-prop 12 274 25 30, 0
+xinput set-prop 12 275 180
+xinput set-prop 12 276 63
+xinput set-prop 12 277 180 180, 100
+xinput set-prop 12 278 1
+xinput set-prop 12 279 0
+xinput set-prop 12 280 282
+xinput set-prop 12 281 7
+xinput set-prop 12 282 -28 28
+xinput set-prop 12 283 0 0, 0
+xinput set-prop 12 284 1 1
+xinput set-prop 12 285 1.000000 1.750000, 0.138985, 0.000000
+xinput set-prop 12 286 0
+xinput set-prop 12 287 0
+xinput set-prop 12 288 5000
+xinput set-prop 12 289 0 0, 0, 0, 1, 3, 2
+xinput set-prop 12 290 1 3, 2
+xinput set-prop 12 291 0
+xinput set-prop 12 292 0.100000
+xinput set-prop 12 293 0
+xinput set-prop 12 294 0
+xinput set-prop 12 295 1
+xinput set-prop 12 296 10 200
+xinput set-prop 12 297 20.000000 50.000000
+xinput set-prop 12 298 30 160
+xinput set-prop 12 299 1.000000 1.000000
+xinput set-prop 12 300 1
+xinput set-prop 12 301 0
+xinput set-prop 12 302 1
+xinput set-prop 12 305 0 0, 0, 0
+xinput set-prop 12 306 0 0, 0, 0, 0, 0, 0, 0
+xinput set-prop 12 307 7 7

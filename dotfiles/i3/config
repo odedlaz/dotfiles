@@ -20,19 +20,19 @@ client.urgent              $onedark_red            $onedark_red            $oned
 client.placeholder         $onedark_black          $onedark_comment_grey   $onedark_visual_grey    $onedark_black          $onedark_comment_grey
 client.background          $onedark_black
 
-font pango:Source Code Pro for Powerline 11
+font pango:Source Code Variable 11
 
 # Use Mouse+$altkey to drag floating windows to their wanted position
 floating_modifier $altkey
 
 # start a terminal
-bindsym $altkey+Return exec ~/.config/i3/exec_st
+bindsym $altkey+Return exec ~/.config/i3/utils/st
 
 # kill focused window
 bindsym $altkey+Shift+q kill
 
-bindsym $altkey+Tab exec --no-startup-id /usr/local/bin/rofi -show window
-bindsym $altkey+grave exec --no-startup-id "/usr/local/bin/rofi -modi drun,run -sidebar-mode -show drun"
+bindsym $altkey+Tab exec --no-startup-id rofi -show window
+bindsym $altkey+grave exec --no-startup-id "rofi -modi drun,run -sidebar-mode -show drun"
 
 # change focus
 bindsym $altkey+h focus left
@@ -74,7 +74,7 @@ bindsym $altkey+s layout stacked
 bindsym $altkey+w layout tabbed
 
 # scratchpad
-bindsym $altkey+Shift+p move scratchpad
+# bindsym $altkey+Shift+p move scratchpad
 bindsym $altkey+p scratchpad show
 
 # toggle tiling / floating
@@ -119,7 +119,7 @@ bindsym $altkey+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $altkey+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes' 'i3-msg exit'"
 
-bindsym $winkey+l exec "/usr/bin/dm-tool lock"
+bindsym $winkey+l exec "bash -c 'gsettings set org.gnome.desktop.input-sources current 0 && /usr/bin/gnome-screensaver-command -l'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -152,27 +152,36 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +20% #
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -20% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
-# Sreen brightness controls
+# Screen brightness controls
 bindsym XF86MonBrightnessUp exec light -A 10 # increase screen brightness
 bindsym XF86MonBrightnessDown exec light -U 10 # decrease screen brightness
 
-# startup things
+# configure synaptic to mimic gnome
+exec_always ~/.config/i3/utils/touchpad
+
+# execute bar
 exec_always --no-startup-id fish $HOME/.config/polybar/launch
-exec --no-startup-id /usr/local/bin/autokey-gtk
-exec --no-startup-id /usr/bin/insync start
-exec --no-startup-id /usr/bin/redshift-gtk
-exec --no-startup-id /usr/local/bin/udiskie -t
-exec --no-startup-id /usr/bin/nm-applet
-exec --no-startup-id /usr/bin/pasystray
-exec --no-startup-id /usr/bin/lxpolkit
-exec --no-startup-id /usr/bin/blueberry-tray
-exec --no-startup-id /usr/bin/emacs --daemon
 
-# configuration
-exec_always setxkbmap -layout us,il
-exec_always setxkbmap -option 'grp:win_space_toggle'
-exec_always --no-startup-id feh --bg-scale $HOME/Pictures/wallpapers/i-\<3-linux-asian.jpg
-exec_always --no-startup-id xinput set-prop 'Synaptics TM3053-004' 'libinput Tapping Enabled' 1
+# configure language
+exec --no-startup-id setxkbmap -layout us,il -option 'grp:win_space_toggle'
 
+# replace caps lock with escape
 exec_always xmodmap -e "clear lock" #disable caps lock switch
 exec_always xmodmap -e "keysym Caps_Lock = Escape" #set caps_lock as escape
+
+# configure whatsapp to open up in scratchpad
+for_window [instance="web.whatsapp.com" class="Google-chrome" window_role="pop-up"] move window to scratchpad, scratchpad hide
+exec --no-startup-id google-chrome-stable --app=https://web.whatsapp.com
+
+#exec_always --no-startup-id feh --bg-scale $HOME/Pictures/magicleap.png
+# exec --no-startup-id /usr/local/bin/udiskie -t
+# exec --no-startup-id /usr/bin/nm-applet
+# exec --no-startup-id /usr/bin/pasystray
+# exec --no-startup-id /usr/bin/lxpolkit
+# exec --no-startup-id /usr/bin/blueberry-tray
+exec --no-startup-id /usr/bin/redshift-gtk
+
+#bindsym --release $mod+h exec --no-startup-id "i3-vim-nav h"
+#bindsym --release $mod+j exec --no-startup-id "i3-vim-nav j"
+#bindsym --release $mod+k exec --no-startup-id "i3-vim-nav k"
+#bindsym --release $mod+l exec --no-startup-id "i3-vim-nav l"
