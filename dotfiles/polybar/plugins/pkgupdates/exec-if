@@ -1,6 +1,14 @@
 #!/usr/bin/env fish
 
-if pgrep dnf > /dev/null
+if pgrep apt-check > /dev/null
+   exit 1
+end
+
+if pgrep apt > /dev/null
+   exit 1
+end
+
+if pgrep dpkg > /dev/null
    exit 1
 end
 
