@@ -1,3 +1,6 @@
+[common]
+
+monitor = eDP-1
 
 [onedark]
 
@@ -17,6 +20,7 @@ height = 25
 radius = 6.0
 fixed-center = true
 bottom = false
+monitor = ${common.monitor}
 
 background = ${onedark.black}
 foreground = ${onedark.white}
@@ -59,6 +63,7 @@ height = 23
 radius = 6.0
 fixed-center = true
 bottom = true
+monitor = ${common.monitor}
 
 background = ${onedark.black}
 foreground = ${onedark.white}
@@ -116,7 +121,7 @@ exec =  $HOME/.config/polybar/plugins/exec weather
 format-prefix = "  "
 format-prefix-foreground = ${onedark.comment_grey}
 tail = false
-interval = 12
+interval = 600
 
 [module/pkgupdates]
 type = custom/script
