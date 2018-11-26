@@ -31,6 +31,22 @@ function virg --argument text
    nvim "$cursor_cmd" $path
 end
 
+function cdto --argument path
+   if test -z $path
+      return 1
+   end
+
+   if test -L $path
+      set path (readlink -f $path)
+   end
+
+   if test -f $path
+      set path (dirname $path)
+   end
+
+   cd $path
+end
+
 
 function cdrg --argument text
    set match (rg "$text" --vimgrep --no-messages | fzf)
