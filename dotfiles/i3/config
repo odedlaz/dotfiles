@@ -180,8 +180,3 @@ exec --no-startup-id google-chrome-stable --app=https://web.whatsapp.com
 # exec --no-startup-id /usr/bin/lxpolkit
 # exec --no-startup-id /usr/bin/blueberry-tray
 exec --no-startup-id /usr/bin/redshift-gtk
-
-#bindsym --release $mod+h exec --no-startup-id "i3-vim-nav h"
-#bindsym --release $mod+j exec --no-startup-id "i3-vim-nav j"
-#bindsym --release $mod+k exec --no-startup-id "i3-vim-nav k"
-#bindsym --release $mod+l exec --no-startup-id "i3-vim-nav l"
