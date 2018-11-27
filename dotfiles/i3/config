@@ -22,6 +22,9 @@ client.background          $onedark_black
 
 font pango:Source Code Variable 11
 
+# don't focus when moving mouse
+focus_follows_mouse no
+
 # Use Mouse+$altkey to drag floating windows to their wanted position
 floating_modifier $altkey
 
@@ -119,6 +122,7 @@ bindsym $altkey+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $altkey+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes' 'i3-msg exit'"
 
+# lock screen (switch to english language first)
 bindsym $winkey+l exec "bash -c 'gsettings set org.gnome.desktop.input-sources current 0 && /usr/bin/gnome-screensaver-command -l'"
 
 # resize window (you can also use the mouse for that)
@@ -153,11 +157,15 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -20% #
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
 # Screen brightness controls
-bindsym XF86MonBrightnessUp exec light -A 10 # increase screen brightness
-bindsym XF86MonBrightnessDown exec light -U 10 # decrease screen brightness
+# prerequisite: https://github.com/haikarainen/light#permissions
+bindsym XF86MonBrightnessUp exec light -A 7 # increase screen brightness
+bindsym XF86MonBrightnessDown exec light -U 7 # decrease screen brightness
 
 # configure synaptic to mimic gnome
-exec_always ~/.config/i3/utils/touchpad
+exec_always $HOME/.config/i3/utils/touchpad -c
+
+# toggle touchpad on/off
+bindsym $altkey+q exec $HOME/.config/i3/utils/touchpad -t
 
 # execute bar
 exec_always --no-startup-id fish $HOME/.config/polybar/launch
@@ -173,10 +181,20 @@ exec_always xmodmap -e "keysym Caps_Lock = Escape" #set caps_lock as escape
 for_window [instance="web.whatsapp.com" class="Google-chrome" window_role="pop-up"] move window to scratchpad, scratchpad hide
 exec --no-startup-id google-chrome-stable --app=https://web.whatsapp.com
 
-#exec_always --no-startup-id feh --bg-scale $HOME/Pictures/magicleap.png
-# exec --no-startup-id /usr/local/bin/udiskie -t
-# exec --no-startup-id /usr/bin/nm-applet
-# exec --no-startup-id /usr/bin/pasystray
-# exec --no-startup-id /usr/bin/lxpolkit
-# exec --no-startup-id /usr/bin/blueberry-tray
+# open slack on workspace 10
+#exec --no-startup-id i3-msg 'workspace 10; exec /snap/bin/slack; workspace 0'
+
+# set wallpaper
+exec_always --no-startup-id feh --bg-scale /usr/share/backgrounds/ubuntu-default-greyscale-wallpaper.png
+
+# Automounter for removable media
+exec --no-startup-id /usr/bin/udiskie -t
+
+# NetworkManager applet
+exec --no-startup-id /usr/bin/nm-applet
+
+# Adjust color temprature according to location and time of day
 exec --no-startup-id /usr/bin/redshift-gtk
+
+# Control bluetooth
+exec --no-startup-id /usr/bin/blueman-applet
