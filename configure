@@ -15,7 +15,22 @@ for i in (seq (count $argv))
     end
 end
 
+function is_disabled -a 'path'
+   if echo $path | grep '.disabled$' > /dev/null
+      return 0
+   else
+      return 1
+   end
+end
+
 function link -a 'from' 'to'
+   if is_disabled $from
+      set_color 'yellow'
+      echo "not linking "(basename $from)" -- disabled!"
+      set_color 'normal'
+      return 0
+   end
+
    if test (count $rm_flags) -gt 0
       set_color 'yellow'
       sudo rm -v $rm_flags $to
@@ -80,12 +95,9 @@ if test -n $target
 end
 
 for path in $CONFIGDIR/{.??,}*
-   set script (basename $path)
-   if echo $script | grep ".disabled\$" > /dev/null
-      set script (echo $script | \
-                awk -F '.disabled' '{print $1}')
+   if is_disabled $path
       set_color 'yellow'
-      echo "not sourcing $script - disabled."
+      echo "not sourcing $path -- disabled!"
       set_color 'normal'
       continue
    end
