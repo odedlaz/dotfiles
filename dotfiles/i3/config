@@ -181,9 +181,6 @@ exec_always xmodmap -e "keysym Caps_Lock = Escape" #set caps_lock as escape
 for_window [instance="web.whatsapp.com" class="Google-chrome" window_role="pop-up"] move window to scratchpad, scratchpad hide
 exec --no-startup-id google-chrome-stable --app=https://web.whatsapp.com
 
-# open slack on workspace 10
-#exec --no-startup-id i3-msg 'workspace 10; exec /snap/bin/slack; workspace 0'
-
 # set wallpaper
 exec_always --no-startup-id feh --bg-scale /usr/share/backgrounds/ubuntu-default-greyscale-wallpaper.png
 
