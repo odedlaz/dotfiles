@@ -23,7 +23,7 @@ client.background          $onedark_black
 font pango:Source Code Variable 11
 
 # don't focus when moving mouse
-focus_follows_mouse no
+focus_follows_mouse yes
 
 # Use Mouse+$altkey to drag floating windows to their wanted position
 floating_modifier $altkey
@@ -34,8 +34,17 @@ bindsym $altkey+Return exec ~/.config/i3/utils/st
 # kill focused window
 bindsym $altkey+Shift+q kill
 
+# rofi bindings
 bindsym $altkey+Tab exec --no-startup-id rofi -show window
-bindsym $altkey+grave exec --no-startup-id "rofi -modi drun,run -sidebar-mode -show drun"
+
+bindsym $altkey+grave exec --no-startup-id \
+   "rofi -modi drun,run -sidebar-mode -show drun"
+
+bindsym $altkey+Escape exec --no-startup-id \
+   "rofi -show workspace -modi workspace:~/.config/rofi/scripts/i3_switch_workspace"
+
+bindsym $altkey+Shift+Escape exec --no-startup-id \
+   "rofi -show output -modi output:~/.config/rofi/scripts/i3_move_workspace"
 
 # change focus
 bindsym $altkey+h focus left
@@ -90,28 +99,28 @@ bindsym $altkey+space focus mode_toggle
 bindsym $altkey+a focus parent
 
 # switch to workspace
-bindsym $altkey+1 workspace 1
-bindsym $altkey+2 workspace 2
-bindsym $altkey+3 workspace 3
-bindsym $altkey+4 workspace 4
-bindsym $altkey+5 workspace 5
-bindsym $altkey+6 workspace 6
-bindsym $altkey+7 workspace 7
-bindsym $altkey+8 workspace 8
-bindsym $altkey+9 workspace 9
-bindsym $altkey+0 workspace 10
+bindsym $altkey+1 workspace number 1
+bindsym $altkey+2 workspace number 2
+bindsym $altkey+3 workspace number 3
+bindsym $altkey+4 workspace number 4
+bindsym $altkey+5 workspace number 5
+bindsym $altkey+6 workspace number 6
+bindsym $altkey+7 workspace number 7
+bindsym $altkey+8 workspace number 8
+bindsym $altkey+9 workspace number 9
+bindsym $altkey+0 workspace number 10
 
 # move focused container to workspace
-bindsym $altkey+Shift+1 move container to workspace 1
-bindsym $altkey+Shift+2 move container to workspace 2
-bindsym $altkey+Shift+3 move container to workspace 3
-bindsym $altkey+Shift+4 move container to workspace 4
-bindsym $altkey+Shift+5 move container to workspace 5
-bindsym $altkey+Shift+6 move container to workspace 6
-bindsym $altkey+Shift+7 move container to workspace 7
-bindsym $altkey+Shift+8 move container to workspace 8
-bindsym $altkey+Shift+9 move container to workspace 9
-bindsym $altkey+Shift+0 move container to workspace 10
+bindsym $altkey+Shift+1 move container to workspace number 1
+bindsym $altkey+Shift+2 move container to workspace number 2
+bindsym $altkey+Shift+3 move container to workspace number 3
+bindsym $altkey+Shift+4 move container to workspace number 4
+bindsym $altkey+Shift+5 move container to workspace number 5
+bindsym $altkey+Shift+6 move container to workspace number 6
+bindsym $altkey+Shift+7 move container to workspace number 7
+bindsym $altkey+Shift+8 move container to workspace number 8
+bindsym $altkey+Shift+9 move container to workspace number 9
+bindsym $altkey+Shift+0 move container to workspace number 10
 
 # reload the configuration file
 bindsym $altkey+Shift+c reload
@@ -171,14 +180,12 @@ bindsym $altkey+q exec $HOME/.config/i3/utils/touchpad -t
 exec_always --no-startup-id fish $HOME/.config/polybar/launch
 
 # configure language
-exec --no-startup-id setxkbmap -layout us,il -option 'grp:win_space_toggle'
-
-# replace caps lock with escape
-exec_always xmodmap -e "clear lock" #disable caps lock switch
-exec_always xmodmap -e "keysym Caps_Lock = Escape" #set caps_lock as escape
+exec_always --no-startup-id setxkbmap -layout 'us,il' \
+   -option 'grp:win_space_toggle' -option 'caps:escape'
 
 # configure whatsapp to open up in scratchpad
-for_window [instance="web.whatsapp.com" class="Google-chrome" window_role="pop-up"] move window to scratchpad, scratchpad hide
+for_window [instance="web.whatsapp.com" class="Google-chrome" window_role="pop-up"] \
+   move window to scratchpad, scratchpad hide
 exec --no-startup-id google-chrome-stable --app=https://web.whatsapp.com
 
 # set wallpaper
