@@ -1,0 +1,56 @@
+#!/usr/bin/env fish
+set NEW_WORKSPACE "new workspace"
+set workspaces (i3-msg -t get_workspaces | jq -r '.[].name')
+
+if test -z $argv
+   echo "$NEW_WORKSPACE"
+   printf "%s\n" $workspaces | sort -h | awk -F ':' '{
+         if ( $2 != "") $2=" ("$2")"
+         print "workspace " $1 $2
+      }'
+   exit 0
+end
+
+set workspace $argv[1]
+
+if test $workspace = "$NEW_WORKSPACE"
+   echo "opening a new dialog to request workspace name" >&2
+   echo "Please enter workspace name, then press <Enter>"
+   exit 0
+end
+
+set match (echo $workspace | \
+   rg -o -r '$num:$name' 'workspace\s(?P<num>\d+)(\s\((?P<name>.+)\))?$' | \
+   awk -F ':' '{ print $1 }')
+
+if test -n "$match"
+   set workspace $match
+end
+
+set workspace_numbers (printf "%s\n" $workspaces | awk -F ':' '{ print $1 }')
+if contains $workspace $workspace_numbers
+   echo "switching focus to workspace: '$workspace'" >&2
+   set workspace_number (echo "$workspace" | awk -F ':' '{ print $1 }')
+   echo "switching focus to workspace number: '$workspace_number'" >&2
+   i3-msg workspace number $workspace_number >/dev/null ^&1
+   exit 0
+end
+
+if printf "%s\n" $workspaces | rg -o "\d+:$workspace\$" > /dev/null
+   echo "can't create workspace named '$workspace' since one already exists" >&2
+   exit 1
+end
+
+echo "creating a new window named: $workspace" >&2
+
+set last_workspace (printf "%s\n" $workspaces | \
+   awk -F ':' '{ print $1 }' | \
+   sort -h | \
+   tail -n 1)
+
+set new_workspace_number (math $last_workspace + 1)
+if test $new_workspace_number -le 10
+   set new_workspace_number 11
+end
+
+i3-msg workspace "$new_workspace_number:$workspace" > /dev/null ^&1

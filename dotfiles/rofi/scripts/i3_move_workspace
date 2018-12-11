@@ -1,0 +1,15 @@
+#!/usr/bin/env fish
+set NEW_WORKSPACE "new workspace"
+
+if test -z $argv
+   xrandr --current | \
+   rg '^(?P<name>[A-Za-z]+-.+?)\sconnected' -o -r '$name'
+   exit 0
+end
+
+set output $argv[1]
+
+set workspace (i3-msg -t get_workspaces | \
+   jq -r '.[] | select(.focused==true).num')
+
+i3-msg "workspace number $workspace, move workspace to output $output" > /dev/null ^&1
