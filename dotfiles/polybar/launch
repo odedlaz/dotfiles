@@ -1,12 +1,11 @@
 #!/usr/bin/env fish
 
 # Terminate already running bar instances
-killall -q polybar
-
-# Wait until the processes have been shut down
-while pgrep -u (id -u) -x polybar > /dev/null
+while killall -q polybar > /dev/null
    sleep 1
 end
 
-polybar bottom -r &
-polybar top -r &
+set MONITOR (polybar -m | tail -1 | sed -e 's/:.*$//g')
+
+env MONITOR=$MONITOR polybar bottom -r &
+env MONITOR=$MONITOR polybar top -r &

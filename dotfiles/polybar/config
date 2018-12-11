@@ -1,6 +1,6 @@
 [common]
 
-monitor = eDP-1
+monitor = ${env:MONITOR:eDP-1}
 
 [onedark]
 
@@ -138,14 +138,15 @@ interval = 3
 type = internal/i3
 
 format = <label-state> <label-mode>
+
 index-sort = true
 wrapping-scroll = false
 
 label-mode-padding = 2
 label-mode-foreground = ${onedark.black}
 label-mode-background = ${onedark.yellow}
-
-label-focused = %index%
+strip-wsnumbers = true
+label-focused = %name%
 label-focused-background = ${onedark.blue}
 label-focused-foreground = ${onedark.black}
 label-focused-padding = 2
