@@ -48,8 +48,8 @@ Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
     \'rust' : [ $HOME . '/.cargo/bin/rls' , $HOME . '/.cargo/bin/rustup' ],
-    \'python' : ['/opt/nvim/python3/bin/pyls'],
-    \'go' : ['go-langserver'],
+    \'python' : [$HOME . '/.local/bin/pyls'],
+    \'go' : [ $GOBIN . 'go-langserver'],
     \ }
 
 " display number of search matches & index of a current match
