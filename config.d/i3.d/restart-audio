@@ -1,0 +1,5 @@
+#!/usr/bin/env fish
+
+pulseaudio --kill
+rm -rf $HOME/.config/pulse
+pulseaudio --start

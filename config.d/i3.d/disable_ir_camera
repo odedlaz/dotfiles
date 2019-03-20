@@ -1,0 +1,16 @@
+#!/usr/bin/env fish
+set v4l /sys/class/video4linux
+
+for device in (ls $v4l)
+   if test (cat $v4l/$device/name) = "HP HD Camera: HP IR Camera"
+      if ! stat /dev/$device > /dev/null 2>&1
+         echo "device $device already disabled"
+         exit 0
+      end
+
+      sudo mv /dev/$device /dev/$device.disabled
+
+   end
+end
+
+
