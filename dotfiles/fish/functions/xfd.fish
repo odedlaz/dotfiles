@@ -17,7 +17,17 @@ function vifd --argument text
    end
 end
 
+function vilocate --argument text
+   set path (locate "$text" | fzf)
+   if test -n "$path"
+      vi "$path"
+   end
+end
 
+function cdlocate --argument text
+   set path (locate "$text" | fzf)
+   cdto "$path"
+end
 
 function virg --argument text
    set match (rg "$text" --vimgrep --no-messages | fzf)
