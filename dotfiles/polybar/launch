@@ -5,7 +5,9 @@ while killall -q polybar > /dev/null
    sleep 1
 end
 
-set MONITOR (polybar -m | tail -1 | sed -e 's/:.*$//g')
+set primary_display (xrandr --current | \
+   rg --only-matching --replace '$name' \
+      '^(?P<name>[A-Za-z]+-.+?)\sconnected\sprimary')
 
-env MONITOR=$MONITOR polybar bottom -r &
-env MONITOR=$MONITOR polybar top -r &
+env MONITOR=$primary_display nohup polybar bottom -r >/dev/null ^&1 &
+env MONITOR=$primary_display nohup polybar top -r > /dev/null ^&1 &

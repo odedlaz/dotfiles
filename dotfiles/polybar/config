@@ -13,6 +13,38 @@ green = #98c379
 visual_grey = #3e4452
 comment_grey = #5c6370
 
+[bar/slimtop]
+
+width = 100%
+height = 25
+radius = 6.0
+fixed-center = true
+bottom = false
+monitor = ${common.monitor}
+
+background = ${onedark.black}
+foreground = ${onedark.white}
+
+line-size = 1
+line-color = ${onedark.black}
+
+border-size = 3
+border-color = ${onedark.black}
+
+padding-left = 2
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = "FontAwesome:pixelsize=11;0"
+font-1 = "Roboto:size=11"
+font-2 = "owf\-regular:size=16"
+
+modules-left = i3
+modules-center = time date
+modules-right = pkgupdates xkeyboard internal-battery volume
+
 [bar/top]
 
 width = 100%
@@ -46,9 +78,6 @@ modules-center = time date weather
 
 tray-position = right
 tray-padding = 0
-
-;wm-restack = i3
-override-redirect = false
 
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
@@ -87,9 +116,6 @@ font-2 = "owf\-regular:size=16"
 modules-left = uptime ipinfo
 modules-right = pkgupdates xkeyboard memory internal-battery volume
 
-;wm-restack = i3
-override-redirect = false
-
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
 
@@ -121,7 +147,7 @@ exec =  $HOME/.config/polybar/plugins/exec weather
 format-prefix = "  "
 format-prefix-foreground = ${onedark.comment_grey}
 tail = false
-interval = 600
+interval = 900
 
 [module/pkgupdates]
 type = custom/script
@@ -132,7 +158,7 @@ format-foreground = ${onedark.yellow}
 format-prefix = " "
 format-prefix-foreground = ${onedark.red}
 tail = false
-interval = 3
+interval = 10
 
 [module/i3]
 type = internal/i3
@@ -140,27 +166,31 @@ type = internal/i3
 format = <label-state> <label-mode>
 
 index-sort = true
+pin-workspaces = true
 wrapping-scroll = false
 
-label-mode-padding = 2
+label-mode-padding = 3
 label-mode-foreground = ${onedark.black}
 label-mode-background = ${onedark.yellow}
 strip-wsnumbers = true
+
 label-focused = %name%
 label-focused-background = ${onedark.blue}
 label-focused-foreground = ${onedark.black}
-label-focused-padding = 2
+label-focused-padding = 3
 
-label-occupied = %index%
-label-occupied-padding = 2
+label-unfocused = %name%
+label-unfocused-padding = 3
 
-label-urgent = %index%!
+label-visible = %name%
+label-visible-padding = 3
+
+label-occupied = %name%
+label-occupied-padding = 3
+
+label-urgent = %name%!
 label-urgent-background = ${onedark.red}
-label-urgent-padding = 2
-
-label-empty = %index%
-label-empty-foreground = ${onedark.comment_grey}
-label-empty-padding = 2
+label-urgent-padding = 3
 
 [module/xwindow]
 type = internal/xwindow
