@@ -1,3 +1,6 @@
 set -x PATH "/home/local/MAGICLEAP/olazar/.pyenv/bin" $PATH
-status --is-interactive; and . (pyenv init -|psub)
-status --is-interactive; and . (pyenv virtualenv-init -|psub)
+if status --is-interactive
+   source (pyenv init - |psub)
+   # pyenv virtualenv hooks fish's prompt which is extremely slow
+   #source (pyenv virtualenv-init -|psub)
+end

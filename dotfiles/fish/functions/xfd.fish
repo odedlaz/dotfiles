@@ -57,6 +57,10 @@ function cdto --argument path
    cd $path
 end
 
+function viwhich --argument binary
+   vi (which $binary)
+end
+
 
 function cdrg --argument text
    set match (rg "$text" --vimgrep --no-messages | fzf)
