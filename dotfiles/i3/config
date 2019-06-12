@@ -36,15 +36,10 @@ bindsym $altkey+Shift+q kill
 
 # rofi bindings
 bindsym $altkey+Tab exec --no-startup-id rofi -show window
+bindsym $altkey+Esc scratchpad show
 
 bindsym $altkey+grave exec --no-startup-id \
    "rofi -modi drun,run -sidebar-mode -show drun"
-
-bindsym $altkey+Escape exec --no-startup-id \
-   "rofi -show workspace -modi workspace:~/.config/rofi/scripts/i3_switch_workspace"
-
-bindsym $altkey+Shift+Escape exec --no-startup-id \
-   "rofi -show output -modi output:~/.config/rofi/scripts/i3_move_workspace"
 
 # change focus
 bindsym $altkey+h focus left
@@ -134,6 +129,10 @@ bindsym $altkey+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shor
 # lock screen (switch to english language first)
 bindsym $winkey+l exec "bash -c 'gsettings set org.gnome.desktop.input-sources current 0 && /usr/bin/gnome-screensaver-command -l'"
 
+bindsym $winkey+y exec "$HOME/.config/i3/utils/arrange-displays laptop"
+
+bindsym $winkey+h exec "$HOME/.config/i3/utils/arrange-displays hfa"
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
@@ -177,7 +176,7 @@ exec_always $HOME/.config/i3/utils/touchpad -c
 bindsym $altkey+q exec $HOME/.config/i3/utils/touchpad -t
 
 # execute bar
-exec_always --no-startup-id fish $HOME/.config/polybar/launch
+exec --no-startup-id fish $HOME/.config/i3/utils/arrange-displays laptop
 
 # configure language
 exec_always --no-startup-id setxkbmap -layout 'us,il' \
@@ -186,7 +185,8 @@ exec_always --no-startup-id setxkbmap -layout 'us,il' \
 # configure whatsapp to open up in scratchpad
 for_window [instance="web.whatsapp.com" class="Google-chrome" window_role="pop-up"] \
    move window to scratchpad, scratchpad hide
-exec --no-startup-id google-chrome-stable --app=https://web.whatsapp.com
+
+exec --no-startup-id google-chrome-stable --remote-debugging-port=9222 --app=https://web.whatsapp.com
 
 # set wallpaper
 exec_always --no-startup-id feh --bg-scale /usr/share/backgrounds/ubuntu-default-greyscale-wallpaper.png
@@ -202,3 +202,9 @@ exec --no-startup-id /usr/bin/redshift-gtk
 
 # Control bluetooth
 exec --no-startup-id /usr/bin/blueman-applet
+
+# Control volume
+exec --no-startup-id /usr/bin/pasystray
+
+exec --no-startup-id /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
+

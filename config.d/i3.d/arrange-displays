@@ -1,0 +1,99 @@
+#!/usr/bin/env fish
+set builtin_display "eDP-1"
+
+function get_workspaces_for_display --argument display
+      i3-msg -t get_workspaces | \
+         jq -r ".[] | select(.output==\"$display\").num"
+end
+
+function kill_bar --argument name --argument display
+   for pid in (pgrep -f "polybar $display -r")
+      set pid_display (cat /proc/$pid/environ | \
+                       tr '\0' '\n' | \
+                       rg 'MONITOR=(.+)' -r '$1')
+      if test $display = $pid_display
+         kill -9 "$pid"
+      end
+   end
+end
+
+function primary_display --argument display
+   echo "DP-2-1"
+end
+
+function secondary_display --argument display
+   if test $label = "hfa"
+      echo "DP-2-2"
+   end
+
+   if test $label = "tlv"
+      echo "DP-2-2-8"
+   end
+end
+
+function arrange_displays
+   killall polybar
+   if test -z "$NO_XRANDR"
+      echo "setting up displays..."
+      xrandr \
+             --output DP-2-1 --off \
+             --output DP-2-2 --off \
+             --output DP-2-2-8 --off \
+             --output DP-2-3 --off \
+             --output DP-1 --off \
+             --output DP-2 --off \
+             --output HDMI-1 --off \
+             --output HDMI-2 --off
+
+      if test $label = "laptop" -o $label = "builtin"
+         xrandr --output $builtin_display --primary --mode 1920x1080 --pos 2560x0 --rotate normal
+            launch_bar top $builtin_display
+            launch_bar bottom $builtin_display
+         return 0
+      end
+
+      xrandr \
+         --output (primary_display) --mode 2560x1440 --pos 0x0 --rotate normal \
+         --output (secondary_display) --primary --mode 2560x1440 --pos 2560x0 --rotate normal \
+         --output $builtin_display --mode 1920x1080 --pos 2560x1440 --rotate normal
+   end
+
+   launch_bar top (secondary_display)
+   launch_bar bottom (secondary_display)
+   launch_bar slimtop (primary_display)
+   launch_bar slimtop $builtin_display
+end
+
+function launch_bar --argument name --argument display
+   kill_bar $name $display
+   env MONITOR=$display nohup polybar $name -r > /dev/null ^&1 &
+end
+
+function get_workspace --argument number
+   set ws (i3-msg -t get_workspaces | jq -r ".[] | select(.num==$number)")
+   test -n "$ws"
+end
+
+##### beginning #####
+
+set connected_displays (xrandr --current | \
+   rg "^(?P<name>[A-Za-z]+-.+?)\sconnected\s(?P<primary>primary)?" \
+   -o -r '$name $primary')
+
+if test (count $connected_displays) -gt 3
+   echo "This script only works with one external display"
+   exit 1
+end
+
+set label $argv[1]
+arrange_displays
+echo "positioning workspaces..."
+set focused_workspace (i3-msg -t get_workspaces | \
+   jq -r '.[] | select(.focused==true).num')
+
+for workspace in (get_workspaces_for_display $builtin_display)
+   i3-msg "workspace number $workspace, \
+      move workspace to output "(primary_display) > /dev/null
+end
+
+i3-msg "workspace number $focused_workspace" > /dev/null

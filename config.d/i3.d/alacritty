@@ -1,0 +1,18 @@
+#!/usr/bin/env fish
+set window_id (xdpyinfo | awk '/focus/ { print $3 }')
+set window_pid (xprop -id $window_id | awk '/NET_WM_PID/ { print $3 }' )
+set cwd $HOME
+
+if test -n $window_pid
+   set pid (pstree --long --show-pids --ascii $window_pid | \
+            awk -F '---' '{ print $NF }' | \
+            grep --only-matching '[0-9]\+' | \
+            tail --lines 1)
+
+   set cwd (readlink /proc/$pid/cwd)
+   if test -z $cwd
+      set cwd (readlink /proc/$window_pid/cwd)
+   end
+end
+
+exec alacritty

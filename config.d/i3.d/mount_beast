@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+eval $(getent passwd $USER | \
+       rg '^(?P<user>.+):PBIS:(?P<uid>[0-9]+):(?P<gid>[0-9]+):.+:(?P<home>.+):(?P<shell>.+)$' \
+       -o -r 'export _uid=$uid;_gid=$gid;_home=$home')
+
+hostname=${1:-mldl7399}
+
+sshfs -o allow_other,idmap=user,uid=$_uid,gid=$_gid,IdentityFile=$_home/.ssh/$USER\@magicleap.com/id_rsa  $USER@$hostname:/ /mnt/beast
