@@ -37,20 +37,27 @@ set shortmess+=c
 " Dark powered asynchronous unite all interfaces for Neovim/Vim8
 Plug 'Shougo/denite.nvim'
 
-" asynchronous completion framework for neovim/Vim8
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
 " Displays function signatures from completions in the command line.
 Plug 'Shougo/echodoc.vim'
 
 " Language Server Protocol (LSP) support for neovim
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+Plug 'autozimu/LanguageClient-neovim', {
+   \ 'branch': 'next',
+   \ 'do': 'bash install.sh',
+   \ }
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
     \'rust' : [ $HOME . '/.cargo/bin/rls' , $HOME . '/.cargo/bin/rustup' ],
     \'python' : [$HOME . '/.local/bin/pyls'],
-    \'go' : [ $GOBIN . 'go-langserver'],
     \ }
+
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
+" asynchronous completion framework for neovim/Vim8
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+let g:deoplete#enable_at_startup = 1
 
 " display number of search matches & index of a current match
 Plug 'google/vim-searchindex'
