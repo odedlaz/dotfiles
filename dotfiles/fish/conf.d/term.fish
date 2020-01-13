@@ -1,1 +1,2 @@
-set -xg TERM "screen-256color"
+set -xg TERM "xterm-256color"
+

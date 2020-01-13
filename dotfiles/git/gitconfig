@@ -3,7 +3,7 @@
    email = odedlaz@gmail.com
    name = Oded Lazar
 [commit]
-   gpgsign = true
+   gpgsign = false
 
 [gpg]
    program = /usr/bin/gpg2

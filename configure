@@ -86,12 +86,17 @@ set CONFIGDIR $ROOTDIR"/config.d"
 
 if test -n $target
    set path $CONFIGDIR"/"$target
-   if not test -e $path
-      echo "target '$target' doesn't exit"
-      exit 1
+   if test -e $path
+      source $path
+      exit 0
    end
-   source $path
-   exit 0
+
+   if test -e $path.disabled
+      source $path.disabled
+      exit 0
+   end
+   echo "target '$target' doesn't exists"
+   exit 1
 end
 
 for path in $CONFIGDIR/{.??,}*
@@ -99,6 +104,10 @@ for path in $CONFIGDIR/{.??,}*
       set_color 'yellow'
       echo "not sourcing $path -- disabled!"
       set_color 'normal'
+      continue
+   end
+
+   if test -d $path
       continue
    end
 

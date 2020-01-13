@@ -1,7 +1,6 @@
 recursive_link "$DOTDIR/neovim/init.vim" "$HOME/.vimrc"
 recursive_link "$DOTDIR/neovim" "$HOME/.config/nvim"
 
-pip2 install --user -r $DOTDIR/neovim/python/requirements.txt
 pip3 install --user -r $DOTDIR/neovim/python/requirements.txt
 
 # install vim-plug
@@ -12,3 +11,5 @@ if not test -f "$vim_plug_dir/plug.vim"
    curl -sfLo "$vim_plug_dir/plug.vim" --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 end
+
+nvim +PlugInstall!
