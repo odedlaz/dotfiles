@@ -1,3 +1,7 @@
 function pbpaste  --description "Paste data from the Clipboard"
-   xclip -selection clipboard -o
+   if is_wsl
+      powershell.exe -nologo -noprofile -noninteractive 'Get-Clipboard'
+   else
+      xclip -selection clipboard -o
+   end
 end
