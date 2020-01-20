@@ -1,8 +1,8 @@
 function pbcopy --description "Copy data from STDIN to the clipboard"
-   if is_wsl and test wsl_version -eq 1
-      clip.exe
+   if is_wsl and test (wsl_version) -eq 1
+      strstrip | clip.exe
    else
-      xclip -selection c
+      strstrip | xclip -selection c
    end
 end
 
