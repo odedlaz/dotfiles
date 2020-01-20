@@ -1,4 +1,5 @@
 package https://github.com/fisherman/fzf
+package wd
 package z
 theme default
 theme eclm
