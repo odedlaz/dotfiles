@@ -34,6 +34,8 @@ call plug#begin('~/.vim/plugged')
 " '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
 set shortmess+=c
 
+" Powershell support
+Plug 'PProvost/vim-ps1'
 " Dark powered asynchronous unite all interfaces for Neovim/Vim8
 Plug 'Shougo/denite.nvim'
 
