@@ -33,7 +33,7 @@ function link -a 'from' 'to'
 
    if test (count $rm_flags) -gt 0
       set_color 'yellow'
-      sudo rm -v $rm_flags $to
+      rm -v $rm_flags $to
       set_color 'normal'
    end
 
@@ -48,7 +48,7 @@ function link -a 'from' 'to'
       set_color 'yellow'
       echo "trying again as root."
       set_color 'normal'
-      sudo ln -v -s $from $to
+      ln -v -s $from $to
    end
 end
 
@@ -80,10 +80,11 @@ function recursive_link -a 'from' 'to'
 	end
 end
 
-set ROOTDIR (readlink -f (dirname (status -f)))
+set ROOTDIR (realpath (dirname (status -f)))
 set DOTDIR $ROOTDIR"/dotfiles"
 set CONFIGDIR $ROOTDIR"/config.d"
 
+echo $ROOTDIR
 if test -n $target
    set path $CONFIGDIR"/"$target
    if test -e $path

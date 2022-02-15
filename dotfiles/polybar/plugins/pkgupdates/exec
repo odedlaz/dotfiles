@@ -1,5 +1,0 @@
-#!/usr/bin/env fish
-if test (/usr/lib/update-notifier/apt-check ^&1) != "0;0"
-   echo "updates available"
-end
-

@@ -1,4 +1,4 @@
-set PATH $PATH $HOME/.fzf/bin
+fish_add_path $HOME/.fzf/bin
 # --files: List files that would be searched but do not search
 # --no-ignore: Do not respect .gitignore, etc...
 # --hidden: Search hidden files and folders

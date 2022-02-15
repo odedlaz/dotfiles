@@ -17,16 +17,9 @@ set-window-option -g automatic-rename on
 set-window-option -g aggressive-resize on
 set-window-option -g monitor-activity on
 
-set -g default-terminal "$TERM"
-
-# # The following helps with Shift-PageUp/Shift-PageDown
-set -g terminal-overrides 'xterm*:smcup@:rmcup@'
-set-option -ga terminal-overrides ",$TERM:Tc"
-
 # Must set default-command to $SHELL, in order to not source ~/.profile
-set -g default-command /usr/bin/fish
-set -g default-shell /usr/bin/bash
+set -g default-command /opt/homebrew/bin/fish
+set -g default-shell /opt/homebrew/bin/fish
 
-set -g status-interval 60
-set -g message-fg white
+set -g default-terminal "$TERM"
 set -g mouse on

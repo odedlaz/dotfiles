@@ -1,2 +1,0 @@
-#!/usr/bin/env fish
-uptime --pretty | grep -o "[0-9]\+.*"

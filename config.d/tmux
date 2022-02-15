@@ -1,0 +1,6 @@
+recursive_link "$DOTDIR/tmux" "$HOME/.config/tmux"
+
+if not test -d "$HOME/config/.tmux/plugins/tpm"
+   echo "installing tmux plugin manager..."
+   git clone https://github.com/tmux-plugins/tpm $HOME/.config/tmux/plugins/tpm
+end
