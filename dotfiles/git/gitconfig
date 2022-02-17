@@ -7,5 +7,10 @@
 
 [gpg]
    program = /usr/bin/gpg2
+
 [pull]
    rebase = true
+
+[alias]
+	fco = !sh -c 'git fetch origin master && git checkout -b $1 origin/master' -
+	rtl = !sh -c 'git fetch origin master && git rebase origin/master'
