@@ -13,4 +13,5 @@
 
 [alias]
 	fco = !sh -c 'git fetch origin master && git checkout -b $1 origin/master' -
-	rtl = !sh -c 'git fetch origin master && git rebase origin/master'
+	rtl = !sh -c 'git fetch origin master && git rebase origin/master' -
+	cor = !sh -c 'git fetch origin $1 && git checkout $1 && git reset --hard origin/$1' -
